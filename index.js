@@ -32,14 +32,19 @@ const CreateRenderer = (ctx, object) => {
     return Renderer
 }
 
-const CreateCircleObject = (x,y,radius) => {
-    const circleImage = createCircleImage(radius)
-    const circleObject = {
-        image: circleImage,
+const CreateObject = (x,y,vector) => {
+    const object = {
         x:x,
         y:y,
+        vector:vector
     }
-    return circleObject
+    return object
+}
+
+const CreateCircleObject = (x,y,v,radius) => {
+    let object = CreateObject(x,y,v)
+    object.image = createCircleImage(radius)
+    return object
 }
 
 const WrapperClones = (object) => {
@@ -66,10 +71,10 @@ ctx.moveTo(0,0)
 const Render = CreateRenderer(ctx)
 let circleObject = CreateCircleObject(10,15,20)
 let objects = []
-objects.push(CreateCircleObject(10,15,20))
-objects.push(CreateCircleObject(10,15,30))
-objects.push(CreateCircleObject(100,150,40))
-objects.push(CreateCircleObject(200,10,10))
-objects.push(CreateCircleObject(200,15,20))
-objects.push(CreateCircleObject(200,20,30))
+objects.push(CreateCircleObject(10,15,0,20))
+objects.push(CreateCircleObject(10,15,0,30))
+objects.push(CreateCircleObject(100,150,0,40))
+objects.push(CreateCircleObject(200,10,0,10))
+objects.push(CreateCircleObject(200,15,0,20))
+objects.push(CreateCircleObject(200,20,0,30))
 objects.map(Render)
