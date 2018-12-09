@@ -36,7 +36,11 @@ const CreateObject = (x,y,vector) => {
     const object = {
         x:x,
         y:y,
-        vector:vector
+        vector:vector,
+        move: function() { //"this" is trash
+            this.x = this.x + this.vector.x
+            this.y = this.y + this.vector.y
+        }
     }
     return object
 }
@@ -63,18 +67,32 @@ let ctx = canvas.getContext("2d")
 ctx.width = canvas.width   //bind canvas dimensions to the context for convenience
 ctx.height = canvas.height
 ctx = style(ctx)  //Set our fill and stroke styles
-clear(ctx)       //fills the canvas with the fill color
-ctx.moveTo(0,0)
-ctx.lineTo(200,100)
-ctx.stroke()
-ctx.moveTo(0,0)
 const Render = CreateRenderer(ctx)
 let circleObject = CreateCircleObject(10,15,20)
 let objects = []
-objects.push(CreateCircleObject(10,15,0,20))
-objects.push(CreateCircleObject(10,15,0,30))
-objects.push(CreateCircleObject(100,150,0,40))
-objects.push(CreateCircleObject(200,10,0,10))
-objects.push(CreateCircleObject(200,15,0,20))
-objects.push(CreateCircleObject(200,20,0,30))
-objects.map(Render)
+objects.push(CreateCircleObject(10,15,{x:1,y:5},20))
+objects.push(CreateCircleObject(10,15,{x:2,y:10},30))
+objects.push(CreateCircleObject(100,150,{x:6,y:-2},40))
+objects.push(CreateCircleObject(200,10,{x:3,y:-5},10))
+objects.push(CreateCircleObject(200,15,{x:-1,y:5},20))
+objects.push(CreateCircleObject(200,20,{x:3,y:-3},30))
+
+setInterval(() => {
+    clear(ctx)
+    objects.map(Render)
+    objects.map((object)=>{
+        object.move()
+        if (object.x > ctx.width){
+            object.x = object.x - ctx.width
+        }
+        if (object.y > ctx.height){
+            object.y = object.y - ctx.height
+        }
+        if (object.x < 0){
+            object.x = object.x + ctx.width
+        }
+        if (object.y < 0){
+            object.y = object.y + ctx.height
+        }
+    })
+},1000/60)
