@@ -25,20 +25,13 @@ const clear = (ctx) => { //clears the canvas
     ctx.fillRect(0,0,ctx.width,ctx.height)
 }
 
-const CreateRenderer = (ctx, object) => {
-    const Renderer = (object) =>{
-        ctx.drawImage(object.image, object.x, object.y)
-    }
-    return Renderer
-}
-
-const CreateObject = (x,y,vector, ctx, imageFunction, ...imageParams) => {
+const CreateObject = (x,y,vector, ctx, image) => {
     const object = {
         x:x,
         y:y,
         vector:vector,
         ctx:ctx,
-        image: imageFunction(...imageParams),
+        image: image,
         update: function() { //"this" is trash
             //First update position
             this.x = this.x + this.vector.x
@@ -47,6 +40,14 @@ const CreateObject = (x,y,vector, ctx, imageFunction, ...imageParams) => {
         },
         render: function() {
             this.ctx.drawImage(object.image, object.x, object.y)
+            this.ctx.drawImage(object.image, object.x + ctx.width, object.y)
+            this.ctx.drawImage(object.image, object.x - ctx.width, object.y)
+            this.ctx.drawImage(object.image, object.x, object.y + ctx.height)
+            this.ctx.drawImage(object.image, object.x, object.y - ctx.height)
+            this.ctx.drawImage(object.image, object.x - ctx.width, object.y - ctx.height)
+            this.ctx.drawImage(object.image, object.x + ctx.width, object.y - ctx.height)
+            this.ctx.drawImage(object.image, object.x - ctx.width, object.y + ctx.height)
+            this.ctx.drawImage(object.image, object.x + ctx.width, object.y + ctx.height)
         }
     }
     return object
@@ -83,20 +84,18 @@ let ctx = canvas.getContext("2d")
 ctx.width = canvas.width   //bind canvas dimensions to the context for convenience
 ctx.height = canvas.height
 ctx = style(ctx)  //Set our fill and stroke styles
-const Render = CreateRenderer(ctx)
 
 let objects = []
-objects.push(CreateObject(10,15,{x:1,y:2},ctx,createCircleImage,20))
-objects.push(CreateObject(100,15,{x:-1,y:2},ctx,createCircleImage,20))
-objects.push(CreateObject(10,150,{x:2,y:1},ctx,createCircleImage,20))
-objects.push(CreateObject(200,300,{x:-2,y:.5},ctx,createCircleImage,20))
-objects.push(CreateObject(150,150,{x:.5,y:.5},ctx,createCircleImage,20))
-objects.push(CreateObject(10,15,{x:-.5,y:1},ctx,createCircleImage,20))
+objects.push(CreateObject(10,15,{x:1,y:2},ctx,createCircleImage(40)))
+objects.push(CreateObject(100,15,{x:-1,y:2},ctx,createCircleImage(50)))
+objects.push(CreateObject(10,150,{x:2,y:1},ctx,createCircleImage(55)))
+objects.push(CreateObject(200,300,{x:-2,y:.5},ctx,createCircleImage(45)))
+objects.push(CreateObject(150,150,{x:.5,y:.5},ctx,createCircleImage(60)))
+objects.push(CreateObject(10,15,{x:-.5,y:1},ctx,createCircleImage(65)))
 
 
 setInterval(() => {
     clear(ctx)
-   // objects.map(Render)
     objects.map((object)=>{
         object.update()
         constrain(object)
