@@ -37,7 +37,8 @@ const CreateObject = (x,y,vector) => {
         x:x,
         y:y,
         vector:vector,
-        move: function() { //"this" is trash
+        update: function() { //"this" is trash
+            //First update position
             this.x = this.x + this.vector.x
             this.y = this.y + this.vector.y
         }
@@ -53,6 +54,20 @@ const CreateCircleObject = (x,y,v,radius) => {
 
 const WrapperClones = (object) => {
 
+}
+const constrain = (object) => { //makes sure the object stays in the playing field
+    if (object.x > ctx.width){
+        object.x = object.x - ctx.width
+    }
+    if (object.y > ctx.height){
+        object.y = object.y - ctx.height
+    }
+    if (object.x < 0){
+        object.x = object.x + ctx.width
+    }
+    if (object.y < 0){
+        object.y = object.y + ctx.height
+    }
 }
 
 
@@ -81,18 +96,7 @@ setInterval(() => {
     clear(ctx)
     objects.map(Render)
     objects.map((object)=>{
-        object.move()
-        if (object.x > ctx.width){
-            object.x = object.x - ctx.width
-        }
-        if (object.y > ctx.height){
-            object.y = object.y - ctx.height
-        }
-        if (object.x < 0){
-            object.x = object.x + ctx.width
-        }
-        if (object.y < 0){
-            object.y = object.y + ctx.height
-        }
+        object.update()
+        constrain(object)
     })
 },1000/60)
