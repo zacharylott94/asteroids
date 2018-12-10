@@ -21,7 +21,7 @@ const style = (ctx) => { //sets canvas fill and stroke styles
     return ctx
 }
 
-function clear(ctx){ //clears the canvas
+const clear = (ctx) => { //clears the canvas
     ctx.fillRect(0,0,ctx.width,ctx.height)
 }
 
@@ -32,25 +32,26 @@ const CreateRenderer = (ctx, object) => {
     return Renderer
 }
 
-const CreateObject = (x,y,vector) => {
+const CreateObject = (x,y,vector, ctx, imageFunction, ...imageParams) => {
     const object = {
         x:x,
         y:y,
         vector:vector,
+        ctx:ctx,
+        image: imageFunction(...imageParams),
         update: function() { //"this" is trash
             //First update position
             this.x = this.x + this.vector.x
             this.y = this.y + this.vector.y
+            this.render()
+        },
+        render: function() {
+            this.ctx.drawImage(object.image, object.x, object.y)
         }
     }
     return object
 }
 
-const CreateCircleObject = (x,y,v,radius) => {
-    let object = CreateObject(x,y,v)
-    object.image = createCircleImage(radius)
-    return object
-}
 
 const WrapperClones = (object) => {
 
@@ -83,18 +84,19 @@ ctx.width = canvas.width   //bind canvas dimensions to the context for convenien
 ctx.height = canvas.height
 ctx = style(ctx)  //Set our fill and stroke styles
 const Render = CreateRenderer(ctx)
-let circleObject = CreateCircleObject(10,15,20)
+
 let objects = []
-objects.push(CreateCircleObject(10,15,{x:1,y:5},20))
-objects.push(CreateCircleObject(10,15,{x:2,y:10},30))
-objects.push(CreateCircleObject(100,150,{x:6,y:-2},40))
-objects.push(CreateCircleObject(200,10,{x:3,y:-5},10))
-objects.push(CreateCircleObject(200,15,{x:-1,y:5},20))
-objects.push(CreateCircleObject(200,20,{x:3,y:-3},30))
+objects.push(CreateObject(10,15,{x:1,y:2},ctx,createCircleImage,20))
+objects.push(CreateObject(100,15,{x:-1,y:2},ctx,createCircleImage,20))
+objects.push(CreateObject(10,150,{x:2,y:1},ctx,createCircleImage,20))
+objects.push(CreateObject(200,300,{x:-2,y:.5},ctx,createCircleImage,20))
+objects.push(CreateObject(150,150,{x:.5,y:.5},ctx,createCircleImage,20))
+objects.push(CreateObject(10,15,{x:-.5,y:1},ctx,createCircleImage,20))
+
 
 setInterval(() => {
     clear(ctx)
-    objects.map(Render)
+   // objects.map(Render)
     objects.map((object)=>{
         object.update()
         constrain(object)
