@@ -17,6 +17,24 @@ const createCircleImage = (radius) => {
     return circle
 }
 
+const createPlayerImage = () => {
+    let player  = document.createElement("canvas")      //instantiate a canvas object
+    player.width, player.height = 12                    //give the canvas a width and height
+    let ctx = player.getContext("2d")                   //get a context for the circle canvas
+    ctx = style(ctx)                                    //give it the global style
+
+    //draw the player
+    ctx.beginPath()
+    ctx.moveTo(5,1)
+    ctx.moveTo(6,1)
+    ctx.lineTo(11,11)
+    ctx.lineTo(1,11)
+    ctx.lineTo(6,1)
+    ctx.stroke()
+
+    return player
+}
+
 //sets canvas fill and stroke styles
 const style = (ctx) => { 
     ctx.translate(0.5, 0.5)            //an attempt to remove anti-aliasing
@@ -100,6 +118,7 @@ const render = CreateRenderer(ctx)  //create a render function with a context bo
 const largeAsteroid  = createCircleImage(40)
 const mediumAsteroid = createCircleImage(20)
 const smallAsteroid  = createCircleImage(10)
+const player    = createPlayerImage()
 
 //array of objects
 let objects = []
@@ -109,6 +128,7 @@ objects.push(CreateObject(10,  200, {x:2.5,y:1}, mediumAsteroid))
 objects.push(CreateObject(200, 300, {x:-2,y:.5}, mediumAsteroid))
 objects.push(CreateObject(150, 150, {x:.5,y:.5}, smallAsteroid))
 objects.push(CreateObject(10,  15,  {x:-.5,y:1}, smallAsteroid))
+objects.push(CreateObject(ctx.width/2,  ctx.height/2,  {x:0,y:0}, player))
 
 
 
