@@ -19,8 +19,8 @@ const createCircleImage = (radius) => {
 
 //sets canvas fill and stroke styles
 const style = (ctx) => { 
-    ctx.translate(0.5, 0.5)            //an attempt to remove antialiasing
-    ctx.imageSmoothingEnabled = false  //an attempt to remove antialiasiang
+    ctx.translate(0.5, 0.5)            //an attempt to remove anti-aliasing
+    ctx.imageSmoothingEnabled = false  //an attempt to remove anti-aliasing
     ctx.fillStyle = "black"            //space is black
     ctx.strokeStyle = "rgb(0,255,0)"   //lines are green
 
