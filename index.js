@@ -25,12 +25,11 @@ const clear = (ctx) => { //clears the canvas
     ctx.fillRect(0,0,ctx.width,ctx.height)
 }
 
-const CreateObject = (x,y,vector, ctx, image) => {
+const CreateObject = (x,y,vector, image) => {
     const object = {
         x:x,
         y:y,
         vector:vector,
-        ctx:ctx,
         image: image,
         update: function() { //"this" is trash
             //First update position
@@ -88,15 +87,17 @@ ctx.width = canvas.width   //bind canvas dimensions to the context for convenien
 ctx.height = canvas.height
 ctx = style(ctx)  //Set our fill and stroke styles
 const render = CreateRenderer(ctx)
-
+const largeAsteroid = createCircleImage(40)
+const mediumAsteroid = createCircleImage(20)
+const smallAsteroid = createCircleImage(10)
 
 let objects = []
-objects.push(CreateObject(10,15,{x:1,y:2},ctx,createCircleImage(40)))
-objects.push(CreateObject(100,15,{x:-1,y:2},ctx,createCircleImage(50)))
-objects.push(CreateObject(10,150,{x:2,y:1},ctx,createCircleImage(55)))
-objects.push(CreateObject(200,300,{x:-2,y:.5},ctx,createCircleImage(45)))
-objects.push(CreateObject(150,150,{x:.5,y:.5},ctx,createCircleImage(60)))
-objects.push(CreateObject(10,15,{x:-.5,y:1},ctx,createCircleImage(65)))
+objects.push(CreateObject(10, 15, {x:1,y:2.5}, largeAsteroid))
+objects.push(CreateObject(125, 15, {x:-1,y:2}, largeAsteroid))
+objects.push(CreateObject(10, 200, {x:2.5,y:1}, mediumAsteroid))
+objects.push(CreateObject(200, 300, {x:-2,y:.5}, mediumAsteroid))
+objects.push(CreateObject(150, 150, {x:.5,y:.5}, smallAsteroid))
+objects.push(CreateObject(10, 15, {x:-.5,y:1}, smallAsteroid))
 
 
 setInterval(() => {
