@@ -30,12 +30,7 @@ const CreateObject = (x,y,vector, image) => {
         x:x,
         y:y,
         vector:vector,
-        image: image,
-        update: function() { //"this" is trash
-            //First update position
-            this.x = this.x + this.vector.x
-            this.y = this.y + this.vector.y
-        }
+        image: image
 
     }
     return object
@@ -74,6 +69,11 @@ const CreateRenderer = (ctx) => {
     }
 }
 
+const moveObject = (obj) => {
+    obj.x = obj.x + obj.vector.x
+    obj.y = obj.y + obj.vector.y
+}
+
 
 
 //---------------Main--------------------
@@ -103,7 +103,7 @@ objects.push(CreateObject(10, 15, {x:-.5,y:1}, smallAsteroid))
 setInterval(() => {
     clear(ctx)
     objects.map((object)=>{
-        object.update()
+        moveObject(object)
         constrain(object)
         render(object)
     })
