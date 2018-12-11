@@ -36,19 +36,8 @@ const CreateObject = (x,y,vector, ctx, image) => {
             //First update position
             this.x = this.x + this.vector.x
             this.y = this.y + this.vector.y
-            this.render()
-        },
-        render: function() {
-            this.ctx.drawImage(object.image, object.x, object.y)
-            this.ctx.drawImage(object.image, object.x + ctx.width, object.y)
-            this.ctx.drawImage(object.image, object.x - ctx.width, object.y)
-            this.ctx.drawImage(object.image, object.x, object.y + ctx.height)
-            this.ctx.drawImage(object.image, object.x, object.y - ctx.height)
-            this.ctx.drawImage(object.image, object.x - ctx.width, object.y - ctx.height)
-            this.ctx.drawImage(object.image, object.x + ctx.width, object.y - ctx.height)
-            this.ctx.drawImage(object.image, object.x - ctx.width, object.y + ctx.height)
-            this.ctx.drawImage(object.image, object.x + ctx.width, object.y + ctx.height)
         }
+
     }
     return object
 }
@@ -72,6 +61,20 @@ const constrain = (object) => { //makes sure the object stays in the playing fie
     }
 }
 
+const CreateRenderer = (ctx) => {
+    return (object) => {
+        ctx.drawImage(object.image, object.x, object.y)
+        ctx.drawImage(object.image, object.x + ctx.width, object.y)
+        ctx.drawImage(object.image, object.x - ctx.width, object.y)
+        ctx.drawImage(object.image, object.x, object.y + ctx.height)
+        ctx.drawImage(object.image, object.x, object.y - ctx.height)
+        ctx.drawImage(object.image, object.x - ctx.width, object.y - ctx.height)
+        ctx.drawImage(object.image, object.x + ctx.width, object.y - ctx.height)
+        ctx.drawImage(object.image, object.x - ctx.width, object.y + ctx.height)
+        ctx.drawImage(object.image, object.x + ctx.width, object.y + ctx.height)
+    }
+}
+
 
 
 //---------------Main--------------------
@@ -84,6 +87,8 @@ let ctx = canvas.getContext("2d")
 ctx.width = canvas.width   //bind canvas dimensions to the context for convenience
 ctx.height = canvas.height
 ctx = style(ctx)  //Set our fill and stroke styles
+const render = CreateRenderer(ctx)
+
 
 let objects = []
 objects.push(CreateObject(10,15,{x:1,y:2},ctx,createCircleImage(40)))
@@ -99,5 +104,6 @@ setInterval(() => {
     objects.map((object)=>{
         object.update()
         constrain(object)
+        render(object)
     })
 },1000/60)
