@@ -1,71 +1,83 @@
 
 
-const createCircleImage = (radius) => { //creates a circle image
-    let padding = 5
-    let circle = document.createElement("canvas")
-    circle.width, circle.height = radius*2+padding
-    let ctx = circle.getContext("2d")
-    ctx = style(ctx)
+//creates a circle image
+const createCircleImage = (radius) => {                 
+    let padding = 5                                     //for padding the image canvas
+    let circle  = document.createElement("canvas")      //instantiate a canvas object
+    circle.width, circle.height = radius * 2 + padding  //give the canvas a width and height
+    let ctx = circle.getContext("2d")                   //get a context for the circle canvas
+    ctx = style(ctx)                                    //give it the global style
+
+    //draw the circle
     ctx.beginPath()
-    let xy = radius+padding/2
+    let xy = radius + padding / 2
     ctx.arc(xy, xy, radius, 0, 2 * Math.PI)
     ctx.stroke()
+
     return circle
 }
 
-const style = (ctx) => { //sets canvas fill and stroke styles
-    ctx.translate(0.5,0.5)
-    ctx.imageSmoothingEnabled = false
-    ctx.fillStyle = "black"
-    ctx.strokeStyle = "rgb(0,255,0)"
+//sets canvas fill and stroke styles
+const style = (ctx) => { 
+    ctx.translate(0.5, 0.5)            //an attempt to remove antialiasing
+    ctx.imageSmoothingEnabled = false  //an attempt to remove antialiasiang
+    ctx.fillStyle = "black"            //space is black
+    ctx.strokeStyle = "rgb(0,255,0)"   //lines are green
+
     return ctx
 }
 
-const clear = (ctx) => { //clears the canvas
-    ctx.fillRect(0,0,ctx.width,ctx.height)
+//clears the context
+const clear = (ctx) => { 
+    ctx.fillRect(0, 0, ctx.width, ctx.height)
 }
 
-const CreateObject = (x,y,vector, image) => { //creates a generic game object
+//creates a generic game object
+const CreateObject = (x, y, vector, image) => { 
     const object = {
-        x:x,
-        y:y,
-        vector:vector,
-        image: image
-
+        x     : x,        //x position
+        y     : y,        //y position
+        vector: vector,   //velocity vector
+        image : image     //rendering image
     }
     return object
 }
 
-const constrain = (object) => { //makes sure the object stays in the playing field
-    if (object.x > ctx.width){
-        object.x = object.x - ctx.width
+//makes sure the object stays in the playing field
+const constrain = (object) => {  
+    if (object.x > ctx.width){            //if object is past the right edge of the screen
+        object.x = object.x - ctx.width   //subtract the width of the screen to wrap it to the left
     }
-    if (object.y > ctx.height){
-        object.y = object.y - ctx.height
+    if (object.y > ctx.height){           //if object is past the bottom edge of the screen
+        object.y = object.y - ctx.height  //subtract the height of the screen to wrap it to the top
     }
-    if (object.x < 0){
-        object.x = object.x + ctx.width
+    if (object.x < 0){                    //if the object is past the left edge of the screen
+        object.x = object.x + ctx.width   //add the width of the screen to wrap it to the right
     }
-    if (object.y < 0){
-        object.y = object.y + ctx.height
+    if (object.y < 0){                    //if the object is past the top of the screen
+        object.y = object.y + ctx.height  //add the height of the screen to wrap it to the bottom
     }
 }
 
-const CreateRenderer = (ctx) => { //binds a context to a function so that it can draw objects in that context
+//binds a context to a function so that it can draw objects in that context
+const CreateRenderer = (ctx) => { 
     return (object) => {
-        ctx.drawImage(object.image, object.x, object.y)
-        ctx.drawImage(object.image, object.x + ctx.width, object.y)
-        ctx.drawImage(object.image, object.x - ctx.width, object.y)
-        ctx.drawImage(object.image, object.x, object.y + ctx.height)
-        ctx.drawImage(object.image, object.x, object.y - ctx.height)
-        ctx.drawImage(object.image, object.x - ctx.width, object.y - ctx.height)
-        ctx.drawImage(object.image, object.x + ctx.width, object.y - ctx.height)
-        ctx.drawImage(object.image, object.x - ctx.width, object.y + ctx.height)
-        ctx.drawImage(object.image, object.x + ctx.width, object.y + ctx.height)
+        ctx.drawImage(object.image, object.x, object.y) //draw the object at its position
+
+        //draw clones in a box around the object to make screen wrapping appear seamless
+        ctx.drawImage(object.image, object.x + ctx.width, object.y)               //right clone
+        ctx.drawImage(object.image, object.x, object.y + ctx.height)              //bottom clone
+        ctx.drawImage(object.image, object.x - ctx.width, object.y)               //left clone
+        ctx.drawImage(object.image, object.x, object.y - ctx.height)              //top clone
+        ctx.drawImage(object.image, object.x + ctx.width, object.y + ctx.height)  //bottom-right clone
+        ctx.drawImage(object.image, object.x - ctx.width, object.y + ctx.height)  //bottom-left clone
+        ctx.drawImage(object.image, object.x + ctx.width, object.y - ctx.height)  //top-right clone
+        ctx.drawImage(object.image, object.x - ctx.width, object.y - ctx.height)  //top-left clone
     }
 }
 
-const moveObject = (obj) => { //applies an object's vector to its position
+//applies an object's vector to its position
+const move = (obj) => { 
     obj.x = obj.x + obj.vector.x
     obj.y = obj.y + obj.vector.y
 }
@@ -74,35 +86,38 @@ const moveObject = (obj) => { //applies an object's vector to its position
 
 //---------------Main--------------------
 
-let canvas = document.getElementById("canvas")
-let ctx = canvas.getContext("2d")
-ctx.width = canvas.width   //bind canvas dimensions to the context for convenience
+let canvas = document.getElementById("canvas")  //grab our canvas
+let ctx    = canvas.getContext("2d")            // create a context for it
+
+//bind canvas dimensions to the context for convenience
+ctx.width  = canvas.width
 ctx.height = canvas.height
-ctx = style(ctx)  //Set our fill and stroke styles
-const render = CreateRenderer(ctx) //create a render function with a context bound to it
+
+ctx = style(ctx)                    //Set our fill and stroke styles
+const render = CreateRenderer(ctx)  //create a render function with a context bound to it
 
 //stock images
-const largeAsteroid = createCircleImage(40)
+const largeAsteroid  = createCircleImage(40)
 const mediumAsteroid = createCircleImage(20)
-const smallAsteroid = createCircleImage(10)
+const smallAsteroid  = createCircleImage(10)
 
 //array of objects
 let objects = []
-objects.push(CreateObject(10, 15, {x:1,y:2.5}, largeAsteroid))
-objects.push(CreateObject(125, 15, {x:-1,y:2}, largeAsteroid))
-objects.push(CreateObject(10, 200, {x:2.5,y:1}, mediumAsteroid))
+objects.push(CreateObject(10,  15,  {x:1,y:2.5}, largeAsteroid))
+objects.push(CreateObject(125, 15,  {x:-1,y:2},  largeAsteroid))
+objects.push(CreateObject(10,  200, {x:2.5,y:1}, mediumAsteroid))
 objects.push(CreateObject(200, 300, {x:-2,y:.5}, mediumAsteroid))
 objects.push(CreateObject(150, 150, {x:.5,y:.5}, smallAsteroid))
-objects.push(CreateObject(10, 15, {x:-.5,y:1}, smallAsteroid))
+objects.push(CreateObject(10,  15,  {x:-.5,y:1}, smallAsteroid))
 
 
 
 //Main game loop
 setInterval(() => {
     clear(ctx)
-    objects.map((object)=>{
-        moveObject(object)
-        constrain(object)
-        render(object)
+    objects.map(  (object) => {
+        move      (object)
+        constrain (object)
+        render    (object)
     })
 },1000/60)
