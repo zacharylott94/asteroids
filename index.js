@@ -141,7 +141,7 @@ objects.push(GAME.CreateObject(10,  200, GAME.Vector(10, .1), mediumAsteroid))
 objects.push(GAME.CreateObject(200, 300, GAME.Vector(185, 1.5), mediumAsteroid))
 objects.push(GAME.CreateObject(150, 150, GAME.Vector(300, 1), smallAsteroid))
 objects.push(GAME.CreateObject(10,  15,  GAME.Vector(34, 1.25), smallAsteroid))
-objects.push(GAME.CreateObject(ctx.width/2,  ctx.height/2,  {x:0,y:0}, player))
+objects.push(GAME.CreateObject(ctx.width/2,  ctx.height/2,  GAME.Vector(0,0), player))
 
 
 
