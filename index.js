@@ -114,6 +114,12 @@ GAME.Vector = (degrees,magnitude) => {
     }
 }
 
+GAME.VectorToDegrees = (vector) => {
+    let rad = Math.asin(vector.y)
+    let deg = rad * 360 / 2 / Math.PI
+    return deg
+}
+
 
 //---------------Main--------------------
 
