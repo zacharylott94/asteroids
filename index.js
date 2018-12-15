@@ -98,10 +98,21 @@ GAME.constrain = (object) => {
 
 //applies an object's vector to its position
 GAME.move = (obj) => { 
-    obj.x = obj.x + obj.vector.x
-    obj.y = obj.y + obj.vector.y
+    obj.x = obj.x + obj.vector.x * obj.vector.magnitude
+    obj.y = obj.y + obj.vector.y * obj.vector.magnitude
 }
 
+//Takes an angle in degrees and creates a unit vector with a magnitude
+GAME.Vector = (degrees,magnitude) => {
+    let angle = Math.PI * 2 / 360 * degrees
+    let x = Math.cos(angle)
+    let y = Math.sin(angle)
+    return {
+        x,
+        y,
+        magnitude
+    }
+}
 
 
 //---------------Main--------------------
@@ -124,12 +135,12 @@ const player    = GRAPHICS.createPlayerImage(GRAPHICS.style)
 
 //array of objects
 let objects = []
-objects.push(GAME.CreateObject(10,  15,  {x:1,y:2.5}, largeAsteroid))
-objects.push(GAME.CreateObject(125, 15,  {x:-1,y:2},  largeAsteroid))
-objects.push(GAME.CreateObject(10,  200, {x:2.5,y:1}, mediumAsteroid))
-objects.push(GAME.CreateObject(200, 300, {x:-2,y:.5}, mediumAsteroid))
-objects.push(GAME.CreateObject(150, 150, {x:.5,y:.5}, smallAsteroid))
-objects.push(GAME.CreateObject(10,  15,  {x:-.5,y:1}, smallAsteroid))
+objects.push(GAME.CreateObject(10,  15,  GAME.Vector(45,2), largeAsteroid))
+objects.push(GAME.CreateObject(125, 15,  GAME.Vector(270, .9),  largeAsteroid))
+objects.push(GAME.CreateObject(10,  200, GAME.Vector(10, .1), mediumAsteroid))
+objects.push(GAME.CreateObject(200, 300, GAME.Vector(185, 1.5), mediumAsteroid))
+objects.push(GAME.CreateObject(150, 150, GAME.Vector(300, 1), smallAsteroid))
+objects.push(GAME.CreateObject(10,  15,  GAME.Vector(34, 1.25), smallAsteroid))
 objects.push(GAME.CreateObject(ctx.width/2,  ctx.height/2,  {x:0,y:0}, player))
 
 
