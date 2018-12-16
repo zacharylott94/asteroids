@@ -133,9 +133,9 @@ GAME.distance = (x, y, x2, y2) => {
 GAME.collide = (obj, obj2) => {
     let distance = GAME.distance(obj.x + obj.radius, obj.y + obj.radius, obj2.x + obj2.radius, obj2.y + obj2.radius)
     if (distance <= obj.radius + obj2.radius) {
-        return true, obj, obj2
+        return [true, obj, obj2]
     } else {
-        return false
+        return [false]
     }
 }
 
@@ -185,8 +185,21 @@ setInterval(() => {
         let tail = objects.slice(1)
         for (let each of objects) {
             for (let other of tail) {
-                let result = GAME.collide(each, other)
+                let [result, obj, obj2] = GAME.collide(each, other)
                 if (result) {
+                    let vector = {x:obj2.x - obj.x, y:obj2.y - obj.y} // get our vector between objects
+                    let distance = GAME.distance(obj.x, obj.y, obj2.x, obj2.y) //get the distance between objects
+                    let normalVector = {x:vector.x/distance, y:vector.y/distance} //normalize the vector
+                    let angle = GAME.VectorToDegrees(normalVector) //get angle between objects
+                    let radii = obj.radius + obj2.radius //sum of radii for minimum distance between objects
+                    obj2.x = obj.x + (normalVector * radii) 
+                    obj2.y = obj.y + (normalVector * radii)
+
+                    let deg1 = GAME.VectorToDegrees(obj.vector)
+                    let deg2 = GAME.VectorToDegrees(obj2.vector)
+                    let angleSum = (deg1 + deg2) / 2
+                    obj.vector = GAME.Vector(angleSum + deg2, obj.vector.magnitude)
+                    obj2.vector = GAME.Vector(angleSum + deg1, obj2.vector.magnitude)
                     console.log("collision")
                 }
             }
@@ -197,6 +210,7 @@ setInterval(() => {
             tail = tail.slice(1)
         }
     }
+    //console.log(objects.length)
 
 
 
