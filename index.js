@@ -69,12 +69,13 @@ GRAPHICS.clear = (ctx) => {
 
 const GAME = {}
 //creates a generic game object
-GAME.CreateObject = (x, y, vector, image) => { 
+GAME.CreateObject = (x, y, vector, image, radius) => { 
     const object = {
-        x     : x,        //x position
-        y     : y,        //y position
-        vector: vector,   //velocity vector
-        image : image     //rendering image
+        x,        //x position
+        y,        //y position
+        vector,   //velocity vector
+        image,     //rendering image
+        radius
     }
     return object
 }
@@ -122,11 +123,20 @@ GAME.VectorToDegrees = (vector) => {
 
 GAME.distance = (x, y, x2, y2) => {
     let dx = x - x2
-    let dy = y - dy
+    let dy = y - y2
     dx *= dx
     dy *= dy
     let sum = dx + dy
     return Math.sqrt(sum)
+}
+
+GAME.collide = (obj, obj2) => {
+    let distance = GAME.distance(obj.x + obj.radius, obj.y + obj.radius, obj2.x + obj2.radius, obj2.y + obj2.radius)
+    if (distance <= obj.radius + obj2.radius) {
+        return true, obj, obj2
+    } else {
+        return false
+    }
 }
 
 
@@ -142,30 +152,58 @@ ctx.height = canvas.height
 ctx = GRAPHICS.style(ctx)                    //Set our fill and stroke styles
 const render = GRAPHICS.CreateRenderer(ctx)  //create a render function with a context bound to it
 
+// Radius Constants
+const largeRadius = 40
+const mediumRadius = 25
+const smallRadius = 16
+const playerRadius = 5
+
+
 //stock images
-const largeAsteroid  = GRAPHICS.createCircleImage(40, GRAPHICS.style)
-const mediumAsteroid = GRAPHICS.createCircleImage(20, GRAPHICS.style)
-const smallAsteroid  = GRAPHICS.createCircleImage(10, GRAPHICS.style)
-const player    = GRAPHICS.createPlayerImage(GRAPHICS.style)
+const largeAsteroidImage  = GRAPHICS.createCircleImage(largeRadius, GRAPHICS.style)
+const mediumAsteroidImage = GRAPHICS.createCircleImage(mediumRadius, GRAPHICS.style)
+const smallAsteroidImage  = GRAPHICS.createCircleImage(smallRadius, GRAPHICS.style)
+const playerImage    = GRAPHICS.createPlayerImage(GRAPHICS.style)
 
 //array of objects
 let objects = []
-objects.push(GAME.CreateObject(10,  15,  GAME.Vector(45,2), largeAsteroid))
-objects.push(GAME.CreateObject(125, 15,  GAME.Vector(270, .9),  largeAsteroid))
-objects.push(GAME.CreateObject(10,  200, GAME.Vector(10, .1), mediumAsteroid))
-objects.push(GAME.CreateObject(200, 300, GAME.Vector(185, 1.5), mediumAsteroid))
-objects.push(GAME.CreateObject(150, 150, GAME.Vector(300, 1), smallAsteroid))
-objects.push(GAME.CreateObject(10,  15,  GAME.Vector(34, 1.25), smallAsteroid))
-objects.push(GAME.CreateObject(ctx.width/2,  ctx.height/2,  GAME.Vector(0,0), player))
+objects.push(GAME.CreateObject(10,  15,  GAME.Vector(45,2), largeAsteroidImage, largeRadius))
+objects.push(GAME.CreateObject(125, 15,  GAME.Vector(270, .9),  largeAsteroidImage, largeRadius))
+objects.push(GAME.CreateObject(10,  200, GAME.Vector(10, .1), mediumAsteroidImage, mediumRadius))
+objects.push(GAME.CreateObject(200, 300, GAME.Vector(185, 1.5), mediumAsteroidImage, mediumRadius))
+objects.push(GAME.CreateObject(150, 150, GAME.Vector(300, 1), smallAsteroidImage, smallRadius))
+objects.push(GAME.CreateObject(10,  15,  GAME.Vector(34, 1.25), smallAsteroidImage, smallRadius))
+objects.push(GAME.CreateObject(ctx.width/2,  ctx.height/2,  GAME.Vector(0,0), playerImage, playerRadius))
 
 
 
 //Main game loop
 setInterval(() => {
     GRAPHICS.clear(ctx)
-    objects.map(  (object) => {
-        GAME.move      (object)
-        GAME.constrain (object)
-        render    (object)
-    })
+
+    {
+        let tail = objects.slice(1)
+        for (let each of objects) {
+            for (let other of tail) {
+                let result = GAME.collide(each, other)
+                if (result) {
+                    console.log("collision")
+                }
+            }
+
+            GAME.move      (each)
+            GAME.constrain (each)
+            render    (each)
+            tail = tail.slice(1)
+        }
+    }
+
+
+
+    // objects.map(  (object) => {
+
+    //     GAME.move      (object)
+    //     GAME.constrain (object)
+    //     render    (object)
+    // })
 },1000/60)
