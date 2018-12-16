@@ -120,6 +120,15 @@ GAME.VectorToDegrees = (vector) => {
     return deg
 }
 
+GAME.distance = (x, y, x2, y2) => {
+    let dx = x - x2
+    let dy = y - dy
+    dx *= dx
+    dy *= dy
+    let sum = dx + dy
+    return Math.sqrt(sum)
+}
+
 
 //---------------Main--------------------
 
