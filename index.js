@@ -131,7 +131,12 @@ GAME.distance = (x, y, x2, y2) => {
 }
 
 GAME.collide = (obj, obj2) => {
-    let distance = GAME.distance(obj.x + obj.radius, obj.y + obj.radius, obj2.x + obj2.radius, obj2.y + obj2.radius)
+    let x = obj.x + 2*(obj.vector.x * obj.vector.magnitude)
+    let y = obj.y + 2*(obj.vector.y * obj.vector.magnitude)
+    let x2 = obj2.x + 2*(obj2.vector.x * obj2.vector.magnitude)
+    let y2 = obj2.y + 2*(obj2.vector.y * obj2.vector.magnitude)
+
+    let distance = GAME.distance(x + obj.radius, y + obj.radius, x2 + obj2.radius, y2 + obj2.radius)
     if (distance <= obj.radius + obj2.radius) {
         return [true, obj, obj2]
     } else {
@@ -169,7 +174,7 @@ const playerImage    = GRAPHICS.createPlayerImage(GRAPHICS.style)
 let objects = []
 objects.push(GAME.CreateObject(10,  150,  GAME.Vector(45, .1), largeAsteroidImage, largeRadius))
 objects.push(GAME.CreateObject(125, 15,  GAME.Vector(270, .9),  largeAsteroidImage, largeRadius))
-objects.push(GAME.CreateObject(10,  200, GAME.Vector(10, .2), mediumAsteroidImage, mediumRadius))
+objects.push(GAME.CreateObject(10,  300, GAME.Vector(10, .2), mediumAsteroidImage, mediumRadius))
 objects.push(GAME.CreateObject(200, 300, GAME.Vector(185, 1.5), mediumAsteroidImage, mediumRadius))
 objects.push(GAME.CreateObject(150, 150, GAME.Vector(300, 1), smallAsteroidImage, smallRadius))
 objects.push(GAME.CreateObject(10,  15,  GAME.Vector(34, 1.25), smallAsteroidImage, smallRadius))
@@ -192,17 +197,18 @@ setInterval(() => {
                     let distance = GAME.distance(obj.x, obj.y, obj2.x, obj2.y) //get the distance between objects
                     let normalVector = {x:vector.x/distance, y:vector.y/distance} //normalize the vector
                     let angle = GAME.VectorToDegrees(normalVector) //get angle between objects
-                    let radii = obj.radius + obj2.radius //sum of radii for minimum distance between objects
-                    obj2.x = obj.x + (normalVector.x * radii) 
-                    obj2.y = obj.y + (normalVector.y * radii)
-                    obj.x = obj2.x + (normalVector.x * radii) 
-                    obj.y = obj2.y + (normalVector.y * radii)
+                    // let radii = obj.radius + obj2.radius //sum of radii for minimum distance between objects
+                    // obj2.x = obj.x + (normalVector.x * radii) 
+                    // obj2.y = obj.y + (normalVector.y * radii)
+                    // obj.x = obj2.x + (normalVector.x * radii) 
+                    // obj.y = obj2.y + (normalVector.y * radii)
 
                     let deg1 = GAME.VectorToDegrees(obj.vector)
                     let deg2 = GAME.VectorToDegrees(obj2.vector)
                     let angleSum = (deg1 + deg2) / 2
-                    obj.vector = GAME.Vector(angleSum + deg2, obj.vector.magnitude)
-                    obj2.vector = GAME.Vector(angleSum + deg1, obj2.vector.magnitude)
+                    let objMag = obj.vector.magnitude
+                    obj.vector = GAME.Vector(-angle, obj2.vector.magnitude)
+                    obj2.vector = GAME.Vector(angle, objMag)
                     console.log("collision")
                 }
             }
