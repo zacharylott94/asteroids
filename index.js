@@ -167,9 +167,9 @@ const playerImage    = GRAPHICS.createPlayerImage(GRAPHICS.style)
 
 //array of objects
 let objects = []
-objects.push(GAME.CreateObject(10,  15,  GAME.Vector(45,2), largeAsteroidImage, largeRadius))
+objects.push(GAME.CreateObject(10,  150,  GAME.Vector(45, .1), largeAsteroidImage, largeRadius))
 objects.push(GAME.CreateObject(125, 15,  GAME.Vector(270, .9),  largeAsteroidImage, largeRadius))
-objects.push(GAME.CreateObject(10,  200, GAME.Vector(10, .1), mediumAsteroidImage, mediumRadius))
+objects.push(GAME.CreateObject(10,  200, GAME.Vector(10, .2), mediumAsteroidImage, mediumRadius))
 objects.push(GAME.CreateObject(200, 300, GAME.Vector(185, 1.5), mediumAsteroidImage, mediumRadius))
 objects.push(GAME.CreateObject(150, 150, GAME.Vector(300, 1), smallAsteroidImage, smallRadius))
 objects.push(GAME.CreateObject(10,  15,  GAME.Vector(34, 1.25), smallAsteroidImage, smallRadius))
@@ -180,7 +180,8 @@ objects.push(GAME.CreateObject(ctx.width/2,  ctx.height/2,  GAME.Vector(0,0), pl
 //Main game loop
 setInterval(() => {
     GRAPHICS.clear(ctx)
-
+    // console.log(objects[0].x, objects[0].y, objects[1].x, objects[1].y)
+    // console.log(objects[0], objects[1])
     {
         let tail = objects.slice(1)
         for (let each of objects) {
@@ -192,8 +193,10 @@ setInterval(() => {
                     let normalVector = {x:vector.x/distance, y:vector.y/distance} //normalize the vector
                     let angle = GAME.VectorToDegrees(normalVector) //get angle between objects
                     let radii = obj.radius + obj2.radius //sum of radii for minimum distance between objects
-                    obj2.x = obj.x + (normalVector * radii) 
-                    obj2.y = obj.y + (normalVector * radii)
+                    obj2.x = obj.x + (normalVector.x * radii) 
+                    obj2.y = obj.y + (normalVector.y * radii)
+                    obj.x = obj2.x + (normalVector.x * radii) 
+                    obj.y = obj2.y + (normalVector.y * radii)
 
                     let deg1 = GAME.VectorToDegrees(obj.vector)
                     let deg2 = GAME.VectorToDegrees(obj2.vector)
@@ -209,6 +212,7 @@ setInterval(() => {
             render    (each)
             tail = tail.slice(1)
         }
+        
     }
     //console.log(objects.length)
 
