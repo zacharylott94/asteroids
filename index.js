@@ -131,11 +131,16 @@ GAME.distance = (x, y, x2, y2) => {
 }
 
 GAME.collide = (obj, obj2) => {
-    let distance = GAME.distance(obj.x + obj.radius, obj.y + obj.radius, obj2.x + obj2.radius, obj2.y + obj2.radius)
+    let x = obj.x + 2*(obj.vector.x * obj.vector.magnitude)
+    let y = obj.y + 2*(obj.vector.y * obj.vector.magnitude)
+    let x2 = obj2.x + 2*(obj2.vector.x * obj2.vector.magnitude)
+    let y2 = obj2.y + 2*(obj2.vector.y * obj2.vector.magnitude)
+
+    let distance = GAME.distance(x + obj.radius, y + obj.radius, x2 + obj2.radius, y2 + obj2.radius)
     if (distance <= obj.radius + obj2.radius) {
-        return true, obj, obj2
+        return [true, obj, obj2]
     } else {
-        return false
+        return [false]
     }
 }
 
@@ -167,9 +172,9 @@ const playerImage    = GRAPHICS.createPlayerImage(GRAPHICS.style)
 
 //array of objects
 let objects = []
-objects.push(GAME.CreateObject(10,  15,  GAME.Vector(45,2), largeAsteroidImage, largeRadius))
+objects.push(GAME.CreateObject(10,  150,  GAME.Vector(45, .1), largeAsteroidImage, largeRadius))
 objects.push(GAME.CreateObject(125, 15,  GAME.Vector(270, .9),  largeAsteroidImage, largeRadius))
-objects.push(GAME.CreateObject(10,  200, GAME.Vector(10, .1), mediumAsteroidImage, mediumRadius))
+objects.push(GAME.CreateObject(10,  300, GAME.Vector(10, .2), mediumAsteroidImage, mediumRadius))
 objects.push(GAME.CreateObject(200, 300, GAME.Vector(185, 1.5), mediumAsteroidImage, mediumRadius))
 objects.push(GAME.CreateObject(150, 150, GAME.Vector(300, 1), smallAsteroidImage, smallRadius))
 objects.push(GAME.CreateObject(10,  15,  GAME.Vector(34, 1.25), smallAsteroidImage, smallRadius))
@@ -180,13 +185,20 @@ objects.push(GAME.CreateObject(ctx.width/2,  ctx.height/2,  GAME.Vector(0,0), pl
 //Main game loop
 setInterval(() => {
     GRAPHICS.clear(ctx)
-
     {
         let tail = objects.slice(1)
         for (let each of objects) {
             for (let other of tail) {
-                let result = GAME.collide(each, other)
+                let [result, obj, obj2] = GAME.collide(each, other)
                 if (result) {
+                    let vector = {x:obj2.x - obj.x, y:obj2.y - obj.y}              // get our vector between objects
+                    let distance = GAME.distance(obj.x, obj.y, obj2.x, obj2.y)     //get the distance between objects
+                    let normalVector = {x:vector.x/distance, y:vector.y/distance}  //normalize the vector
+                    let angle = GAME.VectorToDegrees(normalVector)                 //get angle between objects
+
+                    let objMag = obj.vector.magnitude                       //store one objects' velocity magnitude to switch them later
+                    obj.vector = GAME.Vector(-angle, obj2.vector.magnitude) //update velocity angle and switch magnitude
+                    obj2.vector = GAME.Vector(angle, objMag)                //update velocity angle and switch magnitude
                     console.log("collision")
                 }
             }
@@ -196,14 +208,6 @@ setInterval(() => {
             render    (each)
             tail = tail.slice(1)
         }
+        
     }
-
-
-
-    // objects.map(  (object) => {
-
-    //     GAME.move      (object)
-    //     GAME.constrain (object)
-    //     render    (object)
-    // })
 },1000/60)
