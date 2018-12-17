@@ -185,30 +185,20 @@ objects.push(GAME.CreateObject(ctx.width/2,  ctx.height/2,  GAME.Vector(0,0), pl
 //Main game loop
 setInterval(() => {
     GRAPHICS.clear(ctx)
-    // console.log(objects[0].x, objects[0].y, objects[1].x, objects[1].y)
-    // console.log(objects[0], objects[1])
     {
         let tail = objects.slice(1)
         for (let each of objects) {
             for (let other of tail) {
                 let [result, obj, obj2] = GAME.collide(each, other)
                 if (result) {
-                    let vector = {x:obj2.x - obj.x, y:obj2.y - obj.y} // get our vector between objects
-                    let distance = GAME.distance(obj.x, obj.y, obj2.x, obj2.y) //get the distance between objects
-                    let normalVector = {x:vector.x/distance, y:vector.y/distance} //normalize the vector
-                    let angle = GAME.VectorToDegrees(normalVector) //get angle between objects
-                    // let radii = obj.radius + obj2.radius //sum of radii for minimum distance between objects
-                    // obj2.x = obj.x + (normalVector.x * radii) 
-                    // obj2.y = obj.y + (normalVector.y * radii)
-                    // obj.x = obj2.x + (normalVector.x * radii) 
-                    // obj.y = obj2.y + (normalVector.y * radii)
+                    let vector = {x:obj2.x - obj.x, y:obj2.y - obj.y}              // get our vector between objects
+                    let distance = GAME.distance(obj.x, obj.y, obj2.x, obj2.y)     //get the distance between objects
+                    let normalVector = {x:vector.x/distance, y:vector.y/distance}  //normalize the vector
+                    let angle = GAME.VectorToDegrees(normalVector)                 //get angle between objects
 
-                    let deg1 = GAME.VectorToDegrees(obj.vector)
-                    let deg2 = GAME.VectorToDegrees(obj2.vector)
-                    let angleSum = (deg1 + deg2) / 2
-                    let objMag = obj.vector.magnitude
-                    obj.vector = GAME.Vector(-angle, obj2.vector.magnitude)
-                    obj2.vector = GAME.Vector(angle, objMag)
+                    let objMag = obj.vector.magnitude                       //store one objects' velocity magnitude to switch them later
+                    obj.vector = GAME.Vector(-angle, obj2.vector.magnitude) //update velocity angle and switch magnitude
+                    obj2.vector = GAME.Vector(angle, objMag)                //update velocity angle and switch magnitude
                     console.log("collision")
                 }
             }
@@ -220,14 +210,4 @@ setInterval(() => {
         }
         
     }
-    //console.log(objects.length)
-
-
-
-    // objects.map(  (object) => {
-
-    //     GAME.move      (object)
-    //     GAME.constrain (object)
-    //     render    (object)
-    // })
 },1000/60)
