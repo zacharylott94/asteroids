@@ -75,7 +75,8 @@ GAME.CreateObject = (x, y, vector, image, radius) => {
         y,        //y position
         vector,   //velocity vector
         image,     //rendering image
-        radius
+        radius,
+        cooldown: 5
     }
     return object
 }
@@ -131,6 +132,12 @@ GAME.distance = (x, y, x2, y2) => {
 }
 
 GAME.collide = (obj, obj2) => {
+    //hash the objects to see if they are the same object
+    let hash1 = GAME.hash(obj)
+    let hash2 = GAME.hash(obj2)
+    if (hash1 === hash2) return false
+    if (obj.cooldown > 0) return false
+    if (obj2.cooldown > 0) return false
 
     // Get the two objects' positions two frames before the current
     // This is an attempt to prevent overlapping
@@ -144,9 +151,10 @@ GAME.collide = (obj, obj2) => {
                                  x2 + obj2.radius,
                                  y2 + obj2.radius)  
     if (distance <= obj.radius + obj2.radius) {     // If distance is less than the sum of radii, the objects have "collided"
-        return [true, obj, obj2]                    //return out the objects so that they can be acted upon
+        obj.cooldown, obj2.cooldown = 5             //prevent objects from detecting collisions for five frames
+        return true
     } else {
-        return [false]
+        return false
     }
 }
 
@@ -202,29 +210,45 @@ console.log(hash)
 //Main game loop
 setInterval(() => {
     GRAPHICS.clear(ctx)
-    {
-        let tail = objects.slice(1)
-        for (let each of objects) {
-            for (let other of tail) {
-                let [result, obj, obj2] = GAME.collide(each, other)
+        objects.map((obj) => {
+            objects.map((obj2) => {
+                let result = GAME.collide(obj, obj2)
                 if (result) {
-                    let vector = {x:obj2.x - obj.x, y:obj2.y - obj.y}              // get our vector between objects
+                    let radii = obj.radius + obj2.radius
+                    let vector = {x:obj2.x - obj.x, y:obj2.y - obj.y}              //get our vector between objects
                     let distance = GAME.distance(obj.x, obj.y, obj2.x, obj2.y)     //get the distance between objects
                     let normalVector = {x:vector.x/distance, y:vector.y/distance}  //normalize the vector
                     let angle = GAME.vectorToDegrees(normalVector)                 //get angle between objects
+
+                    // {
+                    //     let adj = Math.sin(angle) * radii
+                    //     let opp = Math.cos(angle) * radii
+                    //     if (obj.x < obj2.x) obj2.x = obj.x + adj + 2
+                    //     if (obj.y < obj2.y) obj2.y = obj.y + opp + 2
+                    //     if (obj.x >= obj2.x) obj2.x = obj.x - adj - 2
+                    //     if (obj.y >= obj2.y) obj2.y = obj.y - opp - 2
+                        
+                    // }
+
+
+
+                    // if (obj2.x < obj.x) obj2.x = obj.x + (radii+10) * normalVector.x 
+                    // if (obj2.y < obj.y) obj2.y = obj.y + (radii+10) * normalVector.y 
+                    // if (obj2.x >= obj.x) obj2.x = obj.x + (radii+10) * normalVector.x 
+                    // if (obj2.y >= obj.y) obj2.y = obj.y + (radii+10) * normalVector.y 
+
+
 
                     let objMag = obj.vector.magnitude                       //store one objects' velocity magnitude to switch them later
                     obj.vector = GAME.Vector(-angle, obj2.vector.magnitude) //update velocity angle and switch magnitude
                     obj2.vector = GAME.Vector(angle, objMag)                //update velocity angle and switch magnitude
                     console.log("collision")
                 }
-            }
+            })
+            obj.cooldown -= 1
+            GAME.move      (obj)
+            GAME.constrain (obj)
+            render    (obj)
+        })
 
-            GAME.move      (each)
-            GAME.constrain (each)
-            render    (each)
-            tail = tail.slice(1)
-        }
-        
-    }
 },1000/60)
