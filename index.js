@@ -123,8 +123,8 @@ GAME.vectorToDegrees = (vector) => {
 }
 
 GAME.distance = (x, y, x2, y2) => {
-    let dx = x - x2
-    let dy = y - y2
+    let dx = x2 - x
+    let dy = y2 - y
     dx *= dx
     dy *= dy
     let sum = dx + dy
@@ -151,7 +151,7 @@ GAME.collide = (obj, obj2) => {
                                  x2 + obj2.radius,
                                  y2 + obj2.radius)  
     if (distance <= obj.radius + obj2.radius) {     // If distance is less than the sum of radii, the objects have "collided"
-        obj.cooldown, obj2.cooldown = 5             //prevent objects from detecting collisions for five frames
+        obj.cooldown, obj2.cooldown = 5            //prevent objects from detecting collisions for five frames
         return true
     } else {
         return false
@@ -214,34 +214,16 @@ setInterval(() => {
             objects.map((obj2) => {
                 let result = GAME.collide(obj, obj2)
                 if (result) {
-                    let radii = obj.radius + obj2.radius
                     let vector = {x:obj2.x - obj.x, y:obj2.y - obj.y}              //get our vector between objects
                     let distance = GAME.distance(obj.x, obj.y, obj2.x, obj2.y)     //get the distance between objects
                     let normalVector = {x:vector.x/distance, y:vector.y/distance}  //normalize the vector
                     let angle = GAME.vectorToDegrees(normalVector)                 //get angle between objects
 
-                    // {
-                    //     let adj = Math.sin(angle) * radii
-                    //     let opp = Math.cos(angle) * radii
-                    //     if (obj.x < obj2.x) obj2.x = obj.x + adj + 2
-                    //     if (obj.y < obj2.y) obj2.y = obj.y + opp + 2
-                    //     if (obj.x >= obj2.x) obj2.x = obj.x - adj - 2
-                    //     if (obj.y >= obj2.y) obj2.y = obj.y - opp - 2
-                        
-                    // }
 
+                    let objMag = obj.vector.magnitude                          //store one objects' velocity magnitude to switch them later
+                    obj.vector = GAME.Vector(angle+180, obj2.vector.magnitude) //update velocity angle and switch magnitude
+                    obj2.vector = GAME.Vector(angle, objMag)                   //update velocity angle and switch magnitude
 
-
-                    // if (obj2.x < obj.x) obj2.x = obj.x + (radii+10) * normalVector.x 
-                    // if (obj2.y < obj.y) obj2.y = obj.y + (radii+10) * normalVector.y 
-                    // if (obj2.x >= obj.x) obj2.x = obj.x + (radii+10) * normalVector.x 
-                    // if (obj2.y >= obj.y) obj2.y = obj.y + (radii+10) * normalVector.y 
-
-
-
-                    let objMag = obj.vector.magnitude                       //store one objects' velocity magnitude to switch them later
-                    obj.vector = GAME.Vector(-angle, obj2.vector.magnitude) //update velocity angle and switch magnitude
-                    obj2.vector = GAME.Vector(angle, objMag)                //update velocity angle and switch magnitude
                     console.log("collision")
                 }
             })
