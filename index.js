@@ -115,7 +115,7 @@ GAME.Vector = (degrees,magnitude) => {
     }
 }
 
-GAME.VectorToDegrees = (vector) => {
+GAME.vectorToDegrees = (vector) => {
     let rad = Math.asin(vector.y)
     let deg = rad * 360 / 2 / Math.PI
     return deg
@@ -131,19 +131,32 @@ GAME.distance = (x, y, x2, y2) => {
 }
 
 GAME.collide = (obj, obj2) => {
+
+    // Get the two objects' positions two frames before the current
+    // This is an attempt to prevent overlapping
     let x = obj.x + 2*(obj.vector.x * obj.vector.magnitude)
     let y = obj.y + 2*(obj.vector.y * obj.vector.magnitude)
     let x2 = obj2.x + 2*(obj2.vector.x * obj2.vector.magnitude)
     let y2 = obj2.y + 2*(obj2.vector.y * obj2.vector.magnitude)
 
-    let distance = GAME.distance(x + obj.radius, y + obj.radius, x2 + obj2.radius, y2 + obj2.radius)
-    if (distance <= obj.radius + obj2.radius) {
-        return [true, obj, obj2]
+    let distance = GAME.distance(x + obj.radius,    //Get distance between objects, correcting for the center
+                                 y + obj.radius,
+                                 x2 + obj2.radius,
+                                 y2 + obj2.radius)  
+    if (distance <= obj.radius + obj2.radius) {     // If distance is less than the sum of radii, the objects have "collided"
+        return [true, obj, obj2]                    //return out the objects so that they can be acted upon
     } else {
         return [false]
     }
 }
 
+GAME.hash = (thing) => {
+    thing = JSON.stringify(thing)
+    thing = thing.split("")
+    thing = thing.map((x) => x.charCodeAt(0))
+    let sum = thing.reduce((acc, cur) => (cur * acc) - (cur + acc))
+    return sum % 181
+}
 
 //---------------Main--------------------
 
@@ -181,6 +194,10 @@ objects.push(GAME.CreateObject(10,  15,  GAME.Vector(34, 1.25), smallAsteroidIma
 objects.push(GAME.CreateObject(ctx.width/2,  ctx.height/2,  GAME.Vector(0,0), playerImage, playerRadius))
 
 
+test = GAME.CreateObject(10,  150,  GAME.Vector(45, .1), largeAsteroidImage, largeRadius)
+let hash = GAME.hash(test)
+console.log(hash)
+
 
 //Main game loop
 setInterval(() => {
@@ -194,7 +211,7 @@ setInterval(() => {
                     let vector = {x:obj2.x - obj.x, y:obj2.y - obj.y}              // get our vector between objects
                     let distance = GAME.distance(obj.x, obj.y, obj2.x, obj2.y)     //get the distance between objects
                     let normalVector = {x:vector.x/distance, y:vector.y/distance}  //normalize the vector
-                    let angle = GAME.VectorToDegrees(normalVector)                 //get angle between objects
+                    let angle = GAME.vectorToDegrees(normalVector)                 //get angle between objects
 
                     let objMag = obj.vector.magnitude                       //store one objects' velocity magnitude to switch them later
                     obj.vector = GAME.Vector(-angle, obj2.vector.magnitude) //update velocity angle and switch magnitude
