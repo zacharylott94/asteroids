@@ -122,13 +122,13 @@ GAME.vectorToDegrees = (vector) => {
     return deg
 }
 
-GAME.distance = (x, y, x2, y2) => {
+GAME.distanceSquared = (x, y, x2, y2) => {
     let dx = x2 - x
     let dy = y2 - y
     dx *= dx
     dy *= dy
     let sum = dx + dy
-    return Math.sqrt(sum)
+    return sum
 }
 
 GAME.collide = (obj, obj2) => {
@@ -146,11 +146,13 @@ GAME.collide = (obj, obj2) => {
     let x2 = obj2.x + 2*(obj2.vector.x * obj2.vector.magnitude)
     let y2 = obj2.y + 2*(obj2.vector.y * obj2.vector.magnitude)
 
-    let distance = GAME.distance(x + obj.radius,    //Get distance between objects, correcting for the center
+    let distance = GAME.distanceSquared(x + obj.radius,    //Get Squared distance between objects, correcting for the center
                                  y + obj.radius,
                                  x2 + obj2.radius,
                                  y2 + obj2.radius)  
-    if (distance <= obj.radius + obj2.radius) {     // If distance is less than the sum of radii, the objects have "collided"
+    let radii = obj.radius + obj2.radius
+    radii *= radii
+    if (distance <= radii) {     // If Squared distance is less than the squared sum of radii, the objects have "collided"
         obj.cooldown, obj2.cooldown = 5            //prevent objects from detecting collisions for five frames
         return true
     } else {
@@ -215,7 +217,7 @@ setInterval(() => {
                 let result = GAME.collide(obj, obj2)
                 if (result) {
                     let vector = {x:obj2.x - obj.x, y:obj2.y - obj.y}              //get our vector between objects
-                    let distance = GAME.distance(obj.x, obj.y, obj2.x, obj2.y)     //get the distance between objects
+                    let distance = GAME.distanceSquared(obj.x, obj.y, obj2.x, obj2.y)     //get the distance between objects
                     let normalVector = {x:vector.x/distance, y:vector.y/distance}  //normalize the vector
                     let angle = GAME.vectorToDegrees(normalVector)                 //get angle between objects
 
