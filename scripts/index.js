@@ -1,6 +1,6 @@
 import GRAPHICS from "./graphics.js"
+import GAME from "./game.js"
 
-const GAME = {}
 //creates a generic game object
 GAME.CreateObject = (x, y, vector, image, radius) => { 
     const object = {
