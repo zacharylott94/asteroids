@@ -1,0 +1,29 @@
+{
+  "name": "asteroids",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./scripts/ --require @babel/register",
+    "start": "nodemon --exec babel-node ./scripts/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zacharylott94/asteroids.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zacharylott94/asteroids/issues"
+  },
+  "homepage": "https://github.com/zacharylott94/asteroids#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.0.2"
+  },
+  "dependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/register": "^7.0.0"
+  }
+}

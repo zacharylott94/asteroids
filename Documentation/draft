@@ -1,0 +1,28 @@
+Asteroids
+What is it?
+It is a Javascript implementation of the classic game "Asteroids"
+
+What problem does it solve?
+It provides entertainment to the user
+It provides me with something to put in my portfolio
+
+Is there existing software that solves this problem?
+Yes, there are implementations of Asteroids. The one I looked at runs in the browser as this one will.
+
+Who is this software for?
+Users. Specifically users that want to play Asteroids.
+
+What technologies will be employed in the creation of this software?
+I will be using Javascript, HTML, and CSS. The current plan is to implement everything myself without using outside libraries.
+
+What systems need to be made for this project?
+There will need to be a physics engine to simulate the motion of the game objects
+There will need to be a rendering engine to draw game objects
+There will need to be event handling/collision detection to enable interactions between game objects
+There will need to be a scoring system to determine how well the user plays and to encourage competition.
+
+What programming paradigms will be used in the implementation of this software?
+Usually, for a game, object oriented design is well suited for the task. However, I am considering attempting a functional implementation in order to further my skills in this paradigm.
+
+What game objects will exist?
+Currently, asteroids, the player ship, and ship projectiles
