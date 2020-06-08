@@ -4,7 +4,7 @@ let CreateObject = (x, y, vector, image, radius) => {
         x,        //x position
         y,        //y position
         vector,   //velocity vector
-        image,     //rendering image
+        image,    //rendering image
         radius,
         cooldown: 5
     }

@@ -18,6 +18,7 @@ let CreateRenderer = (ctx) => {
     }
 }
 
+
 //sets canvas fill and stroke styles
 let style = (ctx) => { 
     ctx.translate(0.5, 0.5)            //an attempt to remove anti-aliasing
@@ -33,8 +34,7 @@ let clear = (ctx) => {
     ctx.fillRect(0, 0, ctx.width, ctx.height)
 }
 
-let showCenter = (ctx) => {
-    
+let showCenter = (ctx, object) => {
 }
 
 const GRAPHICS = {
