@@ -1,16 +1,4 @@
-//creates a generic game object
-let CreateObject = (x, y, vector, image, radius) => { 
-    const object = {
-        x,        //x position
-        y,        //y position
-        vector,   //velocity vector
-        image,    //rendering image
-        radius,
-        cooldown: 5
-    }
-    return object
-}
-
+import GameObject from "./objects/GameObject.js"
 //makes sure the object stays in the playing field
 let constrain = (object, ctx) => {  
     if (object.x > ctx.width){            //if object is past the right edge of the screen
@@ -26,6 +14,7 @@ let constrain = (object, ctx) => {
         object.y = object.y + ctx.height  //add the height of the screen to wrap it to the bottom
     }
 }
+
 
 
 //applies an object's vector to its position
@@ -99,7 +88,7 @@ let hash = (thing) => {
 }
 
 const GAME = {
-  CreateObject,
+  CreateObject: GameObject,
   constrain,
   move,
   Vector,
