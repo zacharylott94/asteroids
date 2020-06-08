@@ -19,7 +19,7 @@ const render = GRAPHICS.CreateRenderer(ctx)  //create a render function with a c
 const largeRadius = 40
 const mediumRadius = 25
 const smallRadius = 16
-const playerRadius = 5
+const playerRadius = 6
 
 
 //stock images

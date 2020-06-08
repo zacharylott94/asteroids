@@ -5,7 +5,6 @@ let Player = (style) => {
     ctx = style(ctx); //give it the global style
     //draw the player
     ctx.beginPath();
-    ctx.moveTo(5, 1);
     ctx.moveTo(6, 1);
     ctx.lineTo(11, 11);
     ctx.lineTo(1, 11);
