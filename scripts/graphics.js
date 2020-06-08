@@ -5,6 +5,7 @@ import Player from "./objects/Player.js"
 let CreateRenderer = (ctx) => { 
     return (object) => {
         ctx.drawImage(object.image, object.x, object.y) //draw the object at its position
+        showCenter(ctx, object)
 
         //draw clones in a box around the object to make screen wrapping appear seamless
         ctx.drawImage(object.image, object.x + ctx.width, object.y)               //right clone
@@ -34,7 +35,14 @@ let clear = (ctx) => {
     ctx.fillRect(0, 0, ctx.width, ctx.height)
 }
 
+let setColor = (ctx, color = Color(0,255,0)) => {
+    ctx.strokeStyle = color
+    return ctx
+}
+
 let showCenter = (ctx, object) => {
+    ctx = setColor(ctx, "rgb(255,0,0)")
+    ctx.strokeText('X',object.x,object.y)
 }
 
 const GRAPHICS = {
@@ -43,6 +51,10 @@ const GRAPHICS = {
   createPlayerImage: Player,
   style,
   clear,
+}
+
+let Color = (r = 255, g = 255, b = 255) => {
+    return `"rgb(${r},${g},${b})"`
 }
 
 
