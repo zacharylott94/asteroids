@@ -5,7 +5,7 @@ let create = (degrees,magnitude) => {
   return {
       x,
       y,
-      magnitudes
+      magnitude
   }
 }
 

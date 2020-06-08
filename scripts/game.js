@@ -1,37 +1,12 @@
 import GameObject from "./objects/GameObject.js"
 import constrain from "./gameLogic/constrain.js"
+import Vector from "./objects/Vector.js"
 //applies an object's vector to its position
 let move = (obj) => { 
     obj.x = obj.x + obj.vector.x * obj.vector.magnitude
     obj.y = obj.y + obj.vector.y * obj.vector.magnitude
 }
 
-//Takes an angle in degrees and creates a unit vector with a magnitude
-let Vector = (degrees,magnitude) => {
-    let angle = Math.PI * 2 / 360 * degrees
-    let x = Math.cos(angle)
-    let y = Math.sin(angle)
-    return {
-        x,
-        y,
-        magnitude
-    }
-}
-
-let vectorToDegrees = (vector) => {
-    let rad = Math.asin(vector.y)
-    let deg = rad * 360 / 2 / Math.PI
-    return deg
-}
-
-let distanceSquared = (x, y, x2, y2) => {
-    let dx = x2 - x
-    let dy = y2 - y
-    dx *= dx
-    dy *= dy
-    let sum = dx + dy
-    return sum
-}
 
 let collide = (obj, obj2) => {
     //hash the objects to see if they are the same object
@@ -74,9 +49,9 @@ const GAME = {
   CreateObject: GameObject,
   constrain,
   move,
-  Vector,
-  vectorToDegrees,
-  distanceSquared,
+  Vector: Vector.create,
+  vectorToDegrees: Vector.getDegrees,
+  distanceSquared: Vector.distanceSquared,
   collide,
   hash,
 }
