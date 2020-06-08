@@ -4,7 +4,7 @@ import Player from "./objects/Player.js"
 //binds a context to a function so that it can draw objects in that context
 let CreateRenderer = (ctx) => { 
     return (object) => {
-        ctx.drawImage(object.image, object.x, object.y) //draw the object at its position
+        showObject(ctx, object)
         showCenter(ctx, object)
 
         //draw clones in a box around the object to make screen wrapping appear seamless
@@ -40,9 +40,20 @@ let setColor = (ctx, color = Color(0,255,0)) => {
     return ctx
 }
 
+let setFillColor = (ctx, color = Color(0,255,0)) => {
+    ctx.fillStyle = color
+    return ctx
+}
+
 let showCenter = (ctx, object) => {
-    ctx = setColor(ctx, "rgb(255,0,0)")
-    ctx.strokeText('X',object.x,object.y)
+    ctx = setFillColor(ctx, "rgb(255,0,0)")
+    ctx.fillRect(object.x-object.radius,object.y,object.radius*2,1)
+    ctx.fillRect(object.x,object.y-object.radius,1,object.radius*2)
+    ctx = setFillColor(ctx, "rgb(0,0,0)")
+}
+
+let showObject = (ctx, object) => {
+    ctx.drawImage(object.image, object.x - object.radius, object.y - object.radius)
 }
 
 const GRAPHICS = {
