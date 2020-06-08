@@ -26,7 +26,7 @@ let style = (ctx) => {
 
 //clears the context
 let clear = (ctx) => { 
-    ctx.fillRect(0, 0, ctx.width, ctx.height)
+    ctx.fillRect(-10, -10, ctx.width+15, ctx.height+15)
 }
 
 let setColor = (ctx, color = Color(0,255,0)) => {
