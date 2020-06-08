@@ -1,5 +1,6 @@
 import Circle from "./objects/Circle.js"
 import Player from "./objects/Player.js"
+import GameObject from "./objects/GameObject.js"
 
 //binds a context to a function so that it can draw objects in that context
 let CreateRenderer = (ctx) => { 
@@ -8,14 +9,7 @@ let CreateRenderer = (ctx) => {
         showCenter(ctx, object)
 
         //draw clones in a box around the object to make screen wrapping appear seamless
-        ctx.drawImage(object.image, object.x + ctx.width, object.y)               //right clone
-        ctx.drawImage(object.image, object.x, object.y + ctx.height)              //bottom clone
-        ctx.drawImage(object.image, object.x - ctx.width, object.y)               //left clone
-        ctx.drawImage(object.image, object.x, object.y - ctx.height)              //top clone
-        ctx.drawImage(object.image, object.x + ctx.width, object.y + ctx.height)  //bottom-right clone
-        ctx.drawImage(object.image, object.x - ctx.width, object.y + ctx.height)  //bottom-left clone
-        ctx.drawImage(object.image, object.x + ctx.width, object.y - ctx.height)  //top-right clone
-        ctx.drawImage(object.image, object.x - ctx.width, object.y - ctx.height)  //top-left clone
+        showClones(ctx, object)
     }
 }
 
@@ -54,6 +48,18 @@ let showCenter = (ctx, object) => {
 
 let showObject = (ctx, object) => {
     ctx.drawImage(object.image, object.x - object.radius, object.y - object.radius)
+}
+
+let showClones = (ctx, object) => {
+    let [x,y] = GameObject.getCoordsMinusRadius(object)
+    ctx.drawImage(object.image, x + ctx.width, y)               //right clone
+    ctx.drawImage(object.image, x, y + ctx.height)              //bottom clone
+    ctx.drawImage(object.image, x - ctx.width, y)               //left clone
+    ctx.drawImage(object.image, x, y - ctx.height)              //top clone
+    ctx.drawImage(object.image, x + ctx.width, y + ctx.height)  //bottom-right clone
+    ctx.drawImage(object.image, x - ctx.width, y + ctx.height)  //bottom-left clone
+    ctx.drawImage(object.image, x + ctx.width, y - ctx.height)  //top-right clone
+    ctx.drawImage(object.image, x - ctx.width, y - ctx.height)  //top-left clone
 }
 
 const GRAPHICS = {

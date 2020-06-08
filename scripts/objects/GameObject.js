@@ -45,9 +45,15 @@ let collide = (obj, obj2) => {
     }
 }
 
+let getCoordsMinusRadius = (object) => {
+    let coords =  [object.x - object.radius, object.y - object.radius]
+    return coords
+}
+
 const GameObject = {
     create,
     move,
-    collide
+    collide,
+    getCoordsMinusRadius,
 }
 export default GameObject
