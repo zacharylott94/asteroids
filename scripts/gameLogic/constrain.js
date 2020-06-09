@@ -1,5 +1,7 @@
+import Context from "../objects/Context.js"
+const ctx = Context.create()
 //makes sure the object stays in the playing field
-let constrain = (object, ctx) => {
+let constrain = (object) => {
     if (object.x > ctx.width) { //if object is past the right edge of the screen
         object.x = object.x - ctx.width; //subtract the width of the screen to wrap it to the left
     }

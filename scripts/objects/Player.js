@@ -1,8 +1,8 @@
-let Player = (style) => {
+import Context from "./Context.js"
+let Player = () => {
     let player = document.createElement("canvas"); //instantiate a canvas object
     player.width, player.height = 12; //give the canvas a width and height
-    let ctx = player.getContext("2d"); //get a context for the circle canvas
-    ctx = style(ctx); //give it the global style
+    let ctx = Context.create(player) //get a context for the circle canvas
     //draw the player
     ctx.beginPath();
     ctx.moveTo(6, 1);

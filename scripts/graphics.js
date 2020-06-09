@@ -1,56 +1,50 @@
 import Circle from "./objects/Circle.js"
 import Player from "./objects/Player.js"
 import GameObject from "./objects/GameObject.js"
+import Context from "./objects/Context.js"
+
+
+
+const ctx = Context.create()
+
 
 //binds a context to a function so that it can draw objects in that context
-let CreateRenderer = (ctx) => { 
+let CreateRenderer = () => { 
     return (object) => {
-        showObject(ctx, object)
-        showCenter(ctx, object)
+        showObject(object)
+        showCenter(object)
 
         //draw clones in a box around the object to make screen wrapping appear seamless
-        showClones(ctx, object)
+        showClones(object)
     }
 }
 
 
-//sets canvas fill and stroke styles
-let style = (ctx) => { 
-    ctx.translate(0.5, 0.5)            //an attempt to remove anti-aliasing
-    ctx.imageSmoothingEnabled = false  //an attempt to remove anti-aliasing
-    ctx.fillStyle = "black"            //space is black
-    ctx.strokeStyle = "rgb(0,255,0)"   //lines are green
-
-    return ctx
-}
-
 //clears the context
-let clear = (ctx) => { 
+let clear = () => { 
     ctx.fillRect(-10, -10, ctx.width+15, ctx.height+15)
 }
 
-let setColor = (ctx, color = Color(0,255,0)) => {
+let setColor = (color = Color(0,255,0)) => {
     ctx.strokeStyle = color
-    return ctx
 }
 
-let setFillColor = (ctx, color = Color(0,255,0)) => {
+let setFillColor = (color = Color(0,255,0)) => {
     ctx.fillStyle = color
-    return ctx
 }
 
-let showCenter = (ctx, object) => {
-    ctx = setFillColor(ctx, "rgb(255,0,0)")
+let showCenter = (object) => {
+    setFillColor("rgb(255,0,0)")
     ctx.fillRect(object.x-object.radius,object.y,object.radius*2,1)
     ctx.fillRect(object.x,object.y-object.radius,1,object.radius*2)
-    ctx = setFillColor(ctx, "rgb(0,0,0)")
+    setFillColor("rgb(0,0,0)")
 }
 
-let showObject = (ctx, object) => {
+let showObject = (object) => {
     ctx.drawImage(object.image, object.x - object.radius, object.y - object.radius)
 }
 
-let showClones = (ctx, object) => {
+let showClones = (object) => {
     let [x,y] = GameObject.getCoordsMinusRadius(object)
     ctx.drawImage(object.image, x + ctx.width, y)               //right clone
     ctx.drawImage(object.image, x, y + ctx.height)              //bottom clone
@@ -66,7 +60,6 @@ const GRAPHICS = {
   CreateRenderer,
   createCircleImage: Circle,
   createPlayerImage: Player,
-  style,
   clear,
 }
 
