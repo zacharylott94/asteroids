@@ -2,6 +2,7 @@ import Circle from "./objects/Circle.js"
 import Player from "./objects/Player.js"
 import GameObject from "./objects/GameObject.js"
 import Context from "./objects/Context.js"
+import Vector from "./objects/Vector.js"
 
 
 
@@ -10,6 +11,8 @@ const ctx = Context.create()
 let render = (object) => {
     showObject(object)
     showCenter(object)
+    showVelocity(object)
+
 
     //draw clones in a box around the object to make screen wrapping appear seamless
     showClones(object)
@@ -41,7 +44,7 @@ let showObject = (object) => {
 }
 
 let showVelocity = (object) => {
-    drawRay(object.position)
+    drawRay(object.position, Vector.add(object.position, Vector.multiply(object.velocity,object.velocity.magnitude,50)))
 }
 
 let drawRay = (start, end) => {
