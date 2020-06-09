@@ -44,7 +44,7 @@ let showObject = (object) => {
 }
 
 let showVelocity = (object) => {
-    drawRay(object.position, Vector.add(object.position, Vector.multiply(object.velocity,object.velocity.magnitude,50)))
+    drawRay(object.position, Vector.add(object.position, Vector.multiply(object.velocity,50)))
 }
 
 let drawRay = (start, end) => {

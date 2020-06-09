@@ -11,8 +11,8 @@ let create = (position, velocity, image, radius) => {
 };
 
 let move = (obj) => { 
-    obj.position.x += obj.velocity.x * obj.velocity.magnitude
-    obj.position.y += obj.velocity.y * obj.velocity.magnitude
+    obj.position.x += obj.velocity.x
+    obj.position.y += obj.velocity.y
 }
 
 let hasCollided = (obj, obj2) => {

@@ -1,16 +1,21 @@
-let create = (degrees,magnitude) => {
+let createDM = (degrees,magnitude) => {
   let angle = Math.PI * 2 / 360 * degrees
   let x = Math.cos(angle)
   let y = Math.sin(angle)
   return {
-      x,
-      y,
-      magnitude
+      x:x * magnitude,
+      y:y * magnitude
+  }
+}
+let create = (x,y) => {
+  return {
+    x,
+    y
   }
 }
 
 let getRadians = (vector) => {
-  return Math.asin(vector.y)
+  return Math.asin(normalize(vector).y)
 }
 
 let getDegrees = (vector) => {
@@ -41,12 +46,25 @@ let multiply = (vec, ...sca) => {
   return {x:vec.x*sca, y:vec.y*sca}
 }
 
+let magnitude = (vec) => {
+  let x = vec.x
+  let y = vec.y
+  return Math.sqrt(x*x + y*y)
+}
+
+let normalize = (vec) => {
+  return {x:vec.x/magnitude(vec) ,y:vec.y/magnitude(vec)}
+}
+
 const Vector = {
+  createDM,
   create,
   getDegrees,
   distanceSquared,
   distance,
   add,
   multiply,
+  magnitude,
+  normalize
 }
 export default Vector
