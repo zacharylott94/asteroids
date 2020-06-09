@@ -31,13 +31,26 @@ let setFillColor = (color = Color(0,0,0)) => {
 
 let showCenter = (object) => {
     setFillColor(Color(255))
-    ctx.fillRect(object.x-object.radius,object.y,object.radius*2,1)
-    ctx.fillRect(object.x,object.y-object.radius,1,object.radius*2)
+    ctx.fillRect(object.position.x-object.radius,object.position.y,object.radius*2,1)
+    ctx.fillRect(object.position.x,object.position.y-object.radius,1,object.radius*2)
     setFillColor()
 }
 
 let showObject = (object) => {
-    ctx.drawImage(object.image, object.x - object.radius, object.y - object.radius)
+    ctx.drawImage(object.image, object.position.x - object.radius, object.position.y - object.radius)
+}
+
+let showVelocity = (object) => {
+    drawRay(object.position)
+}
+
+let drawRay = (start, end) => {
+    setColor(Color(255,255))
+    ctx.beginPath()
+    ctx.moveTo(start.x, start.y)
+    ctx.lineTo(end.x, end.y)
+    ctx.stroke()
+    setColor()
 }
 
 let showClones = (object) => {
@@ -53,7 +66,6 @@ let showClones = (object) => {
 }
 
 const GRAPHICS = {
-  CreateRenderer,
   Circle,
   Player,
   clear,
