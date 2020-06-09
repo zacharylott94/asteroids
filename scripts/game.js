@@ -5,9 +5,6 @@ import GRAPHICS from "./graphics.js"
 
 //---------------Initialize Game--------------------
 
-
-
-const render = GRAPHICS.CreateRenderer()  //create a render function with a context bound to it
 const canvas = document.getElementById("canvas")
 
 
@@ -20,20 +17,20 @@ const playerRadius = 6
 
 
 //stock images
-const largeAsteroidImage  = GRAPHICS.createCircleImage(largeRadius)
-const mediumAsteroidImage = GRAPHICS.createCircleImage(mediumRadius)
-const smallAsteroidImage  = GRAPHICS.createCircleImage(smallRadius)
-const playerImage    = GRAPHICS.createPlayerImage()
+const largeAsteroidImage  = GRAPHICS.Circle(largeRadius)
+const mediumAsteroidImage = GRAPHICS.Circle(mediumRadius)
+const smallAsteroidImage  = GRAPHICS.Circle(smallRadius)
+const playerImage    = GRAPHICS.Player()
 
 //array of objects
 let objects = []
-objects.push(GameObject.create(10,  150,  Vector.create(45, .1), largeAsteroidImage, largeRadius))
-objects.push(GameObject.create(125, 15,  Vector.create(270, .9),  largeAsteroidImage, largeRadius))
-objects.push(GameObject.create(10,  300, Vector.create(10, .2), mediumAsteroidImage, mediumRadius))
+objects.push(GameObject.create(10,  150, Vector.create(45,   .1), largeAsteroidImage,  largeRadius))
+objects.push(GameObject.create(125, 15,  Vector.create(270,  .9), largeAsteroidImage,  largeRadius))
+objects.push(GameObject.create(10,  300, Vector.create(10,   .2), mediumAsteroidImage, mediumRadius))
 objects.push(GameObject.create(200, 300, Vector.create(185, 1.5), mediumAsteroidImage, mediumRadius))
-objects.push(GameObject.create(150, 150, Vector.create(300, 1), smallAsteroidImage, smallRadius))
-objects.push(GameObject.create(10,  15,  Vector.create(34, 1.25), smallAsteroidImage, smallRadius))
-objects.push(GameObject.create(canvas.width/2,  canvas.height/2,  Vector.create(0,0), playerImage, playerRadius))
+objects.push(GameObject.create(150, 150, Vector.create(300,   1), smallAsteroidImage,  smallRadius))
+objects.push(GameObject.create(10,  15,  Vector.create(34, 1.25), smallAsteroidImage,  smallRadius))
+objects.push(GameObject.create(canvas.width/2,  canvas.height/2,  Vector.create(0,0),  playerImage, playerRadius))
 
 
 
@@ -44,7 +41,7 @@ let loop = () => {
     objects.map((obj) => {
         GameObject.move  (obj)
         constrain        (obj)
-        render           (obj)
+        GRAPHICS.render  (obj)
     })
 }
 

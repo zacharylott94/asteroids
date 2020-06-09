@@ -7,16 +7,12 @@ import Context from "./objects/Context.js"
 
 const ctx = Context.create()
 
+let render = (object) => {
+    showObject(object)
+    showCenter(object)
 
-//binds a context to a function so that it can draw objects in that context
-let CreateRenderer = () => { 
-    return (object) => {
-        showObject(object)
-        showCenter(object)
-
-        //draw clones in a box around the object to make screen wrapping appear seamless
-        showClones(object)
-    }
+    //draw clones in a box around the object to make screen wrapping appear seamless
+    showClones(object)
 }
 
 
@@ -29,15 +25,15 @@ let setColor = (color = Color(0,255,0)) => {
     ctx.strokeStyle = color
 }
 
-let setFillColor = (color = Color(0,255,0)) => {
+let setFillColor = (color = Color(0,0,0)) => {
     ctx.fillStyle = color
 }
 
 let showCenter = (object) => {
-    setFillColor("rgb(255,0,0)")
+    setFillColor(Color(255))
     ctx.fillRect(object.x-object.radius,object.y,object.radius*2,1)
     ctx.fillRect(object.x,object.y-object.radius,1,object.radius*2)
-    setFillColor("rgb(0,0,0)")
+    setFillColor()
 }
 
 let showObject = (object) => {
@@ -58,13 +54,14 @@ let showClones = (object) => {
 
 const GRAPHICS = {
   CreateRenderer,
-  createCircleImage: Circle,
-  createPlayerImage: Player,
+  Circle,
+  Player,
   clear,
+  render,
 }
 
-let Color = (r = 255, g = 255, b = 255) => {
-    return `"rgb(${r},${g},${b})"`
+let Color = (r = 0, g = 0, b = 0) => {
+    return `rgb(${r},${g},${b})`
 }
 
 
