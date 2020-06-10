@@ -6,6 +6,7 @@ let create = (position, velocity, image, radius) => {
         velocity,
         image,
         radius,
+        collided
     };
     return object;
 };
@@ -28,10 +29,8 @@ let hasCollided = (obj, obj2) => {
     let x2 = obj2.position.x
     let y2 = obj2.position.y
 
-    let distance = Vector.distanceSquared(x + obj.radius,    //Get Squared distance between objects, correcting for the center
-                                 y + obj.radius,
-                                 x2 + obj2.radius,
-                                 y2 + obj2.radius)  
+    let distance = Vector.distanceSquared(Vector.create(x, y),
+                                          Vector.create(x2, y2))  
     let radii = obj.radius + obj2.radius
     radii *= radii
     if (distance <= radii) {     // If Squared distance is less than the squared sum of radii, the objects have "collided"

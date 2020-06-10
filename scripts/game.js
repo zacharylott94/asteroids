@@ -41,10 +41,10 @@ let loop = () => {
     objects.map((obj) => {
         GameObject.move  (obj)
         constrain        (obj)
+        objects.map((obj2) => {
+            GameObject.hasCollided(obj, obj2)? console.log("collision"): false
+        })
         GRAPHICS.render  (obj)
-        // objects.map((obj2) => {
-        //     GameObject.hasCollided(obj, obj2)? console.log("collision"): false
-        // })
     })
 }
 
