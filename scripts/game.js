@@ -36,22 +36,27 @@ objects.push(GameObject.create(Vector.create(canvas.width/2,  canvas.height/2), 
 
 
 //The main game loop should happen in here
-let loop = () => {
+let renderLoop = () => {
     GRAPHICS.clear()
+    objects.map((obj) => {
+        GRAPHICS.render  (obj)
+    })
+}
+
+let physicsLoop = () => {
     objects.map((obj) => {
         GameObject.move  (obj)
         constrain        (obj)
         objects.map((obj2) => {
             GameObject.hasCollided(obj, obj2)? console.log("collision"): false
         })
-        GRAPHICS.render  (obj)
     })
 }
 
 
-
 const GAME = {
-  loop
+  renderLoop,
+  physicsLoop
 }
 
 export default GAME

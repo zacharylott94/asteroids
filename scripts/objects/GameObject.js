@@ -6,7 +6,7 @@ let create = (position, velocity, image, radius) => {
         velocity,
         image,
         radius,
-        collided
+        collided: false
     };
     return object;
 };
