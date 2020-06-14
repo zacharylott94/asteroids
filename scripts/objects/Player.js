@@ -15,9 +15,12 @@ const draw = (position, ...trash) => {
 };
 
 const create = (position, velocity, radius) => {
-    const player = GameObject.create(position, velocity, draw, radius)
+    let player = GameObject.create(position, velocity, draw, radius)
     Event.register("collision", (obj) => {
-        obj === player? console.log("Player hit!"): false
+        if(obj === player) {
+            console.log("Player hit!")
+            
+        } 
     })
     return player
 }

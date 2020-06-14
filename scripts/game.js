@@ -17,11 +17,6 @@ const mediumRadius = 25
 const smallRadius = 16
 const playerRadius = 6
 
-const collisionCallback = (obj1, obj2) => {
-    console.log(`${obj1} has collided with ${obj2}`)
-}
-Event.register("collision", collisionCallback)
-
 
 //array of objects
 let objects = []
