@@ -16,8 +16,6 @@ const playerRadius = 6
 
 
 
-//stock images
-const playerImage    = GRAPHICS.Player()
 
 //array of objects
 let objects = []
@@ -27,7 +25,7 @@ objects.push(GameObject.create(Vector.create(10,  300), Vector.createDM(10,   .2
 objects.push(GameObject.create(Vector.create(200, 300), Vector.createDM(185, 1.5), GRAPHICS.Circle, mediumRadius))
 objects.push(GameObject.create(Vector.create(150, 150), Vector.createDM(300,   1), GRAPHICS.Circle,  smallRadius))
 objects.push(GameObject.create(Vector.create(10,   15),  Vector.createDM(34, 1.25), GRAPHICS.Circle,  smallRadius))
-// objects.push(GameObject.create(Vector.create(canvas.width/2,  canvas.height/2),  Vector.createDM(0,0),  playerImage, playerRadius))
+objects.push(GameObject.create(Vector.create(canvas.width/2,  canvas.height/2),  Vector.createDM(0,0),  GRAPHICS.Player, playerRadius))
 
 
 
