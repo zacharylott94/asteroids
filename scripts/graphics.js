@@ -70,9 +70,6 @@ const GRAPHICS = {
   render,
 }
 
-const Color = (r = 0, g = 0, b = 0) => {
-    return `rgb(${r},${g},${b})`
-}
 
 
 export default GRAPHICS

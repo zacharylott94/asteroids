@@ -1,6 +1,9 @@
 import Canvas from "./Canvas.js"
+import GameObject from "./GameObject.js"
+import Event from "../gameLogic/Event.js"
+
 //Draws a triangle for the player. Will eventually need rotation
-const Player = (position, ...trash) => {
+const draw = (position, ...trash) => {
     let ctx = Canvas.context
     let origin = position
     ctx.beginPath();
@@ -11,4 +14,18 @@ const Player = (position, ...trash) => {
     ctx.stroke();
 };
 
+const create = (position, velocity, radius) => {
+    const player = GameObject.create(position, velocity, draw, radius)
+    Event.register("collision", (obj) => {
+        obj === player? console.log("Player hit!"): false
+    })
+    return player
+}
+
+
+
+const Player = {
+    create,
+    draw
+}
 export default Player
