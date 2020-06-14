@@ -22,11 +22,11 @@ const hasCollided = (obj, obj2) => {
     const hash2 = hash(obj2)
     if (hash1 === hash2) return false
 
-    const distance = Vector.distanceSquared(obj.position,
+    const squaredDistanceBetweenObjects = Vector.distanceSquared(obj.position,
                                           obj2.position)  
-    let radii = obj.radius + obj2.radius
-    radii *= radii
-    if (distance <= radii) {     // If Squared distance is less than the squared sum of radii, the objects have "collided"
+    const summedRadiiOfObjects = obj.radius + obj2.radius
+    const squaredRadiiOfObjects = summedRadiiOfObjects * summedRadiiOfObjects
+    if (squaredDistanceBetweenObjects <= squaredRadiiOfObjects) {
         return true
     } else {
         return false
