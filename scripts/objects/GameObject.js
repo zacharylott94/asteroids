@@ -1,12 +1,12 @@
 import Vector from "./Vector.js"
 //creates a generic game object
-let create = (position, velocity, image, radius) => {
+let create = (position /*Vector*/, velocity /*Vector*/ , draw /*Function*/, radius /*Number*/) => {
     const object = {
         position,
         velocity,
-        image,
+        draw,
         radius,
-        collided: false
+        collided: false,
     };
     return object;
 };

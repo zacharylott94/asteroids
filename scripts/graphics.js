@@ -9,7 +9,11 @@ import Vector from "./objects/Vector.js"
 const ctx = Context.create()
 
 let render = (object) => {
-    showObject(object)
+    //proposed change
+    object.draw(ctx, object.position,object.radius)
+    // showObject(object)
+
+
     showCenter(object)
     showVelocity(object)
 
@@ -57,15 +61,16 @@ let drawRay = (start, end) => {
 }
 
 let showClones = (object) => {
-    let [x,y] = GameObject.getCoordsMinusRadius(object)
-    ctx.drawImage(object.image, x + ctx.width, y)               //right clone
-    ctx.drawImage(object.image, x, y + ctx.height)              //bottom clone
-    ctx.drawImage(object.image, x - ctx.width, y)               //left clone
-    ctx.drawImage(object.image, x, y - ctx.height)              //top clone
-    ctx.drawImage(object.image, x + ctx.width, y + ctx.height)  //bottom-right clone
-    ctx.drawImage(object.image, x - ctx.width, y + ctx.height)  //bottom-left clone
-    ctx.drawImage(object.image, x + ctx.width, y - ctx.height)  //top-right clone
-    ctx.drawImage(object.image, x - ctx.width, y - ctx.height)  //top-left clone
+    let x = object.position.x
+    let y = object.position.y
+    object.draw(ctx,Vector.create(x + ctx.width, y), object.radius)               //right clone
+    object.draw(ctx,Vector.create(x, y + ctx.height), object.radius)              //bottom clone
+    object.draw(ctx,Vector.create(x - ctx.width, y), object.radius)               //left clone
+    object.draw(ctx,Vector.create(x, y - ctx.height), object.radius)              //top clone
+    object.draw(ctx,Vector.create(x + ctx.width, y + ctx.height), object.radius)  //bottom-right clone
+    object.draw(ctx,Vector.create(x - ctx.width, y + ctx.height), object.radius)  //bottom-left clone
+    object.draw(ctx,Vector.create(x + ctx.width, y - ctx.height), object.radius)  //top-right clone
+    object.draw(ctx,Vector.create(x - ctx.width, y - ctx.height), object.radius)  //top-left clone
 }
 
 const GRAPHICS = {
