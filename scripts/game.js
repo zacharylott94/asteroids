@@ -31,14 +31,14 @@ objects.push(GameObject.create(Vector.create(canvas.width/2,  canvas.height/2), 
 
 
 //The main game loop should happen in here
-let renderLoop = () => {
+const renderLoop = () => {
     GRAPHICS.clear()
     objects.map((obj) => {
         GRAPHICS.render  (obj)
     })
 }
 
-let physicsLoop = () => {
+const physicsLoop = () => {
     objects.map((obj) => {
         GameObject.move  (obj)
         constrain        (obj)

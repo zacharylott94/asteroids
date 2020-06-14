@@ -1,6 +1,5 @@
 import Circle from "./objects/Circle.js"
 import Player from "./objects/Player.js"
-import GameObject from "./objects/GameObject.js"
 import Context from "./objects/Context.js"
 import Vector from "./objects/Vector.js"
 
@@ -8,49 +7,45 @@ import Vector from "./objects/Vector.js"
 
 const ctx = Context.create()
 
-let render = (object) => {
+const render = (object) => {
+    //Assumption: All objects' draw functions will take or ignore these specific parameters
+    //            So, all object draw functions should take a context, then have their position passed in, etc.
+    //            If a draw function ever doesn't follow this, rendering will break
     object.draw(ctx, object.position,object.radius)
-    // showObject(object)
-
 
     showCenter(object)
     showVelocity(object)
 
-
-    //draw clones in a box around the object to make screen wrapping appear seamless
+    //The above assumption exists in this function as well
     showClones(object)
 }
 
 
 //clears the context
-let clear = () => { 
+const clear = () => { 
     ctx.fillRect(-10, -10, ctx.width+15, ctx.height+15)
 }
 
-let setColor = (color = Color(0,255,0)) => {
+const setColor = (color = Color(0,255,0)) => {
     ctx.strokeStyle = color
 }
 
-let setFillColor = (color = Color(0,0,0)) => {
+const setFillColor = (color = Color(0,0,0)) => {
     ctx.fillStyle = color
 }
 
-let showCenter = (object) => {
+const showCenter = (object) => {
     setFillColor(Color(255))
     ctx.fillRect(object.position.x-object.radius,object.position.y,object.radius*2,1)
     ctx.fillRect(object.position.x,object.position.y-object.radius,1,object.radius*2)
     setFillColor()
 }
 
-let showObject = (object) => {
-    ctx.drawImage(object.image, object.position.x - object.radius, object.position.y - object.radius)
-}
-
-let showVelocity = (object) => {
+const showVelocity = (object) => {
     drawRay(object.position, Vector.add(object.position, Vector.multiply(object.velocity,50)))
 }
 
-let drawRay = (start, end) => {
+const drawRay = (start, end) => {
     setColor(Color(255,255))
     ctx.beginPath()
     ctx.moveTo(start.x, start.y)
@@ -59,9 +54,10 @@ let drawRay = (start, end) => {
     setColor()
 }
 
-let showClones = (object) => {
-    let x = object.position.x
-    let y = object.position.y
+//This draws screen-wrap clones for a seamless appearance
+const showClones = (object) => {
+    const x = object.position.x
+    const y = object.position.y
     object.draw(ctx,Vector.create(x + ctx.width, y), object.radius)               //right clone
     object.draw(ctx,Vector.create(x, y + ctx.height), object.radius)              //bottom clone
     object.draw(ctx,Vector.create(x - ctx.width, y), object.radius)               //left clone
@@ -79,7 +75,7 @@ const GRAPHICS = {
   render,
 }
 
-let Color = (r = 0, g = 0, b = 0) => {
+const Color = (r = 0, g = 0, b = 0) => {
     return `rgb(${r},${g},${b})`
 }
 

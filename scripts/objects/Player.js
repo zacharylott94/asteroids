@@ -1,5 +1,5 @@
-import Context from "./Context.js"
-let Player = (ctx, position, ...trash) => {
+//Draws a triangle for the player. Will eventually need rotation
+const Player = (ctx, position, ...trash) => {
     let origin = position
     ctx.beginPath();
     ctx.moveTo(origin.x-7, origin.y+7);
