@@ -48,7 +48,7 @@ ObjectPool.add(Asteroid.create(Vector.create(200, 300), Vector.createDM(185, 1.5
 ObjectPool.add(Asteroid.create(Vector.create(150, 150), Vector.createDM(300,   1),  smallRadius))
 ObjectPool.add(Asteroid.create(Vector.create(10,   15),  Vector.createDM(34, 1.25),  smallRadius))
 ObjectPool.add(player)
-
+console.log(ObjectPool.id(player))
 
 
 const GAME = {

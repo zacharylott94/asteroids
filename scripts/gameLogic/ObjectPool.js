@@ -6,10 +6,14 @@ const add = (object) => {
 const remove= (object) => {
   Object.entries(objects).forEach(([key, value]) => {value === object? delete objects[key]: false });
 }
+const id = (object) => {
+  return Object.entries(objects).find(([key,value]) => value === object)[0]
+}
 
 const ObjectPool = {
   add,
   remove,
-  objects
+  objects,
+  id
 }
 export default ObjectPool
