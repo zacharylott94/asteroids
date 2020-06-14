@@ -5,7 +5,7 @@ import GRAPHICS from "./graphics.js"
 import Event from "./gameLogic/Event.js"
 import Asteroid from "./objects/Asteroid.js"
 import Player from "./objects/Player.js"
-
+import hasCollided from "./gameLogic/hasCollided.js"
 import ObjectPool from "./gameLogic/ObjectPool.js"
 
 //---------------Initialize Game--------------------
@@ -26,7 +26,7 @@ const physicsLoop = () => {
         GameObject.move  (obj)
         constrain        (obj)
         Object.entries(ObjectPool.objects).forEach(([key,obj2]) => {
-            GameObject.hasCollided(obj, obj2)? Event.call(Event.collision, obj, obj2): false
+            hasCollided(obj, obj2)? Event.call(Event.collision, obj, obj2): false
         })
     })
 }
@@ -48,7 +48,6 @@ ObjectPool.add(Asteroid.create(Vector.create(200, 300), Vector.createDM(185, 1.5
 ObjectPool.add(Asteroid.create(Vector.create(150, 150), Vector.createDM(300,   1),  smallRadius))
 ObjectPool.add(Asteroid.create(Vector.create(10,   15),  Vector.createDM(34, 1.25),  smallRadius))
 ObjectPool.add(player)
-console.log(ObjectPool.id(player))
 
 
 const GAME = {
