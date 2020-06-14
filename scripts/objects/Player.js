@@ -1,5 +1,7 @@
+import Canvas from "./Canvas.js"
 //Draws a triangle for the player. Will eventually need rotation
-const Player = (ctx, position, ...trash) => {
+const Player = (position, ...trash) => {
+    let ctx = Canvas.context
     let origin = position
     ctx.beginPath();
     ctx.moveTo(origin.x-7, origin.y+7);

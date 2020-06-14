@@ -1,17 +1,13 @@
 import Circle from "./objects/Circle.js"
 import Player from "./objects/Player.js"
-import Context from "./objects/Context.js"
+import Canvas from "./objects/Canvas.js"
 import Vector from "./objects/Vector.js"
-
-
-
-const ctx = Context.create()
 
 const render = (object) => {
     //Assumption: All objects' draw functions will take or ignore these specific parameters
     //            So, all object draw functions should take a context, then have their position passed in, etc.
     //            If a draw function ever doesn't follow this, rendering will break
-    object.draw(ctx, object.position,object.radius)
+    object.draw(object.position,object.radius)
 
     showCenter(object)
     showVelocity(object)
@@ -23,22 +19,18 @@ const render = (object) => {
 
 //clears the context
 const clear = () => { 
-    ctx.fillRect(-10, -10, ctx.width+15, ctx.height+15)
+    let ctx = Canvas.context
+    ctx.fillRect(-10, -10, Canvas.width+15, Canvas.height+15)
 }
 
-const setColor = (color = Color(0,255,0)) => {
-    ctx.strokeStyle = color
-}
-
-const setFillColor = (color = Color(0,0,0)) => {
-    ctx.fillStyle = color
-}
 
 const showCenter = (object) => {
-    setFillColor(Color(255))
+    let ctx = Canvas.context
+    ctx.save()
+    ctx.fillStyle = "rgb(255,0,0"
     ctx.fillRect(object.position.x-object.radius,object.position.y,object.radius*2,1)
     ctx.fillRect(object.position.x,object.position.y-object.radius,1,object.radius*2)
-    setFillColor()
+    ctx.restore()
 }
 
 const showVelocity = (object) => {
@@ -46,26 +38,29 @@ const showVelocity = (object) => {
 }
 
 const drawRay = (start, end) => {
-    setColor(Color(255,255))
+    let ctx = Canvas.context
+    ctx.save()
+    ctx.strokeStyle = "rgb(255,255,0)"
     ctx.beginPath()
     ctx.moveTo(start.x, start.y)
     ctx.lineTo(end.x, end.y)
     ctx.stroke()
-    setColor()
+    ctx.restore()
 }
 
 //This draws screen-wrap clones for a seamless appearance
 const showClones = (object) => {
+
     const x = object.position.x
     const y = object.position.y
-    object.draw(ctx,Vector.create(x + ctx.width, y), object.radius)               //right clone
-    object.draw(ctx,Vector.create(x, y + ctx.height), object.radius)              //bottom clone
-    object.draw(ctx,Vector.create(x - ctx.width, y), object.radius)               //left clone
-    object.draw(ctx,Vector.create(x, y - ctx.height), object.radius)              //top clone
-    object.draw(ctx,Vector.create(x + ctx.width, y + ctx.height), object.radius)  //bottom-right clone
-    object.draw(ctx,Vector.create(x - ctx.width, y + ctx.height), object.radius)  //bottom-left clone
-    object.draw(ctx,Vector.create(x + ctx.width, y - ctx.height), object.radius)  //top-right clone
-    object.draw(ctx,Vector.create(x - ctx.width, y - ctx.height), object.radius)  //top-left clone
+    object.draw(Vector.create(x + Canvas.width, y), object.radius)               //right clone
+    object.draw(Vector.create(x, y + Canvas.height), object.radius)              //bottom clone
+    object.draw(Vector.create(x - Canvas.width, y), object.radius)               //left clone
+    object.draw(Vector.create(x, y - Canvas.height), object.radius)              //top clone
+    object.draw(Vector.create(x + Canvas.width, y + Canvas.height), object.radius)  //bottom-right clone
+    object.draw(Vector.create(x - Canvas.width, y + Canvas.height), object.radius)  //bottom-left clone
+    object.draw(Vector.create(x + Canvas.width, y - Canvas.height), object.radius)  //top-right clone
+    object.draw(Vector.create(x - Canvas.width, y - Canvas.height), object.radius)  //top-left clone
 }
 
 const GRAPHICS = {
