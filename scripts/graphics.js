@@ -9,7 +9,6 @@ import Vector from "./objects/Vector.js"
 const ctx = Context.create()
 
 let render = (object) => {
-    //proposed change
     object.draw(ctx, object.position,object.radius)
     // showObject(object)
 
