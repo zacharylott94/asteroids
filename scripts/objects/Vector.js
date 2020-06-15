@@ -1,3 +1,5 @@
+import Canvas from "./Canvas.js"
+import Constrain from "../gameLogic/constrain.js"
 const createDM = (degrees,magnitude) => {
   const angle = Math.PI * 2 / 360 * degrees
   const x = Math.cos(angle)
@@ -27,8 +29,14 @@ const getDegrees = (vector) => {
 
 
 const distanceSquared = (vector1, vector2) => {
-  let dx = vector2.x - vector1.x
-  let dy = vector2.y - vector1.y
+  let dx = Math.abs(vector2.x - vector1.x)
+  let dy = Math.abs(vector2.y - vector1.y)
+  let cx = Canvas.width - dx //the c stands for complimentary, lol
+  let cy = Canvas.height - dy
+  dx =  dx <= cx? dx: cx  //if dx is smaller than cx, use dx, otherwise cx
+  dy =  dy <= cy? dy: cy //if dy is smaller than cy, use dy, otherwise cy
+  
+  // console.log(`dx:${dx},dy:${dy},cx:${cx},cy:${cy}`)
   dx *= dx
   dy *= dy
   const sum = dx + dy

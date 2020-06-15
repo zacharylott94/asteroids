@@ -10,6 +10,7 @@ const render = (object) => {
     object.draw(object.position,object.radius)
 
     showCenter(object)
+    object.collided > 0? showCollision(object.position): false
     showVelocity(object)
 
     //The above assumption exists in this function as well
@@ -25,16 +26,22 @@ const clear = () => {
 
 
 const showCenter = (object) => {
-    let ctx = Canvas.context
-    ctx.save()
-    ctx.fillStyle = "rgb(255,0,0"
-    ctx.fillRect(object.position.x-object.radius,object.position.y,object.radius*2,1)
-    ctx.fillRect(object.position.x,object.position.y-object.radius,1,object.radius*2)
-    ctx.restore()
+    drawCross(object.position, object.radius*2, "rgb(255,0,0)")
 }
 
 const showVelocity = (object) => {
     drawRay(object.position, Vector.add(object.position, Vector.multiply(object.velocity,50)))
+}
+const showCollision = (position) => {
+    drawCross(position, 10, "white")
+}
+const drawCross = (position, size, color) => {
+    let ctx = Canvas.context
+    ctx.save()
+    ctx.fillStyle = color
+    ctx.fillRect(position.x-size/2,position.y,size,1)
+    ctx.fillRect(position.x,position.y-size/2,1,size)
+    ctx.restore()
 }
 
 const drawRay = (start, end) => {
@@ -68,6 +75,7 @@ const GRAPHICS = {
   Player,
   clear,
   render,
+  showCollision
 }
 
 
