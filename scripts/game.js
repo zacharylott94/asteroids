@@ -22,16 +22,18 @@ const renderLoop = () => {
 }
 
 const physicsLoop = () => {
-    Object.entries(ObjectPool.objects).forEach(([key,obj]) => {
-        GameObject.move  (obj)
-        Constrain.object       (obj)
-        Object.entries(ObjectPool.objects).forEach(([key,obj2]) => {
-            obj.collided = hasCollided(obj, obj2)? 3: obj.collided
-            // console.log("inner loop called")
+    let objects = Object.entries(ObjectPool.objects)
+    while (objects.length > 0) {
+        let obj1 = objects.shift()[1]
+        GameObject.move (obj1)
+        Constrain.object(obj1)
+        objects.forEach(([uuid, obj2]) => {
+            let answer = hasCollided(obj1, obj2)
+            obj1.collided = answer? 3: obj1.collided
+            obj2.collided = answer? 3: obj2.collided
         })
-        obj.collided -= 1
-        // console.log("outer loop called")
-    })
+        obj1.collided -= 1
+    }
 }
 
 
