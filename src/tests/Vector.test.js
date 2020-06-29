@@ -1,4 +1,4 @@
-import Vector from "../objects/Vector.new.js"
+import Vector from "../objects/Vector.js"
 
 describe('Vectors', () => {
   test('can return degrees', () => {
@@ -47,6 +47,25 @@ describe('Vectors', () => {
     const vector = new Vector(2,2)
     expect(vector.normalize().x).toBeCloseTo(Math.SQRT1_2)
     expect(vector.normalize().y).toBeCloseTo(Math.SQRT1_2)
+  });
+
+  //Assumes game field of 500,500
+  test('distance is calculated based on the width and height of game field', () => {
+    const A = new Vector(10,10)
+    const B = new Vector(490,10)
+    const C = new Vector(10,490)
+    const D = new Vector(490,490)
+    const AB = Vector.distance(A,B)
+    const AC = Vector.distance(A,C)
+    const DB = Vector.distance(D,B)
+    const DC = Vector.distance(D,C)
+    const AD = Vector.distance(A,D)
+    const BC = Vector.distance(B,C)
+
+    expect(AB).toBeCloseTo(AC)
+    expect(DB).toBeCloseTo(DC)
+    expect(DB).toBeCloseTo(AB)
+    expect(AD).toBeCloseTo(BC)
   });
 
 });

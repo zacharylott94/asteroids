@@ -17,7 +17,7 @@ const object = (object) => {
 };
 
 const vector = (vector) => {
-    let result = Vector.create(0,0)
+    let result = new Vector()
     if (vector.x > Canvas.width) {                   //if object is past the right edge of the screen
         result.x = vector.x - Canvas.width; //subtract the width of the screen to wrap it to the left
     }

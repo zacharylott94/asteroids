@@ -30,7 +30,7 @@ const showCenter = (object) => {
 }
 
 const showVelocity = (object) => {
-    drawRay(object.position, Vector.add(object.position, Vector.multiply(object.velocity,50)))
+    drawRay(object.position, Vector.add(object.position, object.velocity.scale(50)))
 }
 const showCollision = (position) => {
     drawCross(position, 10, "white")
@@ -60,14 +60,14 @@ const showClones = (object) => {
 
     const x = object.position.x
     const y = object.position.y
-    object.draw(Vector.create(x + Canvas.width, y), object.radius)               //right clone
-    object.draw(Vector.create(x, y + Canvas.height), object.radius)              //bottom clone
-    object.draw(Vector.create(x - Canvas.width, y), object.radius)               //left clone
-    object.draw(Vector.create(x, y - Canvas.height), object.radius)              //top clone
-    object.draw(Vector.create(x + Canvas.width, y + Canvas.height), object.radius)  //bottom-right clone
-    object.draw(Vector.create(x - Canvas.width, y + Canvas.height), object.radius)  //bottom-left clone
-    object.draw(Vector.create(x + Canvas.width, y - Canvas.height), object.radius)  //top-right clone
-    object.draw(Vector.create(x - Canvas.width, y - Canvas.height), object.radius)  //top-left clone
+    object.draw(new Vector(x + Canvas.width, y), object.radius)               //right clone
+    object.draw(new Vector(x, y + Canvas.height), object.radius)              //bottom clone
+    object.draw(new Vector(x - Canvas.width, y), object.radius)               //left clone
+    object.draw(new Vector(x, y - Canvas.height), object.radius)              //top clone
+    object.draw(new Vector(x + Canvas.width, y + Canvas.height), object.radius)  //bottom-right clone
+    object.draw(new Vector(x - Canvas.width, y + Canvas.height), object.radius)  //bottom-left clone
+    object.draw(new Vector(x + Canvas.width, y - Canvas.height), object.radius)  //top-right clone
+    object.draw(new Vector(x - Canvas.width, y - Canvas.height), object.radius)  //top-left clone
 }
 
 const GRAPHICS = {
