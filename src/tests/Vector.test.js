@@ -43,4 +43,10 @@ describe('Vectors', () => {
     expect(vector.magnitude()).toBeCloseTo(Math.SQRT2)
   });
 
+  test('Can be normalized', () => {
+    const vector = new Vector(2,2)
+    expect(vector.normalize().x).toBeCloseTo(Math.SQRT1_2)
+    expect(vector.normalize().y).toBeCloseTo(Math.SQRT1_2)
+  });
+
 });
