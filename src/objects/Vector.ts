@@ -20,7 +20,7 @@ class Vector{
 
   scale(...scalars: [number]){
     const scalar = scalars.reduce((acc, next) => {return acc * next})
-    return {x:this.x*scalar, y:this.y*scalar}
+    return new Vector(this.x*scalar, this.y*scalar)
   }
 
   degrees() {
@@ -60,10 +60,10 @@ class Vector{
     return Math.sqrt(Vector.distanceSquared(vector1, vector2))
   }
 
-  static UP()    {new Vector(0,-1)}
-  static DOWN()  {new Vector(0,1) }
-  static LEFT()  {new Vector(-1,0)}
-  static RIGHT() {new Vector(1,0) }
+  static UP()    {return new Vector(0,-1)}
+  static DOWN()  {return new Vector(0,1) }
+  static LEFT()  {return new Vector(-1,0)}
+  static RIGHT() {return new Vector(1,0) }
 }
 
 export default Vector

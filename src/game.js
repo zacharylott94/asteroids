@@ -47,7 +47,7 @@ const playerRadius = 6
 
 const player = Player.create(new Vector(canvas.width/2,  canvas.height/2),  Vector.fromDegreesAndMagnitude(0,0), playerRadius)
 ObjectPool.add(Asteroid.create(new Vector(5,  5), Vector.fromDegreesAndMagnitude(45,   0),  largeRadius))
-ObjectPool.add(Asteroid.create(new Vector(450,  5),  Vector.fromDegreesAndMagnitude(270,  .75),  largeRadius))
+ObjectPool.add(Asteroid.create(new Vector(450,  5),  Vector.UP().scale(5),  largeRadius))
 ObjectPool.add(Asteroid.create(new Vector(10,  300), Vector.fromDegreesAndMagnitude(10,   .2), mediumRadius))
 ObjectPool.add(Asteroid.create(new Vector(200, 300), Vector.fromDegreesAndMagnitude(185, 1.5), mediumRadius))
 ObjectPool.add(Asteroid.create(new Vector(150, 150), Vector.fromDegreesAndMagnitude(300,   1),  smallRadius))
