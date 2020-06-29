@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest ./deploy --watch"
+    "test": "jest ./deploy --watch",
+    "compile": "tsc --watch"
   },
   "repository": {
     "type": "git",

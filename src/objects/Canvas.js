@@ -5,7 +5,7 @@
   context.restore() after you have used the context
 */
 let Canvas = document.getElementById("canvas")
-Canvas.context = canvas.getContext("2d")
+Canvas.context = Canvas.getContext("2d")
 
 let ctx = Canvas.context
 ctx.translate(0.5, 0.5)            //an attempt to remove anti-aliasing
