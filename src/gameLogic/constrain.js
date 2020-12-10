@@ -2,22 +2,11 @@ import Canvas from "../objects/Canvas.js"
 import Vector from "../objects/Vector.js"
 //makes sure the object stays in the playing field
 const object = (object) => {
-    if (object.position.x > Canvas.width) {                   //if object is past the right edge of the screen
-        object.position.x = object.position.x - Canvas.width; //subtract the width of the screen to wrap it to the left
-    }
-    if (object.position.y > Canvas.height) {                   //if object is past the bottom edge of the screen
-        object.position.y = object.position.y - Canvas.height; //subtract the height of the screen to wrap it to the top
-    }
-    if (object.position.x < 0) {                           //if the object is past the left edge of the screen
-        object.position.x = object.position.x + Canvas.width; //add the width of the screen to wrap it to the right
-    }
-    if (object.position.y < 0) {                            //if the object is past the top of the screen
-        object.position.y = object.position.y + Canvas.height; //add the height of the screen to wrap it to the bottom
-    }
+    object.position = Constrain.vector(object.position)
 };
 
 const vector = (vector) => {
-    let result = new Vector()
+    let result = new Vector(vector.x,vector.y)
     if (vector.x > Canvas.width) {                   //if object is past the right edge of the screen
         result.x = vector.x - Canvas.width; //subtract the width of the screen to wrap it to the left
     }

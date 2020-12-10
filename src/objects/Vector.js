@@ -4,8 +4,6 @@ class Vector{
     this.x = x || 0
     this.y = y || 0
   }
-  static width () {return 500}
-  static height () {return 500}
   
   static fromDegreesAndMagnitude(degrees, magnitude) {
     const angle = Math.PI * 2 / 360 * degrees
@@ -16,12 +14,12 @@ class Vector{
   static add(vec1,vec2){
     return new Vector(vec1.x + vec2.x, vec1.y + vec2.y)
   }
-
+  
   scale(...scalars){
     const scalar = scalars.reduce((acc, next) => {return acc * next})
     return new Vector(this.x*scalar, this.y*scalar)
   }
-
+  
   degrees() {
     const rad = this.radians()
     const deg = rad * 360 / 2 / Math.PI
@@ -58,7 +56,9 @@ class Vector{
   static distance(vector1, vector2){
     return Math.sqrt(Vector.distanceSquared(vector1, vector2))
   }
-
+  
+  static width  () {return 500}   //This is wrong and gross. Find a good way to get game width
+  static height () {return 500}   //This is wrong and gross. Find a good way to get game height      
   static UP()    {return new Vector(0,-1)}
   static DOWN()  {return new Vector(0,1) }
   static LEFT()  {return new Vector(-1,0)}
