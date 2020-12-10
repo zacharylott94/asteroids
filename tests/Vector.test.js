@@ -1,4 +1,4 @@
-import Vector from "../objects/Vector.js"
+import Vector from "../src/objects/Vector.js"
 
 describe('Vectors', () => {
   test('can return degrees', () => {
