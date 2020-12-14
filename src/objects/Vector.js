@@ -45,7 +45,7 @@ class Vector{
     gameWidth = gameWidth === undefined? Vector.width() : gameWidth
     gameHeight = gameHeight === undefined? Vector.height() : gameHeight
 
-    
+
     let dx = Math.abs(vector2.x - vector1.x)
     let dy = Math.abs(vector2.y - vector1.y)
     let cx = gameWidth - dx //the c stands for complimentary, lol
@@ -59,8 +59,8 @@ class Vector{
     const sum = dx + dy
     return sum
   }
-  static distance(vector1, vector2){
-    return Math.sqrt(Vector.distanceSquared(vector1, vector2))
+  static distance(vector1, vector2, height, width){
+    return Math.sqrt(Vector.distanceSquared(vector1, vector2, height, width))
   }
   
   static width  () {return 500}   //This is wrong and gross. Find a good way to get game width
