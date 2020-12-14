@@ -49,24 +49,6 @@ describe('Vectors', () => {
     expect(vector.normalize().y).toBeCloseTo(Math.SQRT1_2)
   });
 
-  //Assumes game field of 500,500
-  test('distance is calculated based on the width and height of game field', () => {
-    const A = new Vector(10,10)
-    const B = new Vector(490,10)
-    const C = new Vector(10,490)
-    const D = new Vector(490,490)
-    const AB = Vector.distance(A,B)
-    const AC = Vector.distance(A,C)
-    const DB = Vector.distance(D,B)
-    const DC = Vector.distance(D,C)
-    const AD = Vector.distance(A,D)
-    const BC = Vector.distance(B,C)
-
-    expect(AB).toBeCloseTo(AC)
-    expect(DB).toBeCloseTo(DC)
-    expect(DB).toBeCloseTo(AB)
-    expect(AD).toBeCloseTo(BC)
-  });
 
     //Allows passed game field
     test('distance is calculated based on the width and height passed', () => {
@@ -76,12 +58,12 @@ describe('Vectors', () => {
       const B = new Vector(290,10)
       const C = new Vector(10,290)
       const D = new Vector(290,290)
-      const AB = Vector.distance(A,B)
-      const AC = Vector.distance(A,C)
-      const DB = Vector.distance(D,B)
-      const DC = Vector.distance(D,C)
-      const AD = Vector.distance(A,D)
-      const BC = Vector.distance(B,C)
+      const AB = Vector.distance(A,B,width,height)
+      const AC = Vector.distance(A,C,width,height)
+      const DB = Vector.distance(D,B,width,height)
+      const DC = Vector.distance(D,C,width,height)
+      const AD = Vector.distance(A,D,width,height)
+      const BC = Vector.distance(B,C,width,height)
   
       expect(AB).toBeCloseTo(AC)
       expect(DB).toBeCloseTo(DC)

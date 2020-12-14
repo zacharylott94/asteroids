@@ -53,11 +53,6 @@ class Vector{
   }
   static distanceSquared(vector1, vector2, gameWidth, gameHeight){
 
-    //This is for backwards compatibility
-    gameWidth = gameWidth === undefined? Vector.width() : gameWidth
-    gameHeight = gameHeight === undefined? Vector.height() : gameHeight
-
-
     let dx = Math.abs(vector2.x - vector1.x)
     let dy = Math.abs(vector2.y - vector1.y)
     let cx = gameWidth - dx //the c stands for complimentary, lol
