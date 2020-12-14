@@ -2,8 +2,8 @@
 
 class GameObject {
     constructor(position, velocity, draw, radius){
-        if (position.constructor.name !== 'Vector') throw TypeError('position was not an instance of class Vector')
-        if (velocity.constructor.name !== 'Vector') throw TypeError('velocity was not an instance of class Vector')
+        if (position.constructor.name !== 'Vector') throw TypeError('position is not an instance of class Vector')
+        if (velocity.constructor.name !== 'Vector') throw TypeError('velocity is not an instance of class Vector')
         if (typeof draw !== 'function') throw TypeError('draw is not a function')
         if (typeof radius !== 'number' || Number.isNaN(radius)) throw TypeError('radius is not of type Number')
         this.position = position
