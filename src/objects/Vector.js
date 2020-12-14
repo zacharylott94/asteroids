@@ -1,8 +1,19 @@
 class Vector{
   
   constructor(x, y) {
-    this.x = x || 0
-    this.y = y || 0
+    if (x === undefined || y === undefined){
+      this.x = 0
+      this.y = 0
+    } else if (typeof x != "number" || 
+        typeof y != "number" || 
+        Number.isNaN(x)      || 
+        Number.isNaN(y)){
+      throw new TypeError('Passed parameters were not of type Number')
+    } else {
+      this.x = x
+      this.y = y
+    }
+    
   }
   
   static fromDegreesAndMagnitude(degrees, magnitude) {

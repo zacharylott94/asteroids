@@ -89,4 +89,14 @@ describe('Vectors', () => {
       expect(AD).toBeCloseTo(BC)
     });
 
+    test('Vector throws error if passed non-number parameters', () => {
+      expect(() => {new Vector('f',1)}).toThrow(TypeError)
+      expect(() => {new Vector(1,'f')}).toThrow(TypeError)
+      expect(() => {new Vector('f','b')}).toThrow(TypeError)
+      expect(() => {new Vector(NaN,NaN)}).toThrow(TypeError)
+      expect(() => {new Vector([],[])}).toThrow(TypeError)
+      expect(() => {new Vector('2','2')}).toThrow(TypeError)
+
+    });
+
 });
