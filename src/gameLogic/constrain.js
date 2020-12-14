@@ -1,14 +1,10 @@
-import Canvas from "../objects/Canvas.js"
 import Vector from "../objects/Vector.js"
 //makes sure the object stays in the playing field
-const object = (object) => {
-    object.position = Constrain.vector(object.position)
+const object = (object, width, height) => {
+    object.position = Constrain.vector(object.position, width, height)
 };
 
 const vector = (vector, gameWidth, gameHeight) => {
-    //Backwards compatibility
-    gameWidth = gameWidth === undefined? Canvas.width : gameWidth
-    gameHeight = gameHeight === undefined? Canvas.height : gameHeight
 
     let result = new Vector(vector.x,vector.y)
     if (vector.x > gameWidth) {                   //if object is past the right edge of the screen

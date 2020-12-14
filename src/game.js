@@ -6,12 +6,9 @@ import Asteroid from "./objects/Asteroid.js"
 import Player from "./objects/Player.js"
 import hasCollided from "./gameLogic/hasCollided.js"
 import ObjectPool from "./gameLogic/ObjectPool.js"
+import Canvas from "./objects/Canvas.js"
 
 //---------------Initialize Game--------------------
-
-const canvas = document.getElementById("canvas")
-//array of objects
-
 //The main game loop should happen in here
 const renderLoop = () => {
     GRAPHICS.clear()
@@ -25,7 +22,7 @@ const physicsLoop = () => {
     while (objects.length > 0) {
         let obj1 = objects.shift()[1]
         GameObject.move (obj1)
-        Constrain.object(obj1)
+        Constrain.object(obj1, Canvas.width, Canvas.height)
         objects.forEach(([uuid, obj2]) => {
             let answer = hasCollided(obj1, obj2)
             obj1.collided = answer? 3: obj1.collided
@@ -44,7 +41,7 @@ const smallRadius = 16
 const playerRadius = 6
 
 
-const player = Player.create(new Vector(canvas.width/2,  canvas.height/2),  Vector.fromDegreesAndMagnitude(0,0), playerRadius)
+const player = Player.create(new Vector(Canvas.width/2,  Canvas.height/2),  Vector.fromDegreesAndMagnitude(0,0), playerRadius)
 ObjectPool.add(Asteroid.create(new Vector(5,  5), Vector.fromDegreesAndMagnitude(45,   0),  largeRadius))
 ObjectPool.add(Asteroid.create(new Vector(450,  5),  Vector.UP().scale(5),  largeRadius))
 ObjectPool.add(Asteroid.create(new Vector(10,  300), Vector.fromDegreesAndMagnitude(10,   .2), mediumRadius))
