@@ -1,7 +1,6 @@
 import Canvas from "./Canvas.js"
 import GameObject from "./GameObject.js"
 
-
 //Draws a triangle for the player. Will eventually need rotation
 const draw = (position, ...trash) => {
     let ctx = Canvas.context
@@ -14,15 +13,13 @@ const draw = (position, ...trash) => {
     ctx.stroke();
 };
 
-const create = (position, velocity, radius) => {
-    let player = GameObject.create(position, velocity, draw, radius)
-    return player
+class Player extends GameObject {
+    constructor(position, velocity, radius) {
+        super(position, velocity, draw, radius)
+    }
+    static create (position, velocity, radius) {
+        return new Player(position, velocity, radius)
+    }
 }
 
-
-
-const Player = {
-    create,
-    draw
-}
 export default Player
