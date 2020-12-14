@@ -1,14 +1,15 @@
 import GameObject from "./GameObject.js"
 import Circle from "./Circle.js"
 
-const create = (position, velocity, radius, color) => {
-  const draw = Circle
-  const asteroid = GameObject.create(position, velocity, draw, radius)
-  return asteroid
+class Asteroid extends GameObject {
+  constructor(position, velocity, radius, color) {
+    const draw = Circle
+    super(position, velocity, draw, radius)
+  }
+  static create(position,velocity, radius, color) {
+    return new Asteroid(position, velocity, radius, color)
+  }
 }
 
-const Asteroid = {
-  create,
-}
 
 export default Asteroid
