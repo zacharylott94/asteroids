@@ -75,8 +75,6 @@ class Vector{
     return Math.sqrt(Vector.distanceSquared(vector1, vector2, height, width))
   }
   
-  static width  () {return 500}   //This is wrong and gross. Find a good way to get game width
-  static height () {return 500}   //This is wrong and gross. Find a good way to get game height      
   static UP()    {return new Vector(0,-1)}
   static DOWN()  {return new Vector(0,1) }
   static LEFT()  {return new Vector(-1,0)}

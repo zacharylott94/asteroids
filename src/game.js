@@ -24,7 +24,7 @@ const physicsLoop = () => {
         GameObject.move (obj1)
         Constrain.object(obj1, Canvas.width, Canvas.height)
         objects.forEach(([uuid, obj2]) => {
-            let answer = hasCollided(obj1, obj2)
+            let answer = hasCollided(obj1, obj2, Canvas.width, Canvas.height)
             obj1.collided = answer? 3: obj1.collided
             obj2.collided = answer? 3: obj2.collided
         })
