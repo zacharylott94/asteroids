@@ -39,11 +39,17 @@ class Vector{
     const y = this.y
     return (x*x + y*y)
   }
-  static distanceSquared(vector1, vector2){
+  static distanceSquared(vector1, vector2, gameWidth, gameHeight){
+
+    //This is for backwards compatibility
+    gameWidth = gameWidth === undefined? Vector.width() : gameWidth
+    gameHeight = gameHeight === undefined? Vector.height() : gameHeight
+
+    
     let dx = Math.abs(vector2.x - vector1.x)
     let dy = Math.abs(vector2.y - vector1.y)
-    let cx = Vector.width() - dx //the c stands for complimentary, lol
-    let cy = Vector.height() - dy
+    let cx = gameWidth - dx //the c stands for complimentary, lol
+    let cy = gameHeight - dy
     dx =  dx <= cx? dx: cx  //if dx is smaller than cx, use dx, otherwise cx
     dy =  dy <= cy? dy: cy //if dy is smaller than cy, use dy, otherwise cy
     
