@@ -98,5 +98,9 @@ describe('Vectors', () => {
       expect(() => {new Vector('2','2')}).toThrow(TypeError)
 
     });
+    test('Passing only one parameter throws an error', () => {
+      expect(() => {new Vector(1)}).toThrow(TypeError)
+      expect(() => {new Vector(undefined,1)}).toThrow(TypeError)
+    });
 
 });

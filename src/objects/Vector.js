@@ -1,10 +1,11 @@
 class Vector{
   
   constructor(x, y) {
-    if (x === undefined || y === undefined){
-      this.x = 0
-      this.y = 0
-    } else if (typeof x != "number" || 
+    if (y === undefined && x !== undefined) throw new TypeError('y is undefined')
+    if (y !== undefined && x === undefined) throw new TypeError('x is undefined')
+    x = x === undefined? 0 : x
+    y = y === undefined? 0 : y
+    if (typeof x != "number" || 
         typeof y != "number" || 
         Number.isNaN(x)      || 
         Number.isNaN(y)){
