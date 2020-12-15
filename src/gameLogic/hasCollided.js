@@ -1,5 +1,4 @@
 import Vector from "../objects/Vector.js";
-import elasticCollision from "./elasticCollision.js"
 const hasCollided = (obj, obj2, width, height) => {
     if (obj === obj2) {
         // console.log("same boi");
