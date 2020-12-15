@@ -9,7 +9,6 @@ const hasCollided = (obj, obj2, width, height) => {
     const summedRadiiOfObjects = obj.radius + obj2.radius;
     const squaredRadiiOfObjects = summedRadiiOfObjects * summedRadiiOfObjects;
     if (squaredDistanceBetweenObjects <= squaredRadiiOfObjects) {
-        elasticCollision(obj,obj2)//Testing collision
         return true;
     }
     else {
