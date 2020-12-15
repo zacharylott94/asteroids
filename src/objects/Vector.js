@@ -26,6 +26,9 @@ class Vector{
   static add(vec1,vec2){
     return new Vector(vec1.x + vec2.x, vec1.y + vec2.y)
   }
+  static subtract(vec1, vec2) {
+    return new Vector(vec1.x - vec2.x, vec1.y - vec2.y)
+  }
   
   scale(...scalars){
     const scalar = scalars.reduce((acc, next) => {return acc * next})
@@ -68,6 +71,12 @@ class Vector{
   }
   static distance(vector1, vector2, height, width){
     return Math.sqrt(Vector.distanceSquared(vector1, vector2, height, width))
+  }
+  static dotProduct(vector1, vector2){
+    return ((vector1.x * vector2.x) + (vector1.y * vector2.y))
+  }
+  static tangent(vector) {
+    return new Vector(vector.y*-1, vector.x)
   }
   
   static UP()    {return new Vector(0,-1)}

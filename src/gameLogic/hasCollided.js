@@ -1,4 +1,5 @@
 import Vector from "../objects/Vector.js";
+import elasticCollision from "./elasticCollision.js"
 const hasCollided = (obj, obj2, width, height) => {
     if (obj === obj2) {
         // console.log("same boi");
@@ -8,6 +9,7 @@ const hasCollided = (obj, obj2, width, height) => {
     const summedRadiiOfObjects = obj.radius + obj2.radius;
     const squaredRadiiOfObjects = summedRadiiOfObjects * summedRadiiOfObjects;
     if (squaredDistanceBetweenObjects <= squaredRadiiOfObjects) {
+        elasticCollision(obj,obj2)//Testing collision
         return true;
     }
     else {
