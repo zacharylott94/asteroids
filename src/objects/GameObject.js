@@ -31,6 +31,10 @@ class GameObject {
         ObjectPool.remove(this)
     }
 
+    handleCollision(obj) {
+        // console.log(`Collided with: ${obj.constructor.name}`)
+    }
+
     update() {
         this.move()
     }
