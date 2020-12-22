@@ -20,6 +20,11 @@ class Player extends GameObject {
     static create (position, velocity, radius) {
         return new Player(position, velocity, radius)
     }
+
+    handleCollision(obj) {
+    // if (obj.constructor.name === 'Asteroid')
+        console.log('Hit Asteroid')
+    }
 }
 
 export default Player
