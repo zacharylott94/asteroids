@@ -22,6 +22,11 @@ class GameObject {
         return object;
     }
     
+    move () { 
+        this.position.x += this.velocity.x
+        this.position.y += this.velocity.y
+    }
+
     delete() {
         ObjectPool.remove(this)
     }
