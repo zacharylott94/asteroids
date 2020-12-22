@@ -5,7 +5,7 @@ describe('GameObject', () => {
     let position = new Vector()
     let velocity = new Vector(1,1)
     let obj = new GameObject(position,velocity,() =>{}, 0)
-    GameObject.move(obj)
+    obj.move()
     expect(obj.position.x).toBe(1)
     expect(obj.position.y).toBe(1)
 
