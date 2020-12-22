@@ -9,6 +9,10 @@ class Asteroid extends GameObject {
   static create(position,velocity, radius, color) {
     return new Asteroid(position, velocity, radius, color)
   }
+
+  handleCollision(obj) {
+    if (obj.constructor.name === "Projectile") this.delete()
+  }
 }
 
 
