@@ -1,5 +1,7 @@
 //creates a generic game object
 
+import ObjectPool from "../gameLogic/ObjectPool.js"
+
 class GameObject {
     constructor(position, velocity, draw, radius){
         if (position.constructor.name !== 'Vector') throw TypeError('position is not an instance of class Vector')
@@ -11,6 +13,7 @@ class GameObject {
         this.draw = draw
         this.radius = radius
         this.collided = false
+        ObjectPool.add(this)
     }
 
     //Compatibility from when factory functions were being used to instantiate objects
@@ -19,9 +22,9 @@ class GameObject {
         return object;
     }
     
-    static move (obj) { 
-        obj.position.x += obj.velocity.x
-        obj.position.y += obj.velocity.y
+    delete() {
+        ObjectPool.remove(this)
+    }
     }
 }
 
