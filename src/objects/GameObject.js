@@ -30,6 +30,9 @@ class GameObject {
     delete() {
         ObjectPool.remove(this)
     }
+
+    update() {
+        this.move()
     }
 }
 
