@@ -4,7 +4,7 @@ import Projectile from "./Projectile.js"
 import Vector from "./Vector.js";
 import Controller from "./Controller.js"
 
-
+const playerRadius = 6
 //Draws a triangle for the player. Will eventually need rotation
 const draw = (position, rotation) => {
     let ctx = Canvas.context
@@ -30,7 +30,7 @@ const IMPULSE = .01
 const ROTATION_RATE = 2
 
 class Player extends GameObject {
-    constructor(position = new Vector(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = 6) {
+    constructor(position = new Vector(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = playerRadius) {
         let boundDraw = (position, ...trash) =>{
             draw(position, this.rotation)
         }

@@ -38,10 +38,10 @@ const physicsLoop = () => {
 const largeRadius = 40
 const mediumRadius = 25
 const smallRadius = 16
-const playerRadius = 6
 
 
-new Player(new Vector(Canvas.width/2,  Canvas.height/2),  Vector.fromDegreesAndMagnitude(0,0), playerRadius)
+
+new Player()
 new Asteroid(new Vector(5,  5), Vector.fromDegreesAndMagnitude(45,   0),  largeRadius)
 new Asteroid(new Vector(450,  5),  Vector.UP().scale(5),  largeRadius)
 new Asteroid(new Vector(10,  300), Vector.fromDegreesAndMagnitude(10,   .2), mediumRadius)
