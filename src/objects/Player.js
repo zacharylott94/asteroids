@@ -24,6 +24,8 @@ const draw = (position, rotation) => {
     ctx.restore()
 };
 
+const IMPULSE = .01
+
 class Player extends GameObject {
     constructor(position, velocity, radius) {
         let boundDraw = (position, ...trash) =>{
@@ -31,6 +33,7 @@ class Player extends GameObject {
         }
         super(position, velocity, boundDraw, radius)
         this.rotation = 0
+        this.impulse = IMPULSE
     }
     static create (position, velocity, radius) {
         return new Player(position, velocity, radius)
@@ -48,6 +51,11 @@ class Player extends GameObject {
     update() {
         super.update()
         this.rotation++
+        this.accelerate()
+    }
+
+    accelerate() {
+        this.velocity = Vector.add(this.velocity,Vector.fromDegreesAndMagnitude(this.rotation, this.impulse))
     }
 }
 
