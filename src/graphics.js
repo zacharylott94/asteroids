@@ -13,6 +13,9 @@ const render = (object) => {
     object.collided > 0? showCollision(object.position): false
     showVelocity(object)
 
+    //Rotation Viewer Hack
+    object.rotation === undefined ? false : drawRay(object.position, Vector.add(object.position, Vector.fromDegreesAndMagnitude(object.rotation, 10)))
+
     //The above assumption exists in this function as well
     showClones(object)
 }
@@ -75,7 +78,8 @@ const GRAPHICS = {
   Player,
   clear,
   render,
-  showCollision
+  showCollision,
+  drawRay
 }
 
 

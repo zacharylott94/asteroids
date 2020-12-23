@@ -4,20 +4,32 @@ import Projectile from "./Projectile.js"
 import Vector from "./Vector.js";
 
 //Draws a triangle for the player. Will eventually need rotation
-const draw = (position, ...trash) => {
+const draw = (position, rotation) => {
     let ctx = Canvas.context
-    let origin = position
+    let center = {
+        x: position.x,
+        y: position.y
+    }
+    // center.y = center.y -3
+    ctx.save()
+    ctx.translate(position.x,position.y)
+    ctx.rotate(Math.PI * 2 / 360 * rotation)
+    ctx.translate(-position.x,-position.y)
     ctx.beginPath();
-    ctx.moveTo(origin.x-7, origin.y+7);
-    ctx.lineTo(origin.x, origin.y-7);
-    ctx.lineTo(origin.x+7, origin.y+7);
-    ctx.lineTo(origin.x-7, origin.y+7);
+    ctx.moveTo(center.x-4, center.y+7);
+    ctx.lineTo(center.x-4, center.y-7);
+    ctx.lineTo(center.x+10, center.y);
+    ctx.lineTo(center.x-4, center.y+7);
     ctx.stroke();
+    ctx.restore()
 };
 
 class Player extends GameObject {
     constructor(position, velocity, radius) {
-        super(position, velocity, draw, radius)
+        let boundDraw = (position, ...trash) =>{
+            draw(position, this.rotation)
+        }
+        super(position, velocity, boundDraw, radius)
         this.rotation = 0
     }
     static create (position, velocity, radius) {
@@ -26,11 +38,16 @@ class Player extends GameObject {
 
     handleCollision(obj) {
         super.handleCollision(obj)
-        if (obj.constructor.name === "Asteroid") this.delete()
+        // if (obj.constructor.name === "Asteroid") this.delete()
     }
 
     fireProjectile() {
         new Projectile(this.position, Vector.fromDegreesAndMagnitude(this.rotation,1))
+    }
+
+    update() {
+        super.update()
+        this.rotation++
     }
 }
 
