@@ -2,6 +2,8 @@ import Canvas from "./Canvas.js"
 import GameObject from "./GameObject.js"
 import Projectile from "./Projectile.js"
 import Vector from "./Vector.js";
+import Controller from "./Controller.js"
+
 
 //Draws a triangle for the player. Will eventually need rotation
 const draw = (position, rotation) => {
@@ -25,15 +27,26 @@ const draw = (position, rotation) => {
 };
 
 const IMPULSE = .01
+const ROTATION_RATE = 2
 
 class Player extends GameObject {
-    constructor(position, velocity, radius) {
+    constructor(position = new Vector(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = 6) {
         let boundDraw = (position, ...trash) =>{
             draw(position, this.rotation)
         }
         super(position, velocity, boundDraw, radius)
         this.rotation = 0
         this.impulse = IMPULSE
+        this.accelerating = false
+        this.rotating = 0
+        this.fired = false
+        this.firing = false
+
+        Controller.registerCallback("w", this.acceleratePressed.bind(this), this.accelerateReleased.bind(this))
+        Controller.registerCallback("a", this.rotateLeftPressed.bind(this), this.rotateReleased.bind(this))
+        Controller.registerCallback("d", this.rotateRightPressed.bind(this), this.rotateReleased.bind(this))
+        Controller.registerCallback("Enter", this.firePressed.bind(this), this.fireReleased.bind(this))
+
     }
     static create (position, velocity, radius) {
         return new Player(position, velocity, radius)
@@ -41,7 +54,7 @@ class Player extends GameObject {
 
     handleCollision(obj) {
         super.handleCollision(obj)
-        // if (obj.constructor.name === "Asteroid") this.delete()
+        if (obj.constructor.name === "Asteroid") this.delete()
     }
 
     fireProjectile() {
@@ -50,12 +63,55 @@ class Player extends GameObject {
 
     update() {
         super.update()
-        this.rotation++
-        this.accelerate()
+        // this.rotate(1)
+        if (this.accelerating) this.accelerate()
+        if (this.rotating == 1) this.rotate(ROTATION_RATE)
+        if (this.rotating == -1) this.rotate(-ROTATION_RATE)
+        if (this.firing && !this.fired){
+            this.fired = true
+            this.fireProjectile()
+        } else if (!this.firing) {
+            this.fired = false
+        }
+
+        
+    }
+    delete () {
+        Controller.unregisterCallback("w", this.acceleratePressed, this.accelerateReleased)
+        Controller.unregisterCallback("a", this.rotateLeftPressed.bind(this), this.rotateReleased.bind(this))
+        Controller.unregisterCallback("d", this.rotateRightPressed.bind(this), this.rotateReleased.bind(this))
+        Controller.unregisterCallback("Enter", this.firePressed.bind(this), this.fireReleased.bind(this))
+        super.delete()
     }
 
     accelerate() {
         this.velocity = Vector.add(this.velocity,Vector.fromDegreesAndMagnitude(this.rotation, this.impulse))
+    }
+
+    rotate(angle) {
+        this.rotation+=angle
+    }
+
+    acceleratePressed() {
+        this.accelerating = true
+    }
+    accelerateReleased() {
+        this.accelerating = false
+    }
+    rotateLeftPressed() {
+        this.rotating = -1
+    }
+    rotateRightPressed() {
+        this.rotating = 1
+    }
+    rotateReleased() {
+        this.rotating = 0
+    }
+    firePressed() {
+        this.firing = true
+    }
+    fireReleased() {
+        this.firing = false
     }
 }
 
