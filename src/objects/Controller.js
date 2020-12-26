@@ -1,5 +1,14 @@
 let pressedCallbacks = {}
 let releasedCallbacks = {}
+const button = {
+  fire: "Enter",
+  left: "a",
+  right: "d",
+  accelerate: "w",
+  reset: "o",
+  pause: "p"
+}
+Object.freeze(button)
 
 class Controller {
   static registerCallback(button, callbackPressed, callbackReleased){
@@ -21,6 +30,7 @@ class Controller {
     dict[button]?.forEach?.((each)=> each())
   }
 }
+Controller.button = button
 
 addEventListener("keydown",(e) =>{Controller.call(e.key,pressedCallbacks)})
 addEventListener("keyup",(e) =>{Controller.call(e.key,releasedCallbacks)})

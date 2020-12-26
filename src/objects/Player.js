@@ -42,10 +42,10 @@ class Player extends GameObject {
         this.fired = false
         this.firing = false
 
-        Controller.registerCallback("w", this.acceleratePressed.bind(this), this.accelerateReleased.bind(this))
-        Controller.registerCallback("a", this.rotateLeftPressed.bind(this), this.rotateReleased.bind(this))
-        Controller.registerCallback("d", this.rotateRightPressed.bind(this), this.rotateReleased.bind(this))
-        Controller.registerCallback("Enter", this.firePressed.bind(this), this.fireReleased.bind(this))
+        Controller.registerCallback(Controller.button.accelerate, this.acceleratePressed.bind(this), this.accelerateReleased.bind(this))
+        Controller.registerCallback(Controller.button.left, this.rotateLeftPressed.bind(this), this.rotateReleased.bind(this))
+        Controller.registerCallback(Controller.button.right, this.rotateRightPressed.bind(this), this.rotateReleased.bind(this))
+        Controller.registerCallback(Controller.button.fire, this.firePressed.bind(this), this.fireReleased.bind(this))
 
     }
     static create (position, velocity, radius) {
