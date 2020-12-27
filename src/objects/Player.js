@@ -39,14 +39,15 @@ class Player extends GameObject {
         this.rotation = 0
         this.impulse = IMPULSE
         this.accelerating = false
-        this.rotating = 0
+        this.rotatingRight = false
+        this.rotatingLeft = false
         this.fired = false
         this.firing = false
         this.activeMissiles = new Set()
 
         Controller.registerCallback(Controller.button.accelerate, this.acceleratePressed.bind(this), this.accelerateReleased.bind(this))
-        Controller.registerCallback(Controller.button.left, this.rotateLeftPressed.bind(this), this.rotateReleased.bind(this))
-        Controller.registerCallback(Controller.button.right, this.rotateRightPressed.bind(this), this.rotateReleased.bind(this))
+        Controller.registerCallback(Controller.button.left, this.rotateLeftPressed.bind(this), this.rotateLeftReleased.bind(this))
+        Controller.registerCallback(Controller.button.right, this.rotateRightPressed.bind(this), this.rotateRightReleased.bind(this))
         Controller.registerCallback(Controller.button.fire, this.firePressed.bind(this), this.fireReleased.bind(this))
         EventCoordinator.registerCallback(EventCoordinator.event.ProjectileDeleted, this.decrementActiveMissile.bind(this))
 
@@ -70,8 +71,8 @@ class Player extends GameObject {
         super.update()
         // this.rotate(1)
         if (this.accelerating) this.accelerate()
-        if (this.rotating == 1) this.rotate(ROTATION_RATE)
-        if (this.rotating == -1) this.rotate(-ROTATION_RATE)
+        if (this.rotatingRight) this.rotate(ROTATION_RATE)
+        if (this.rotatingLeft) this.rotate(-ROTATION_RATE)
         if (this.firing && !this.fired){
             this.fired = true
             this.fireProjectile()
@@ -83,8 +84,8 @@ class Player extends GameObject {
     }
     delete () {
         Controller.unregisterCallback("w", this.acceleratePressed, this.accelerateReleased)
-        Controller.unregisterCallback("a", this.rotateLeftPressed.bind(this), this.rotateReleased.bind(this))
-        Controller.unregisterCallback("d", this.rotateRightPressed.bind(this), this.rotateReleased.bind(this))
+        Controller.unregisterCallback("a", this.rotateLeftPressed.bind(this), this.rotateLeftReleased.bind(this))
+        Controller.unregisterCallback("d", this.rotateRightPressed.bind(this), this.rotateRightReleased.bind(this))
         Controller.unregisterCallback("Enter", this.firePressed.bind(this), this.fireReleased.bind(this))
         super.delete()
     }
@@ -104,13 +105,16 @@ class Player extends GameObject {
         this.accelerating = false
     }
     rotateLeftPressed() {
-        this.rotating = -1
+        this.rotatingLeft = true
     }
     rotateRightPressed() {
-        this.rotating = 1
+        this.rotatingRight = true
     }
-    rotateReleased() {
-        this.rotating = 0
+    rotateRightReleased() {
+        this.rotatingRight = false
+    }
+    rotateLeftReleased() {
+        this.rotatingLeft = false
     }
     firePressed() {
         this.firing = true
