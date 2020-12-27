@@ -25,11 +25,11 @@ class Asteroid extends GameObject {
   }
 
   shatter() {
-    if (this.size === largeRadius){
+    if (this.radius === largeRadius){
       Asteroid.createMedium(this.position,this.velocity.scale(1.25))
       Asteroid.createMedium(this.position,new Vector(this.velocity.y, -this.velocity.x).scale(1.25))
     }
-    if (this.size === mediumRadius) {
+    if (this.radius === mediumRadius) {
       Asteroid.createSmall(this.position,this.velocity.scale(1.25))
       Asteroid.createSmall(this.position,new Vector(this.velocity.y, -this.velocity.x).scale(1.25))
     }
@@ -44,7 +44,7 @@ class Asteroid extends GameObject {
     }
   }
 }
-Asteroid.size = size
+
 
 
 export default Asteroid

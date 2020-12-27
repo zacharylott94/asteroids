@@ -6,6 +6,7 @@ import Player from "./objects/Player.js"
 import hasCollided from "./gameLogic/hasCollided.js"
 import ObjectPool from "./gameLogic/ObjectPool.js"
 import Canvas from "./objects/Canvas.js"
+import AsteroidSpawner from "./gameLogic/AsteroidSpawner.js"
 
 //---------------Initialize Game--------------------
 //The main game loop should happen in here
@@ -44,12 +45,12 @@ const physicsLoop = () => {
 
 
 new Player()
-Asteroid.createLarge(new Vector(5,  5), Vector.fromDegreesAndMagnitude(45,   0))
-Asteroid.createLarge(new Vector(450,  5),  Vector.UP().scale(5))
-Asteroid.createMedium(new Vector(10,  300), Vector.fromDegreesAndMagnitude(10,   .2))
-Asteroid.createMedium(new Vector(200, 300), Vector.fromDegreesAndMagnitude(185, 1.5))
-Asteroid.createSmall(new Vector(150, 150), Vector.fromDegreesAndMagnitude(300,   1))
-Asteroid.createSmall(new Vector(10,   15),  Vector.fromDegreesAndMagnitude(34, 1.25))
+// Asteroid.createLarge(new Vector(5,  5), Vector.fromDegreesAndMagnitude(45,   0))
+// Asteroid.createLarge(new Vector(450,  5),  Vector.UP().scale(5))
+// Asteroid.createMedium(new Vector(10,  300), Vector.fromDegreesAndMagnitude(10,   .2))
+// Asteroid.createMedium(new Vector(200, 300), Vector.fromDegreesAndMagnitude(185, 1.5))
+// Asteroid.createSmall(new Vector(150, 150), Vector.fromDegreesAndMagnitude(300,   1))
+// Asteroid.createSmall(new Vector(10,   15),  Vector.fromDegreesAndMagnitude(34, 1.25))
 
 
 const GAME = {

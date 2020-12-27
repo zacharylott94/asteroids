@@ -9,4 +9,11 @@ ObjectPool.count = function(type) {
   return count
 }
 
+ObjectPool.get = function(type) {
+  for (const each of ObjectPool.values()){
+    if (each.constructor.name === type)
+      return each
+  }
+}
+
 export default ObjectPool
