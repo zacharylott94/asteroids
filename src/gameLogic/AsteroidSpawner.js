@@ -5,12 +5,14 @@ import ObjectPool from "./ObjectPool.js"
 import Asteroid from '../objects/Asteroid.js'
 
 const PLAYER_SAFETY_RADIUS = 200
-const MAX_ASTEROID_VELOCITY = 1
+const MIN_ASTEROID_VELOCITY = .1
+const DIFFICULTY_VELOCITY_RATIO = .5
+
 
 class AsteroidSpawner {
-  static workLoop(asteroidCount, difficulty) {
+  static workLoop(difficulty) {
     if (ObjectPool.count("Asteroid") < difficulty * 3) 
-      AsteroidSpawner.spawnAsteroid()
+      AsteroidSpawner.spawnAsteroid(difficulty)
   }
   static generateSpawnLocation() {
     // console.log("attempt to generate spawn location")
@@ -26,15 +28,17 @@ class AsteroidSpawner {
     }
     return newPosition
   }
-  static generateRandomVelocity() {
-    return Vector.fromDegreesAndMagnitude(Math.random() * 360, Math.random() * MAX_ASTEROID_VELOCITY)
+  static generateRandomVelocity(difficulty) {
+    return Vector.fromDegreesAndMagnitude(Math.random() * 360, 
+                                          Math.max(MIN_ASTEROID_VELOCITY, Math.random() * difficulty * DIFFICULTY_VELOCITY_RATIO))
   }
-  static spawnAsteroid() {
+  static spawnAsteroid(difficulty) {
     // console.log("Spawn Asteroid")
-    Asteroid.createLarge(AsteroidSpawner.generateSpawnLocation(), AsteroidSpawner.generateRandomVelocity())
+    Asteroid.createLarge(AsteroidSpawner.generateSpawnLocation(), AsteroidSpawner.generateRandomVelocity(difficulty))
   }
 }
 
 Controller.registerCallback(Controller.button.pause, () => {AsteroidSpawner.spawnAsteroid()})
+
 
 export default AsteroidSpawner

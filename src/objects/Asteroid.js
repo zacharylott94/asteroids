@@ -1,6 +1,7 @@
 import GameObject from "./GameObject.js"
 import Circle from "./Circle.js"
 import Vector from "./Vector.js"
+import EventCoordinator from "./EventCoordinator.js"
 
 
 // Radius Constants
@@ -42,6 +43,10 @@ class Asteroid extends GameObject {
       this.shatter()
       this.delete()
     }
+  }
+  delete() {
+    EventCoordinator.call(EventCoordinator.event.ObjectDeleted, this)
+    super.delete()
   }
 }
 
