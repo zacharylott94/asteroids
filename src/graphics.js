@@ -1,5 +1,4 @@
 import Circle from "./objects/Circle.js"
-import Player from "./objects/Player.js"
 import Canvas from "./objects/Canvas.js"
 import Vector from "./objects/Vector.js"
 
@@ -71,7 +70,6 @@ const showClones = (object) => {
 
 const GRAPHICS = {
   Circle,
-  Player,
   clear,
   render,
   drawRay
