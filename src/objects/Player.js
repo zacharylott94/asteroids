@@ -3,6 +3,7 @@ import GameObject from "./GameObject.js"
 import Projectile from "./Projectile.js"
 import Vector from "./Vector.js";
 import Controller from "./Controller.js"
+import EventCoordinator from "./EventCoordinator.js";
 
 const playerRadius = 6
 //Draws a triangle for the player. Will eventually need rotation
@@ -41,11 +42,13 @@ class Player extends GameObject {
         this.rotating = 0
         this.fired = false
         this.firing = false
+        this.activeMissiles = 0
 
         Controller.registerCallback(Controller.button.accelerate, this.acceleratePressed.bind(this), this.accelerateReleased.bind(this))
         Controller.registerCallback(Controller.button.left, this.rotateLeftPressed.bind(this), this.rotateReleased.bind(this))
         Controller.registerCallback(Controller.button.right, this.rotateRightPressed.bind(this), this.rotateReleased.bind(this))
         Controller.registerCallback(Controller.button.fire, this.firePressed.bind(this), this.fireReleased.bind(this))
+        EventCoordinator.registerCallback(EventCoordinator.event.MissileDeleted, this.decrementActiveMissile.bind(this))
 
     }
     static create (position, velocity, radius) {
@@ -58,7 +61,10 @@ class Player extends GameObject {
     }
 
     fireProjectile() {
-        new Projectile(this.position, Vector.fromDegreesAndMagnitude(this.rotation,1))
+        if (this.activeMissiles < 3) {
+            new Projectile(this.position, Vector.fromDegreesAndMagnitude(this.rotation,1))
+            this.activeMissiles++
+        }
     }
 
     update() {
@@ -112,6 +118,9 @@ class Player extends GameObject {
     }
     fireReleased() {
         this.firing = false
+    }
+    decrementActiveMissile () {
+        this.activeMissiles--
     }
 }
 

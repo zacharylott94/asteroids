@@ -1,5 +1,6 @@
 import GameObject from "./GameObject.js"
 import Circle from "./Circle.js"
+import EventCoordinator from "./EventCoordinator.js"
 
 const speed = 5
 const size = 5
@@ -18,6 +19,11 @@ class Projectile extends GameObject {
   handleCollision(obj){
     super.handleCollision(obj)
     if (obj.constructor.name === "Asteroid") this.delete()
+  }
+
+  delete() {
+    EventCoordinator.call(EventCoordinator.event.MissileDeleted)
+    super.delete()
   }
 }
 
