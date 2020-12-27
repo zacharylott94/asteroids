@@ -12,15 +12,20 @@ Object.freeze(button)
 
 class Controller {
   static registerCallback(button, callbackPressed, callbackReleased){
-    if (typeof callbackPressed == "function" && pressedCallbacks[button]?.constructor.name === "Set" )
-      pressedCallbacks[button].add(callbackPressed)
-    else 
+    //Make sure Sets are Initialized
+    if (pressedCallbacks[button]?.constructor.name != "Set")
       pressedCallbacks[button] = new Set([callbackPressed])
 
-    if (typeof callbackReleased == "function" && releasedCallbacks[button]?.constructor.name === "Set" )
-      releasedCallbacks[button].add(callbackReleased)
-    else 
+    if (releasedCallbacks[button]?.constructor.name != "Set" )
       releasedCallbacks[button] = new Set([callbackReleased])
+
+    //If functions were passed, register them
+    if (typeof callbackPressed == "function")
+      pressedCallbacks[button].add(callbackPressed)
+
+    if (typeof callbackReleased == "function")
+      releasedCallbacks[button].add(callbackReleased)
+
   }
   static unregisterCallback(button, callbackPressed, callbackReleased){
     pressedCallbacks[button].constructor.name === "Set" ? pressedCallbacks[button].delete(callbackPressed): false
