@@ -39,20 +39,17 @@ const physicsLoop = () => {
 
 
 
-// Radius Constants
-const largeRadius = 40
-const mediumRadius = 25
-const smallRadius = 16
+
 
 
 
 new Player()
-new Asteroid(new Vector(5,  5), Vector.fromDegreesAndMagnitude(45,   0),  largeRadius)
-new Asteroid(new Vector(450,  5),  Vector.UP().scale(5),  largeRadius)
-new Asteroid(new Vector(10,  300), Vector.fromDegreesAndMagnitude(10,   .2), mediumRadius)
-new Asteroid(new Vector(200, 300), Vector.fromDegreesAndMagnitude(185, 1.5), mediumRadius)
-new Asteroid(new Vector(150, 150), Vector.fromDegreesAndMagnitude(300,   1),  smallRadius)
-new Asteroid(new Vector(10,   15),  Vector.fromDegreesAndMagnitude(34, 1.25),  smallRadius)
+Asteroid.createLarge(new Vector(5,  5), Vector.fromDegreesAndMagnitude(45,   0))
+Asteroid.createLarge(new Vector(450,  5),  Vector.UP().scale(5))
+Asteroid.createMedium(new Vector(10,  300), Vector.fromDegreesAndMagnitude(10,   .2))
+Asteroid.createMedium(new Vector(200, 300), Vector.fromDegreesAndMagnitude(185, 1.5))
+Asteroid.createSmall(new Vector(150, 150), Vector.fromDegreesAndMagnitude(300,   1))
+Asteroid.createSmall(new Vector(10,   15),  Vector.fromDegreesAndMagnitude(34, 1.25))
 
 
 const GAME = {
