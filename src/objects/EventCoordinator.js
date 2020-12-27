@@ -1,7 +1,8 @@
 const callbacks = {}
 const event = {
   GamePaused: "pause",
-  ProjectileDeleted: "ProjectileDeleted"
+  ProjectileDeleted: "ProjectileDeleted",
+  ObjectDeleted: "ObjectDeleted"
 }
 
 class EventCoordinator {
@@ -15,7 +16,7 @@ class EventCoordinator {
     callbacks[event].constructor.name === "Set" ? callbacks[event].delete(callback): false
   }
   static call(event, ...args){
-    callbacks[event]?.forEach?.((each, args) => each(args))
+    callbacks[event]?.forEach?.((each) => each(args))
   }
 }
 EventCoordinator.event = event

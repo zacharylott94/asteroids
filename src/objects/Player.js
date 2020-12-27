@@ -42,7 +42,7 @@ class Player extends GameObject {
         this.rotating = 0
         this.fired = false
         this.firing = false
-        this.activeMissiles = 0
+        this.activeMissiles = new Set()
 
         Controller.registerCallback(Controller.button.accelerate, this.acceleratePressed.bind(this), this.accelerateReleased.bind(this))
         Controller.registerCallback(Controller.button.left, this.rotateLeftPressed.bind(this), this.rotateReleased.bind(this))
@@ -61,9 +61,8 @@ class Player extends GameObject {
     }
 
     fireProjectile() {
-        if (this.activeMissiles < 3) {
-            new Projectile(this.position, Vector.fromDegreesAndMagnitude(this.rotation,1))
-            this.activeMissiles++
+        if (this.activeMissiles.size < 3) {
+            this.activeMissiles.add(new Projectile(this.position, Vector.fromDegreesAndMagnitude(this.rotation,1)))
         }
     }
 
@@ -119,8 +118,9 @@ class Player extends GameObject {
     fireReleased() {
         this.firing = false
     }
-    decrementActiveMissile () {
-        this.activeMissiles--
+    decrementActiveMissile ([projectile]) {
+        console.log(projectile)
+        this.activeMissiles.delete(projectile)
     }
 }
 
