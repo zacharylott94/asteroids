@@ -14,16 +14,16 @@ class Controller {
   static registerCallback(button, callbackPressed, callbackReleased){
     //Make sure Sets are Initialized
     if (pressedCallbacks[button]?.constructor.name != "Set")
-      pressedCallbacks[button] = new Set([callbackPressed])
+      pressedCallbacks[button] = new Set()
 
     if (releasedCallbacks[button]?.constructor.name != "Set" )
-      releasedCallbacks[button] = new Set([callbackReleased])
+      releasedCallbacks[button] = new Set()
 
     //If functions were passed, register them
-    if (typeof callbackPressed == "function")
+    if (typeof callbackPressed === "function")
       pressedCallbacks[button].add(callbackPressed)
 
-    if (typeof callbackReleased == "function")
+    if (typeof callbackReleased === "function")
       releasedCallbacks[button].add(callbackReleased)
 
   }
