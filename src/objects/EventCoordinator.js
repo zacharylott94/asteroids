@@ -1,7 +1,7 @@
 const callbacks = {}
 const event = {
   GamePaused: "pause",
-  MissileDeleted: "missileDeleted"
+  ProjectileDeleted: "ProjectileDeleted"
 }
 
 class EventCoordinator {

@@ -22,7 +22,10 @@ class Projectile extends GameObject {
   }
 
   delete() {
-    EventCoordinator.call(EventCoordinator.event.MissileDeleted)
+    //Note that there is nothing in the event call identifying the player ship
+    //The assumption is that there is only one player
+    //Any projectile would raise the event for any player
+    EventCoordinator.call(EventCoordinator.event.ProjectileDeleted)
     super.delete()
   }
 }
