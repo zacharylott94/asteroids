@@ -51,6 +51,9 @@ class Player extends GameObject {
         Controller.registerCallback(Controller.button.fire, this.firePressed.bind(this), this.fireReleased.bind(this))
         EventCoordinator.registerCallback(EventCoordinator.event.ProjectileDeleted, this.decrementActiveMissile.bind(this))
 
+        //for Testing
+        Controller.registerCallback(" ", this.firePressed.bind(this), this.fireReleased.bind(this))
+
     }
     static create (position, velocity, radius) {
         return new Player(position, velocity, radius)
