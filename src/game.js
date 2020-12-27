@@ -1,4 +1,3 @@
-import GameObject from "./objects/GameObject.js"
 import Constrain from "./gameLogic/constrain.js"
 import Vector from "./objects/Vector.js"
 import GRAPHICS from "./graphics.js"
@@ -12,23 +11,29 @@ import Canvas from "./objects/Canvas.js"
 //The main game loop should happen in here
 const renderLoop = () => {
     GRAPHICS.clear()
-    Object.entries(ObjectPool.objects).forEach(([key,obj]) => {
-        GRAPHICS.render  (obj)
-    })
+    // Object.entries(ObjectPool.objects).forEach(([key,obj]) => {
+    //     GRAPHICS.render  (obj)
+    // })
+    ObjectPool.forEach(object => GRAPHICS.render (object))
 }
 
 const physicsLoop = () => {
-    let objects = Object.entries(ObjectPool.objects)
+    let objectIterator = ObjectPool.values()
+    let objects = []
+    for (const each of objectIterator){
+        objects.push(each)
+    }
+
     while (objects.length > 0) {
-        let obj1 = objects.shift()[1]
+        let obj1 = objects.shift()
         obj1.update()
         Constrain.object(obj1, Canvas.width, Canvas.height)
-        objects.forEach(([uuid, obj2]) => {
-            let answer = hasCollided(obj1, obj2, Canvas.width, Canvas.height)
-            obj1.collided = answer? 3: obj1.collided
-            obj2.collided = answer? 3: obj2.collided
+        objects.forEach((obj2) => {
+             if (hasCollided(obj1, obj2, Canvas.width, Canvas.height)){
+                obj1.handleCollision?.(obj2)
+                obj2.handleCollision?.(obj1)
+             }
         })
-        obj1.collided -= 1
     }
 }
 

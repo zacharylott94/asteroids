@@ -28,7 +28,7 @@ class GameObject {
     }
 
     delete() {
-        ObjectPool.remove(this)
+        ObjectPool.delete(this)
     }
 
     handleCollision(obj) {

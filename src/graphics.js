@@ -10,7 +10,6 @@ const render = (object) => {
     object.draw(object.position,object.radius)
 
     showCenter(object)
-    object.collided > 0? showCollision(object.position): false
     showVelocity(object)
 
     //Rotation Viewer Hack
@@ -34,9 +33,6 @@ const showCenter = (object) => {
 
 const showVelocity = (object) => {
     drawRay(object.position, Vector.add(object.position, object.velocity.scale(50)))
-}
-const showCollision = (position) => {
-    drawCross(position, 10, "white")
 }
 const drawCross = (position, size, color) => {
     let ctx = Canvas.context
@@ -78,7 +74,6 @@ const GRAPHICS = {
   Player,
   clear,
   render,
-  showCollision,
   drawRay
 }
 

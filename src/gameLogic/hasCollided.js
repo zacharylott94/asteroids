@@ -8,8 +8,6 @@ const hasCollided = (obj, obj2, width, height) => {
     const summedRadiiOfObjects = obj.radius + obj2.radius;
     const squaredRadiiOfObjects = summedRadiiOfObjects * summedRadiiOfObjects;
     if (squaredDistanceBetweenObjects <= squaredRadiiOfObjects) {
-        obj.handleCollision?.(obj2)
-        obj2.handleCollision?.(obj)
         return true;
     }
     else {
