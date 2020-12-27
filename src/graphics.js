@@ -12,11 +12,11 @@ const render = (object) => {
 
     // Everything below is for debugging and should eventually be removed
 
-    showCenter(object)
-    showVelocity(object)
+    // showCenter(object)
+    // showVelocity(object)
 
     //Rotation Viewer Hack
-    object.rotation === undefined ? false : drawRay(object.position, Vector.add(object.position, Vector.fromDegreesAndMagnitude(object.rotation, 10)))
+    // object.rotation === undefined ? false : drawRay(object.position, Vector.add(object.position, Vector.fromDegreesAndMagnitude(object.rotation, 10)))
 }
 
 
