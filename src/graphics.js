@@ -1,21 +1,22 @@
-import Circle from "./objects/Circle.js"
 import Canvas from "./objects/Canvas.js"
 import Vector from "./objects/Vector.js"
 
 const render = (object) => {
     //Assumption: All objects' draw functions will take or ignore these specific parameters
-    //            So, all object draw functions should take a context, then have their position passed in, etc.
+    //            So, all object draw functions should take a position and radius
     //            If a draw function ever doesn't follow this, rendering will break
     object.draw(object.position,object.radius)
+
+    //The above assumption exists in this function as well
+    showClones(object)
+
+    // Everything below is for debugging and should eventually be removed
 
     showCenter(object)
     showVelocity(object)
 
     //Rotation Viewer Hack
     object.rotation === undefined ? false : drawRay(object.position, Vector.add(object.position, Vector.fromDegreesAndMagnitude(object.rotation, 10)))
-
-    //The above assumption exists in this function as well
-    showClones(object)
 }
 
 
@@ -25,14 +26,17 @@ const clear = () => {
     ctx.fillRect(-10, -10, Canvas.width+15, Canvas.height+15)
 }
 
-
+//debug
 const showCenter = (object) => {
     drawCross(object.position, object.radius*2, "rgb(255,0,0)")
 }
 
+//debug
 const showVelocity = (object) => {
     drawRay(object.position, Vector.add(object.position, object.velocity.scale(50)))
 }
+
+//debug
 const drawCross = (position, size, color) => {
     let ctx = Canvas.context
     ctx.save()
@@ -42,6 +46,7 @@ const drawCross = (position, size, color) => {
     ctx.restore()
 }
 
+//debug
 const drawRay = (start, end) => {
     let ctx = Canvas.context
     ctx.save()
@@ -69,10 +74,8 @@ const showClones = (object) => {
 }
 
 const GRAPHICS = {
-  Circle,
   clear,
   render,
-  drawRay
 }
 
 
