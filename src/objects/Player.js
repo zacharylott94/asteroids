@@ -123,7 +123,7 @@ class Player extends GameObject {
         this.firing = false
     }
     decrementActiveMissile ([projectile]) {
-        console.log(projectile)
+        // console.log(projectile)
         this.activeMissiles.delete(projectile)
     }
 }
