@@ -7,6 +7,7 @@ import Canvas from "./objects/Canvas.js"
 import AsteroidSpawner from "./gameLogic/AsteroidSpawner.js"
 import EventCoordinator from "./objects/EventCoordinator.js"
 import Settings from "./gameLogic/Settings.js"
+import HUD from "./objects/HUD.js"
 
 //---------------Initialize Game--------------------
 let difficulty = 1
@@ -15,6 +16,7 @@ let difficulty = 1
 const renderLoop = () => {
     GRAPHICS.clear()
     ObjectPool.forEach(object => GRAPHICS.render (object))
+    HUD.draw()
 }
 
 let timer = 0
