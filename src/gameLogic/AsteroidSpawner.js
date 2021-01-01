@@ -15,18 +15,15 @@ class AsteroidSpawner {
       AsteroidSpawner.spawnAsteroid(difficulty)
   }
   static generateSpawnLocation() {
-    // console.log("attempt to generate spawn location")
     const player = ObjectPool.getPlayer()
-    let newPosition = new Vector()
+    
+    //Get random positions until one of them is outside a radius around the player
     while (true) {
-      newPosition.x = Math.random() * Canvas.width
-      newPosition.y = Math.random() * Canvas.height
+      let newPosition = new Vector(Math.random() * Canvas.width, Math.random() * Canvas.height)
       if (Vector.distanceSquared(newPosition, player.position, canvas.width, canvas.height) > PLAYER_SAFETY_RADIUS*PLAYER_SAFETY_RADIUS){
-        // console.log(`Spawn location at (${newPosition.x}, ${newPosition.y})`)
-        break
+        return newPosition
       }
     }
-    return newPosition
   }
   static generateRandomVelocity(difficulty) {
     return Vector.fromDegreesAndMagnitude(Math.random() * 360, 
