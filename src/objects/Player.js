@@ -5,7 +5,6 @@ import Vector from "./Vector.js";
 import Controller from "./Controller.js"
 import EventCoordinator from "./EventCoordinator.js";
 
-const playerRadius = 6
 //Draws a triangle for the player. Will eventually need rotation
 const draw = (position, rotation) => {
     let ctx = Canvas.context
@@ -27,32 +26,55 @@ const draw = (position, rotation) => {
     ctx.restore()
 };
 
+const PLAYER_RADIUS = 6
 const IMPULSE = .01
 const ROTATION_RATE = 2
 
+class State {
+    constructor(defaultState = false) {
+        this.state = defaultState
+    }
+    get() {
+        return this.state
+    }
+    off() {
+        this.state = false
+    }
+    on() {
+        this.state = true
+    }
+}
+
 class Player extends GameObject {
-    constructor(position = new Vector(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = playerRadius) {
+    constructor(position = new Vector(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = PLAYER_RADIUS) {
         let boundDraw = (position, ...trash) =>{
             draw(position, this.rotation)
         }
         super(position, velocity, boundDraw, radius)
         this.rotation = 0
         this.impulse = IMPULSE
-        this.accelerating = false
-        this.rotatingRight = false
-        this.rotatingLeft = false
-        this.fired = false
-        this.firing = false
+        this.state = {
+            accelerating:  new State,
+            rotatingLeft:  new State,
+            rotatingRight: new State,
+            fired:         new State,
+            firing:        new State
+        }
         this.activeMissiles = new Set()
 
-        Controller.registerCallback(Controller.button.accelerate, this.acceleratePressed.bind(this), this.accelerateReleased.bind(this))
-        Controller.registerCallback(Controller.button.left, this.rotateLeftPressed.bind(this), this.rotateLeftReleased.bind(this))
-        Controller.registerCallback(Controller.button.right, this.rotateRightPressed.bind(this), this.rotateRightReleased.bind(this))
-        Controller.registerCallback(Controller.button.fire, this.firePressed.bind(this), this.fireReleased.bind(this))
-        EventCoordinator.registerCallback(EventCoordinator.event.ProjectileDeleted, this.decrementActiveMissile.bind(this))
+        {   //I did this so that the below lines wouldn't be insanely long due to long-winded property indexing
+            //I.E. this.state.accelerating.on.bind(this.state.accelerating)
+            const accelerating = this.state.accelerating
+            const rotatingLeft = this.state.rotatingLeft
+            const rotatingRight = this.state.rotatingRight
+            const firing = this.state.firing
+            Controller.registerCallback(Controller.button.accelerate, accelerating.on.bind(accelerating), accelerating.off.bind(accelerating))
+            Controller.registerCallback(Controller.button.left, rotatingLeft.on.bind(rotatingLeft), rotatingLeft.off.bind(rotatingLeft))
+            Controller.registerCallback(Controller.button.right, rotatingRight.on.bind(rotatingRight), rotatingRight.off.bind(rotatingRight))
+            Controller.registerCallback(Controller.button.fire, firing.on.bind(firing), firing.off.bind(firing))
+            EventCoordinator.registerCallback(EventCoordinator.event.ProjectileDeleted, this.decrementActiveMissile.bind(this))
+        }
 
-        //for Testing
-        Controller.registerCallback(" ", this.firePressed.bind(this), this.fireReleased.bind(this))
 
     }
     static create (position, velocity, radius) {
@@ -73,14 +95,14 @@ class Player extends GameObject {
     update() {
         super.update()
         // this.rotate(1)
-        if (this.accelerating) this.accelerate()
-        if (this.rotatingRight) this.rotate(ROTATION_RATE)
-        if (this.rotatingLeft) this.rotate(-ROTATION_RATE)
-        if (this.firing && !this.fired){
-            this.fired = true
+        if (this.state.accelerating.get()) this.accelerate()
+        if (this.state.rotatingRight.get()) this.rotate(ROTATION_RATE)
+        if (this.state.rotatingLeft.get()) this.rotate(-ROTATION_RATE)
+        if (this.state.firing.get() && !this.state.fired.get()){
+            this.state.fired.on()
             this.fireProjectile()
-        } else if (!this.firing) {
-            this.fired = false
+        } else if (!this.state.firing.get()) {
+            this.state.fired.off()
         }
 
         
@@ -101,30 +123,6 @@ class Player extends GameObject {
         this.rotation+=angle
     }
 
-    acceleratePressed() {
-        this.accelerating = true
-    }
-    accelerateReleased() {
-        this.accelerating = false
-    }
-    rotateLeftPressed() {
-        this.rotatingLeft = true
-    }
-    rotateRightPressed() {
-        this.rotatingRight = true
-    }
-    rotateRightReleased() {
-        this.rotatingRight = false
-    }
-    rotateLeftReleased() {
-        this.rotatingLeft = false
-    }
-    firePressed() {
-        this.firing = true
-    }
-    fireReleased() {
-        this.firing = false
-    }
     decrementActiveMissile ([projectile]) {
         // console.log(projectile)
         this.activeMissiles.delete(projectile)
