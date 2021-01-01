@@ -59,8 +59,8 @@ class Player extends GameObject {
             fired:         new State,
             firing:        new State
         }
-        this.activeMissiles = new Set()
-        this.decrementActiveMissile = Player.decrementActiveMissile.bind(this)
+        this.activeProjectiles = new Set()
+        this.decrementActiveProjectiles = Player.decrementActiveProjectiles.bind(this)
 
         {   //I did this so that the below lines wouldn't be insanely long due to long-winded property indexing
             //I.E. this.state.accelerating.on.bind(this.state.accelerating)
@@ -72,7 +72,7 @@ class Player extends GameObject {
             Controller.registerCallback(Controller.button.left, rotatingLeft.on, rotatingLeft.off)
             Controller.registerCallback(Controller.button.right, rotatingRight.on, rotatingRight.off)
             Controller.registerCallback(Controller.button.fire, firing.on, firing.off)
-            EventCoordinator.registerCallback(EventCoordinator.event.ProjectileDeleted, this.decrementActiveMissile)
+            EventCoordinator.registerCallback(EventCoordinator.event.ProjectileDeleted, this.decrementActiveProjectiles)
         }
 
 
@@ -84,8 +84,8 @@ class Player extends GameObject {
     }
 
     fireProjectile() {
-        if (this.activeMissiles.size < 3) {
-            this.activeMissiles.add(new Projectile(this.position, Vector.fromDegreesAndMagnitude(this.rotation,1)))
+        if (this.activeProjectiles.size < 3) {
+            this.activeProjectiles.add(new Projectile(this.position, Vector.fromDegreesAndMagnitude(this.rotation,1)))
         }
     }
 
@@ -108,7 +108,7 @@ class Player extends GameObject {
         Controller.unregisterCallback(Controller.button.left, this.state.rotatingLeft.on, this.state.rotatingLeft.off)
         Controller.unregisterCallback(Controller.button.right, this.state.rotatingRight.on, this.state.rotatingRight.off)
         Controller.unregisterCallback(Controller.button.fire, this.state.firing.on, this.state.firing.off)
-        EventCoordinator.unregisterCallback(EventCoordinator.event.ProjectileDeleted, this.decrementActiveMissile)
+        EventCoordinator.unregisterCallback(EventCoordinator.event.ProjectileDeleted, this.decrementActiveProjectiles)
         super.delete()
     }
 
@@ -121,8 +121,8 @@ class Player extends GameObject {
     }
 
     //must be explicitly bound to objects
-    static decrementActiveMissile ([projectile]) {
-        this.activeMissiles.delete(projectile)
+    static decrementActiveProjectiles ([projectile]) {
+        this.activeProjectiles.delete(projectile)
     }
 }
 
