@@ -11,12 +11,14 @@ import EventCoordinator from "./objects/EventCoordinator.js"
 let difficulty = 1
 const DIFFICULTY_RAMPUP = .01
 
-//The main game loop should happen in here
+//The rendering loop here
 const renderLoop = () => {
     GRAPHICS.clear()
     ObjectPool.forEach(object => GRAPHICS.render (object))
 }
+
 let timer = 0
+//Main game loop here
 const physicsLoop = () => {
     let objectIterator = ObjectPool.values()
     let objects = new Array()
