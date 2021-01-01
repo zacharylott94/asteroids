@@ -1,13 +1,7 @@
+import Settings from "../gameLogic/Settings.js"
 let pressedCallbacks = {}
 let releasedCallbacks = {}
-const button = {
-  fire: "Enter",
-  left: "a",
-  right: "d",
-  accelerate: "w",
-  reset: "o",
-  pause: "p"
-}
+const button = Settings.BUTTONS
 Object.freeze(button)
 
 class Controller {

@@ -1,9 +1,7 @@
+import Settings from "../gameLogic/Settings.js"
+
 const callbacks = {}
-const event = {
-  GamePaused: "pause",
-  ProjectileDeleted: "ProjectileDeleted",
-  ObjectDeleted: "ObjectDeleted"
-}
+const event = Settings.EVENTS
 
 class EventCoordinator {
   static registerCallback(event, callback){

@@ -1,3 +1,4 @@
+import Settings from "./gameLogic/Settings.js"
 import Canvas from "./objects/Canvas.js"
 import Vector from "./objects/Vector.js"
 
@@ -10,13 +11,15 @@ const render = (object) => {
     //The above assumption exists in this function as well
     showClones(object)
 
-    // Everything below is for debugging and should eventually be removed
-
+    // Everything below is for debugging
+    if (Settings.RENDER_DEBUG){
     showCenter(object)
     showVelocity(object)
-
     //Rotation Viewer Hack
-    object.rotation === undefined ? false : drawRay(object.position, Vector.add(object.position, Vector.fromDegreesAndMagnitude(object.rotation, 10)))
+        if(object.rotation != undefined) drawRay(object.position, Vector.add(object.position, Vector.fromDegreesAndMagnitude(object.rotation, 20)), "aqua")
+    }
+
+
 }
 
 

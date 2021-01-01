@@ -4,6 +4,7 @@ import Projectile from "./Projectile.js"
 import Vector from "./Vector.js";
 import Controller from "./Controller.js"
 import EventCoordinator from "./EventCoordinator.js";
+import Settings from "../gameLogic/Settings.js"
 
 //Draws a triangle for the player.
 const draw = (position, rotation) => {
@@ -21,10 +22,6 @@ const draw = (position, rotation) => {
     ctx.stroke();
     ctx.restore()
 };
-
-const PLAYER_RADIUS = 6
-const IMPULSE = .01
-const ROTATION_RATE = 2
 
 class State {
     constructor(defaultState = false) {
@@ -45,13 +42,13 @@ class State {
 }
 
 class Player extends GameObject {
-    constructor(position = new Vector(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = PLAYER_RADIUS) {
+    constructor(position = new Vector(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = Settings.PLAYER_RADIUS) {
         let boundDraw = (position, ...trash) =>{
             draw(position, this.rotation)
         }
         super(position, velocity, boundDraw, radius)
         this.rotation = 0
-        this.impulse = IMPULSE
+        this.impulse = Settings.IMPULSE
         this.state = {
             accelerating:  new State,
             rotatingLeft:  new State,
@@ -92,8 +89,8 @@ class Player extends GameObject {
     update() {
         super.update()
         if (this.state.accelerating.get()) this.accelerate()
-        if (this.state.rotatingRight.get()) this.rotate(ROTATION_RATE)
-        if (this.state.rotatingLeft.get()) this.rotate(-ROTATION_RATE)
+        if (this.state.rotatingRight.get()) this.rotate(Settings.ROTATION_RATE)
+        if (this.state.rotatingLeft.get()) this.rotate(-Settings.ROTATION_RATE)
         if (this.state.firing.get() && !this.state.fired.get()){
             this.state.fired.on()
             this.fireProjectile()

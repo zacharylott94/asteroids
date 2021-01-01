@@ -6,10 +6,10 @@ import ObjectPool from "./gameLogic/ObjectPool.js"
 import Canvas from "./objects/Canvas.js"
 import AsteroidSpawner from "./gameLogic/AsteroidSpawner.js"
 import EventCoordinator from "./objects/EventCoordinator.js"
+import Settings from "./gameLogic/Settings.js"
 
 //---------------Initialize Game--------------------
 let difficulty = 1
-const DIFFICULTY_RAMPUP = .01
 
 //The rendering loop here
 const renderLoop = () => {
@@ -43,7 +43,7 @@ const physicsLoop = () => {
 
 EventCoordinator.registerCallback(EventCoordinator.event.ObjectDeleted, ([object]) => {
     if (object.constructor.name === "Asteroid"){
-        difficulty+=DIFFICULTY_RAMPUP
+        difficulty+=Settings.DIFFICULTY_RAMPUP
         console.log(`difficulty is: ${difficulty}`)
     }
 })
