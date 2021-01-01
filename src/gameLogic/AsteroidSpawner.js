@@ -38,7 +38,6 @@ class AsteroidSpawner {
   }
 }
 
-Controller.registerCallback(Controller.button.pause, () => {AsteroidSpawner.spawnAsteroid()})
 
 
 export default AsteroidSpawner
