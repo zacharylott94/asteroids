@@ -19,7 +19,7 @@ const renderLoop = () => {
 let timer = 0
 const physicsLoop = () => {
     let objectIterator = ObjectPool.values()
-    let objects = []
+    let objects = new Array()
     for (const each of objectIterator){
         objects.push(each)
     }
