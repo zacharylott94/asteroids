@@ -8,6 +8,7 @@ import AsteroidSpawner from "./gameLogic/AsteroidSpawner.js"
 import EventCoordinator from "./objects/EventCoordinator.js"
 import Settings from "./gameLogic/Settings.js"
 import HUD from "./objects/HUD.js"
+import Controller from "./objects/Controller.js"
 
 //---------------Initialize Game--------------------
 let difficulty = 1
@@ -49,6 +50,12 @@ EventCoordinator.registerCallback(EventCoordinator.event.ObjectDeleted, ([object
         console.log(`difficulty is: ${difficulty}`)
     }
 })
+function resetGame() {
+    difficulty = Settings.STARTING_DIFFICULTY
+    ObjectPool.reset()
+    HUD.reset()
+    new Player()
+}
 
 
 
@@ -56,7 +63,9 @@ EventCoordinator.registerCallback(EventCoordinator.event.ObjectDeleted, ([object
 
 
 
-new Player()
+resetGame()
+Controller.registerCallback(Controller.button.reset, resetGame)
+// EventCoordinator.registerCallback(EventCoordinator.event.GameReset, resetGame)
 const GAME = {
   renderLoop,
   physicsLoop,

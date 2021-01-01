@@ -24,7 +24,8 @@ class Settings {
   static EVENTS = {
     GamePaused: "pause",
     ProjectileDeleted: "ProjectileDeleted",
-    ObjectDeleted: "ObjectDeleted"
+    ObjectDeleted: "ObjectDeleted",
+    GameReset: "reset"
   }
 
   //Used in Player
@@ -38,6 +39,7 @@ class Settings {
   static PROJECTILE_TIME_TO_LIVE = 100 //in physics frames
 
   //Used in Game
+  static STARTING_DIFFICULTY = 1
   static DIFFICULTY_RAMPUP = .01
 
   //Used in Graphics

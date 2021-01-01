@@ -17,4 +17,8 @@ ObjectPool.getPlayer = function() {
   }
 }
 
+ObjectPool.reset = function() {
+  for (const each of ObjectPool.values()) ObjectPool.delete(each)
+}
+
 export default ObjectPool

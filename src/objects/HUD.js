@@ -15,8 +15,12 @@ class HUD {
   static tickScore() {
     HUD.score += 1
   }
+  static reset() {
+    HUD.score = 0
+  }
 }
 HUD.score = 0
 EventCoordinator.registerCallback(EventCoordinator.event.ObjectDeleted, HUD.tickScore)
+// EventCoordinator.registerCallback(EventCoordinator.event.GameReset, HUD.reset)
 
 export default HUD
