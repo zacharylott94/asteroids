@@ -108,10 +108,6 @@ class Player extends GameObject {
         
     }
     delete () {
-        Controller.unregisterCallback("w", this.acceleratePressed, this.accelerateReleased)
-        Controller.unregisterCallback("a", this.rotateLeftPressed.bind(this), this.rotateLeftReleased.bind(this))
-        Controller.unregisterCallback("d", this.rotateRightPressed.bind(this), this.rotateRightReleased.bind(this))
-        Controller.unregisterCallback("Enter", this.firePressed.bind(this), this.fireReleased.bind(this))
         super.delete()
     }
 
