@@ -13,9 +13,9 @@ const render = (object) => {
 
     // Everything below is for debugging
     if (Settings.RENDER_DEBUG){
-    showCenter(object)
-    showVelocity(object)
-    //Rotation Viewer Hack
+        showCenter(object)
+        showVelocity(object)
+        //Rotation Viewer Hack
         if(object.rotation != undefined) drawRay(object.position, Vector.add(object.position, Vector.fromDegreesAndMagnitude(object.rotation, 20)), "aqua")
     }
 
@@ -50,10 +50,10 @@ const drawCross = (position, size, color) => {
 }
 
 //debug
-const drawRay = (start, end) => {
+const drawRay = (start, end, color = "rgb(255,255,0)") => {
     let ctx = Canvas.context
     ctx.save()
-    ctx.strokeStyle = "rgb(255,255,0)"
+    ctx.strokeStyle = color
     ctx.beginPath()
     ctx.moveTo(start.x, start.y)
     ctx.lineTo(end.x, end.y)
