@@ -33,14 +33,17 @@ const ROTATION_RATE = 2
 class State {
     constructor(defaultState = false) {
         this.state = defaultState
+        this.get = State.get.bind(this)
+        this.off = State.off.bind(this)
+        this.on = State.on.bind(this)
     }
-    get() {
+    static get() {
         return this.state
     }
-    off() {
+    static off() {
         this.state = false
     }
-    on() {
+    static on() {
         this.state = true
     }
 }
@@ -68,10 +71,10 @@ class Player extends GameObject {
             const rotatingLeft = this.state.rotatingLeft
             const rotatingRight = this.state.rotatingRight
             const firing = this.state.firing
-            Controller.registerCallback(Controller.button.accelerate, accelerating.on.bind(accelerating), accelerating.off.bind(accelerating))
-            Controller.registerCallback(Controller.button.left, rotatingLeft.on.bind(rotatingLeft), rotatingLeft.off.bind(rotatingLeft))
-            Controller.registerCallback(Controller.button.right, rotatingRight.on.bind(rotatingRight), rotatingRight.off.bind(rotatingRight))
-            Controller.registerCallback(Controller.button.fire, firing.on.bind(firing), firing.off.bind(firing))
+            Controller.registerCallback(Controller.button.accelerate, accelerating.on, accelerating.off)
+            Controller.registerCallback(Controller.button.left, rotatingLeft.on, rotatingLeft.off)
+            Controller.registerCallback(Controller.button.right, rotatingRight.on, rotatingRight.off)
+            Controller.registerCallback(Controller.button.fire, firing.on, firing.off)
             EventCoordinator.registerCallback(EventCoordinator.event.ProjectileDeleted, this.decrementActiveMissile.bind(this))
         }
 
