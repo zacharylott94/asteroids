@@ -112,10 +112,10 @@ class Player extends GameObject {
         
     }
     delete () {
-        Controller.unregisterCallback(Controller.button.accelerate, accelerating.on, accelerating.off)
-        Controller.unregisterCallback(Controller.button.left, rotatingLeft.on, rotatingLeft.off)
-        Controller.unregisterCallback(Controller.button.right, rotatingRight.on, rotatingRight.off)
-        Controller.unregisterCallback(Controller.button.fire, firing.on, firing.off)
+        Controller.unregisterCallback(Controller.button.accelerate, this.state.accelerating.on, this.state.accelerating.off)
+        Controller.unregisterCallback(Controller.button.left, this.state.rotatingLeft.on, this.state.rotatingLeft.off)
+        Controller.unregisterCallback(Controller.button.right, this.state.rotatingRight.on, this.state.rotatingRight.off)
+        Controller.unregisterCallback(Controller.button.fire, this.state.firing.on, this.state.firing.off)
         EventCoordinator.unregisterCallback(EventCoordinator.event.ProjectileDeleted, this.decrementActiveMissile)
         super.delete()
     }
