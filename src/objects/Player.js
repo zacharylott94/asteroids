@@ -5,23 +5,19 @@ import Vector from "./Vector.js";
 import Controller from "./Controller.js"
 import EventCoordinator from "./EventCoordinator.js";
 
-//Draws a triangle for the player. Will eventually need rotation
+//Draws a triangle for the player.
 const draw = (position, rotation) => {
-    let ctx = Canvas.context
-    let center = {
-        x: position.x,
-        y: position.y
-    }
-    // center.y = center.y -3
+    const ctx = Canvas.context
+    const {x,y} = position
     ctx.save()
-    ctx.translate(position.x,position.y)
+    ctx.translate(x,y)
     ctx.rotate(Math.PI * 2 / 360 * rotation)
-    ctx.translate(-position.x,-position.y)
+    ctx.translate(-x,-y)
     ctx.beginPath();
-    ctx.moveTo(center.x-4, center.y+7);
-    ctx.lineTo(center.x-4, center.y-7);
-    ctx.lineTo(center.x+10, center.y);
-    ctx.lineTo(center.x-4, center.y+7);
+    ctx.moveTo(x-4, y+7);
+    ctx.lineTo(x-4, y-7);
+    ctx.lineTo(x+10, y);
+    ctx.lineTo(x-4, y+7);
     ctx.stroke();
     ctx.restore()
 };
@@ -95,7 +91,6 @@ class Player extends GameObject {
 
     update() {
         super.update()
-        // this.rotate(1)
         if (this.state.accelerating.get()) this.accelerate()
         if (this.state.rotatingRight.get()) this.rotate(ROTATION_RATE)
         if (this.state.rotatingLeft.get()) this.rotate(-ROTATION_RATE)
@@ -125,8 +120,8 @@ class Player extends GameObject {
         this.rotation+=angle
     }
 
+    //must be explicitly bound to objects
     static decrementActiveMissile ([projectile]) {
-        // console.log(projectile)
         this.activeMissiles.delete(projectile)
     }
 }
