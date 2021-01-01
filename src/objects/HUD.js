@@ -1,5 +1,5 @@
 import Canvas from "./Canvas.js"
-
+import EventCoordinator from "./EventCoordinator.js"
 class HUD {
   static draw() {
     let ctx = Canvas.context
@@ -12,8 +12,11 @@ class HUD {
 
     ctx.restore()
   }
+  static tickScore() {
+    HUD.score += 1
+  }
 }
 HUD.score = 0
-
+EventCoordinator.registerCallback(EventCoordinator.event.ObjectDeleted, HUD.tickScore)
 
 export default HUD
