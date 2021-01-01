@@ -81,9 +81,6 @@ class Player extends GameObject {
 
 
     }
-    static create (position, velocity, radius) {
-        return new Player(position, velocity, radius)
-    }
 
     handleCollision(obj) {
         super.handleCollision(obj)
