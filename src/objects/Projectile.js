@@ -1,5 +1,4 @@
 import GameObject from "./GameObject.js"
-import Circle from "./Circle.js"
 import EventCoordinator from "./EventCoordinator.js"
 import Settings from "../gameLogic/Settings.js"
 
@@ -7,7 +6,7 @@ import Settings from "../gameLogic/Settings.js"
 
 class Projectile extends GameObject {
   constructor(position, rotation) {
-    super(position, rotation.scale(Settings.PROJECTILE_SPEED), Circle, Settings.PROJECTILE_SIZE)
+    super(position, rotation.scale(Settings.PROJECTILE_SPEED), Settings.PROJECTILE_SIZE)
     this.timeToLive = Settings.PROJECTILE_TIME_TO_LIVE
   }
   update () {

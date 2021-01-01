@@ -7,7 +7,7 @@ import EventCoordinator from "./EventCoordinator.js";
 import Settings from "../gameLogic/Settings.js"
 
 //Draws a triangle for the player.
-const draw = (position, rotation) => {
+const triangle = (position, rotation) => {
     const ctx = Canvas.context
     const {x,y} = position
     ctx.save()
@@ -43,10 +43,8 @@ class State {
 
 class Player extends GameObject {
     constructor(position = new Vector(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = Settings.PLAYER_RADIUS) {
-        let boundDraw = (position, ...trash) =>{
-            draw(position, this.rotation)
-        }
-        super(position, velocity, boundDraw, radius)
+        super(position, velocity, radius)
+        this.draw = Player.draw
         this.rotation = 0
         this.impulse = Settings.IMPULSE
         this.state = {
@@ -74,6 +72,11 @@ class Player extends GameObject {
 
 
     }
+    
+    static draw(position, ...trash) {
+        triangle(position, this.rotation)
+    }
+    
 
     handleCollision(obj) {
         super.handleCollision(obj)

@@ -1,15 +1,14 @@
 import GameObject from "./GameObject.js"
-import Circle from "./Circle.js"
 import Vector from "./Vector.js"
 import EventCoordinator from "./EventCoordinator.js"
 import Settings from "../gameLogic/Settings.js"
 
 class Asteroid extends GameObject {
   constructor(position, velocity, radius) {
-    const draw = Circle
-    super(position, velocity, draw, radius)
+    super(position, velocity, radius)
     this.durability = 3
   }
+
   static createLarge(position,velocity) {
     return new Asteroid(position, velocity, Settings.LARGE_ASTEROID_RADIUS)
   }
