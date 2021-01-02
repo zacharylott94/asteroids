@@ -11,18 +11,26 @@ import HUD from "./objects/HUD.js"
 import Controller from "./objects/Controller.js"
 
 //---------------Initialize Game--------------------
-let difficulty = 1
+let STATE = {
+    timer: 0,
+    difficulty: Settings.STARTING_DIFFICULTY,
+    paused: false
+}
 
 //The rendering loop here
 const renderLoop = () => {
     GRAPHICS.clear()
+    if (STATE.paused) {
+        HUD.paused()
+        return
+    }
     ObjectPool.forEach(object => GRAPHICS.render (object))
     HUD.draw()
 }
 
-let timer = 0
 //Main game loop here
 const physicsLoop = () => {
+    if (STATE.paused) return
     let objectIterator = ObjectPool.values()
     let objects = new Array()
     for (const each of objectIterator){
@@ -40,21 +48,27 @@ const physicsLoop = () => {
              }
         })
     }
-    if (timer % 100 === 0) AsteroidSpawner.workLoop(difficulty)
-    timer++
+    if (STATE.timer % 100 === 0) AsteroidSpawner.workLoop(STATE.difficulty)
+    STATE.timer++
 }
 
 EventCoordinator.registerCallback(EventCoordinator.event.ObjectDeleted, ([object]) => {
     if (object.constructor.name === "Asteroid"){
-        difficulty+=Settings.DIFFICULTY_RAMPUP
-        console.log(`difficulty is: ${difficulty}`)
+        STATE.difficulty+=Settings.DIFFICULTY_RAMPUP
+        console.log(`difficulty is: ${STATE.difficulty}`)
     }
 })
 function resetGame() {
-    difficulty = Settings.STARTING_DIFFICULTY
+    STATE.difficulty = Settings.STARTING_DIFFICULTY
     ObjectPool.reset()
     HUD.reset()
     new Player()
+    STATE.timer = 0
+    STATE.paused = false
+}
+
+function togglePause() {
+    STATE.paused = !STATE.paused
 }
 
 
@@ -64,12 +78,11 @@ function resetGame() {
 
 
 resetGame()
+// unpauseGame()
+setInterval(renderLoop, 1000/Settings.FRAMERATE)
+setInterval(physicsLoop, 1000/Settings.PHYSICS_FRAMERATE)
 Controller.registerCallback(Controller.button.reset, resetGame)
+Controller.registerCallback(Controller.button.pause, togglePause)
 // EventCoordinator.registerCallback(EventCoordinator.event.GameReset, resetGame)
-const GAME = {
-  renderLoop,
-  physicsLoop,
-}
-// Object.entries(ObjectPool.objects).forEach(([key,value]) => console.log(value))
-
+let GAME = {}
 export default GAME

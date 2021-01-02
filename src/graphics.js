@@ -76,9 +76,22 @@ const showClones = (object) => {
     object.draw(new Vector(x - Canvas.width, y - Canvas.height), object.radius)  //top-left clone
 }
 
+function drawText (text, x, y, {color = "rgb(0,255,0)", size = "1em"} = {}) {
+    let ctx = Canvas.context
+    ctx.save()
+    ctx.textAlign = "center"
+    ctx.textBaseline = "top"
+    ctx.font = `${size} sans-serif`
+    ctx.fillStyle = color
+    ctx.fillText(text,x,y)
+
+    ctx.restore()
+}
+
 const GRAPHICS = {
   clear,
   render,
+  drawText
 }
 
 

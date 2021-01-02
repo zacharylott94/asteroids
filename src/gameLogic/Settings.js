@@ -41,6 +41,8 @@ class Settings {
   //Used in Game
   static STARTING_DIFFICULTY = 1
   static DIFFICULTY_RAMPUP = .01
+  static FRAMERATE = 60
+  static PHYSICS_FRAMERATE = 60
 
   //Used in Graphics
   static RENDER_DEBUG = true
