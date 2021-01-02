@@ -44,7 +44,7 @@ class Vector{
     return new Vector(this.x/this.magnitude(), this.y/this.magnitude())
   }
   radians() {
-    return Math.asin(this.normalize().y)
+    return Math.atan2(this.normalize().y, this.normalize().x)
   }
   magnitude() {
     return Math.sqrt(this.squaredMagnitude())
