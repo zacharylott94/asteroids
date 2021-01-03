@@ -7,6 +7,7 @@ class Settings {
   static ASTEROID_DIFFICULTY_VELOCITY_RATIO = .5
 
   //Used in Asteroid
+  static SPREAD = 45
   static LARGE_ASTEROID_RADIUS = 40
   static MEDIUM_ASTEROID_RADIUS = 25
   static SMALL_ASTEROID_RADIUS = 16
