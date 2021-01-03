@@ -1,5 +1,4 @@
 import Canvas from "../objects/Canvas.js"
-import Controller from "../objects/Controller.js"
 import Vector from "../objects/Vector.js"
 import ObjectPool from "./ObjectPool.js"
 import Asteroid from '../objects/Asteroid.js'
@@ -12,6 +11,7 @@ class AsteroidSpawner {
   }
   static generateSpawnLocation() {
     const player = ObjectPool.getPlayer()
+    if(player === undefined) return new Vector()
     
     //Get random positions until one of them is outside a radius around the player
     while (true) {
@@ -26,7 +26,6 @@ class AsteroidSpawner {
                                           Math.max(Settings.MIN_ASTEROID_VELOCITY, Math.random() * difficulty * Settings.ASTEROID_DIFFICULTY_VELOCITY_RATIO))
   }
   static spawnAsteroid(difficulty) {
-    // console.log("Spawn Asteroid")
     Asteroid.createLarge(AsteroidSpawner.generateSpawnLocation(), AsteroidSpawner.generateRandomVelocity(difficulty))
   }
 }
