@@ -9,7 +9,7 @@ ObjectPool.count = function(type) {
   return count
 }
 
-//Returns first object only. Used to get Player
+//Returns first object only
 ObjectPool.getPlayer = function() {
   for (const each of this.values()){
     if (each.constructor.name === "Player")
