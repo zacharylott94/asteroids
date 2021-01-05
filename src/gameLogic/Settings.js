@@ -46,7 +46,7 @@ class Settings {
   static PHYSICS_FRAMERATE = 60
 
   //Used in Graphics
-  static RENDER_DEBUG = true
+  static RENDER_DEBUG = false
 }
 
 export default Settings

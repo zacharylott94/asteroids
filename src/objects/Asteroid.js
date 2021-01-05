@@ -22,12 +22,13 @@ class Asteroid extends GameObject {
   }
 
   shatter() {
-    let newVelocity = Vector.fromDegreesAndMagnitude(this.velocity.degrees() + (Math.random() -.5) * Settings.SPREAD, this.velocity.magnitude() * 1.25)
+    let newVelocity = Vector.fromDegreesAndMagnitude(this.velocity.degrees() + (Math.random() -.5) * Settings.SPREAD, 
+                                                     this.velocity.magnitude() * 1.25)
     let direction = Math.random() > .5? 1: -1
     let spreadVelocity = new Vector(this.velocity.y*direction, -this.velocity.x*direction).scale(1.25)
     if (this.radius === Settings.LARGE_ASTEROID_RADIUS){
       Asteroid.createMedium(this.position, newVelocity)
-      Asteroid.createMedium(this.position,spreadVelocity)
+      Asteroid.createMedium(this.position, spreadVelocity)
     }
     if (this.radius === Settings.MEDIUM_ASTEROID_RADIUS) {
       Asteroid.createSmall(this.position, newVelocity)
