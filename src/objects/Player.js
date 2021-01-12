@@ -70,7 +70,7 @@ class Player extends GameObject {
 
     }
     
-    static draw(position, ...trash) {
+    static draw(position = this.position) {
         GRAPHICS.runDraw(() => triangle(position, this.rotation))
     }
     

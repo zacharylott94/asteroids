@@ -44,7 +44,7 @@ class Projectile extends GameObject {
     EventCoordinator.call(EventCoordinator.event.ProjectileDeleted, this)
     super.delete()
   }
-  static draw(position, ...trash) {
+  static draw(position = this.position) {
     GRAPHICS.runDraw(() => diamond(position, this.rotation))
   }
 }

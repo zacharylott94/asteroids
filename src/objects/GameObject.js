@@ -1,6 +1,7 @@
 //creates a generic game object
 
 import ObjectPool from "../gameLogic/ObjectPool.js"
+import GRAPHICS from "../graphics.js"
 import Circle from "./Circle.js"
 
 class GameObject {
@@ -11,7 +12,7 @@ class GameObject {
         this.position = position
         this.velocity = velocity
         this.radius = radius
-        this.draw = Circle
+        this.draw = GameObject.draw
         // this.collided = false
         ObjectPool.add(this)
     }
@@ -30,6 +31,10 @@ class GameObject {
 
     update() {
         this.move()
+    }
+
+    static draw(position = this.position) {
+        GRAPHICS.runDraw(() => Circle(position, this.radius))
     }
 }
 
