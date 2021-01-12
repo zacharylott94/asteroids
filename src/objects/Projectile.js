@@ -1,13 +1,30 @@
 import GameObject from "./GameObject.js"
 import EventCoordinator from "./EventCoordinator.js"
 import Settings from "../gameLogic/Settings.js"
+import GRAPHICS from "../graphics.js";
+import Canvas from "./Canvas.js"
 
 
+//Draws a diamond for the projectile
+const diamond = (position, rotation, xSize = 4, ySize = 2) => {
+  const ctx = Canvas.context
+  const {x,y} = position
+  GRAPHICS.rotate(position, rotation)
+  ctx.beginPath();
+  ctx.moveTo(x, y+ySize);
+  ctx.lineTo(x-xSize, y);
+  ctx.lineTo(x, y-ySize);
+  ctx.lineTo(x+xSize, y);
+  ctx.lineTo(x, y+ySize);
+  ctx.stroke();
+};
 
 class Projectile extends GameObject {
-  constructor(position, rotation) {
-    super(position, rotation.scale(Settings.PROJECTILE_SPEED), Settings.PROJECTILE_SIZE)
+  constructor(position, rotationVector) {
+    super(position, rotationVector.scale(Settings.PROJECTILE_SPEED), Settings.PROJECTILE_SIZE)
     this.timeToLive = Settings.PROJECTILE_TIME_TO_LIVE
+    this.rotation = rotationVector.degrees()
+    this.draw = Projectile.draw
   }
   update () {
     super.update()
@@ -26,6 +43,9 @@ class Projectile extends GameObject {
     //Any projectile would raise the event for any player
     EventCoordinator.call(EventCoordinator.event.ProjectileDeleted, this)
     super.delete()
+  }
+  static draw(position, ...trash) {
+    GRAPHICS.runDraw(() => diamond(position, this.rotation))
   }
 }
 
