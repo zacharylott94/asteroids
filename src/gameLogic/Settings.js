@@ -36,7 +36,7 @@ class Settings {
 
   //Used in Projectile
   static PROJECTILE_SPEED = 5
-  static PROJECTILE_SIZE = 5
+  static PROJECTILE_SIZE = 2
   static PROJECTILE_TIME_TO_LIVE = 100 //in physics frames
 
   //Used in Game
