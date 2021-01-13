@@ -6,6 +6,7 @@ import Controller from "./Controller.js"
 import EventCoordinator from "./EventCoordinator.js";
 import Settings from "../gameLogic/Settings.js"
 import triangle from "../draw/Triangle.js";
+import Sound from "../gameLogic/Sound.js";
 
 class State {
     constructor(defaultState = false) {
@@ -93,6 +94,7 @@ class Player extends GameObject {
         Controller.unregisterCallback(Controller.button.right, this.state.rotatingRight.on, this.state.rotatingRight.off)
         Controller.unregisterCallback(Controller.button.fire, this.state.firing.on, this.state.firing.off)
         EventCoordinator.unregisterCallback(EventCoordinator.event.ProjectileDeleted, this.decrementActiveProjectiles)
+        Player.destructionSound.play()
         super.delete()
     }
 
@@ -108,6 +110,8 @@ class Player extends GameObject {
     static decrementActiveProjectiles ([projectile]) {
         this.activeProjectiles.delete(projectile)
     }
+
+    static destructionSound = new Sound("/src/sfx/player_kill.wav")
 }
 
 export default Player
