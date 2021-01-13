@@ -3,6 +3,7 @@ import Vector from "./Vector.js"
 import EventCoordinator from "./EventCoordinator.js"
 import Settings from "../gameLogic/Settings.js"
 import Sound from "../gameLogic/Sound.js"
+import Random from "../gameLogic/random.js"
 
 
 
@@ -21,6 +22,7 @@ class Asteroid extends GameObject {
     
   }
 
+  // Sound files
   static shatterSound = new Sound("/asteroids/src/sfx/asteroid_shatter.wav")
   static shatterSound2 = new Sound("/asteroids/src/sfx/asteroid_shatter2.wav")
   static shatterSound3 = new Sound("/asteroids/src/sfx/asteroid_shatter3.wav")
@@ -28,6 +30,8 @@ class Asteroid extends GameObject {
   static hitSound2 = new Sound("/asteroids/src/sfx/asteroid_hit2.wav")
   static hitSound3 = new Sound("/asteroids/src/sfx/asteroid_hit3.wav")
 
+
+  //template methods
   static createLarge(position,velocity) {
     return new Asteroid(position, velocity, Settings.LARGE_ASTEROID_RADIUS)
   }
@@ -57,11 +61,11 @@ class Asteroid extends GameObject {
   handleCollision(obj) {
     if (obj.constructor.name === "Projectile"){
       this.durability--
-      this.hitSounds[Math.floor((Math.random()*3))].play()
+      this.hitSounds[Random.int(2)].play()
     }
     if (this.durability < 1) {
       this.hitSounds.forEach(each => each.stop())
-      this.shatterSounds[Math.floor((Math.random()*3))].play()
+      this.shatterSounds[Random.int(2)].play()
       this.shatter()
       this.delete()
     }
