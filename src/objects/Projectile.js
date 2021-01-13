@@ -39,9 +39,9 @@ class Projectile extends GameObject {
     diamond(position, this.rotation)
   } 
   static shootSounds = [
-    new Sound("/src/sfx/shoot.wav"),
-    new Sound("/src/sfx/shoot2.wav"),
-    new Sound("/src/sfx/shoot3.wav"),
+    new Sound("/asteroids/src/sfx/shoot.wav"),
+    new Sound("/asteroids/src/sfx/shoot2.wav"),
+    new Sound("/asteroids/src/sfx/shoot3.wav"),
   ]
 }
 

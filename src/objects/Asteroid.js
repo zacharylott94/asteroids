@@ -21,12 +21,12 @@ class Asteroid extends GameObject {
     
   }
 
-  static shatterSound = new Sound("/src/sfx/asteroid_shatter.wav")
-  static shatterSound2 = new Sound("/src/sfx/asteroid_shatter2.wav")
-  static shatterSound3 = new Sound("/src/sfx/asteroid_shatter3.wav")
-  static hitSound = new Sound("/src/sfx/asteroid_hit.wav")
-  static hitSound2 = new Sound("/src/sfx/asteroid_hit2.wav")
-  static hitSound3 = new Sound("/src/sfx/asteroid_hit3.wav")
+  static shatterSound = new Sound("/asteroids/src/sfx/asteroid_shatter.wav")
+  static shatterSound2 = new Sound("/asteroids/src/sfx/asteroid_shatter2.wav")
+  static shatterSound3 = new Sound("/asteroids/src/sfx/asteroid_shatter3.wav")
+  static hitSound = new Sound("/asteroids/src/sfx/asteroid_hit.wav")
+  static hitSound2 = new Sound("/asteroids/src/sfx/asteroid_hit2.wav")
+  static hitSound3 = new Sound("/asteroids/src/sfx/asteroid_hit3.wav")
 
   static createLarge(position,velocity) {
     return new Asteroid(position, velocity, Settings.LARGE_ASTEROID_RADIUS)

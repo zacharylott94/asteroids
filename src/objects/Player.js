@@ -111,7 +111,7 @@ class Player extends GameObject {
         this.activeProjectiles.delete(projectile)
     }
 
-    static destructionSound = new Sound("/src/sfx/player_kill.wav")
+    static destructionSound = new Sound("/asteroids/src/sfx/player_kill.wav")
 }
 
 export default Player
