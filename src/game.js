@@ -9,6 +9,7 @@ import EventCoordinator from "./objects/EventCoordinator.js"
 import Settings from "./gameLogic/Settings.js"
 import HUD from "./objects/HUD.js"
 import Controller from "./objects/Controller.js"
+import Sound from "./gameLogic/Sound.js"
 
 //---------------Initialize Game--------------------
 let STATE = {
@@ -16,6 +17,8 @@ let STATE = {
     difficulty: Settings.STARTING_DIFFICULTY,
     paused: false
 }
+
+let pauseSound = new Sound("/src/sfx/pause.wav")
 
 //The rendering loop here
 const renderLoop = () => {
@@ -68,6 +71,7 @@ function resetGame() {
 }
 
 function togglePause() {
+    pauseSound.play()
     STATE.paused = !STATE.paused
 }
 
