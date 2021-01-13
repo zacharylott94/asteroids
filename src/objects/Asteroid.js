@@ -10,13 +10,23 @@ class Asteroid extends GameObject {
   constructor(position, velocity, radius) {
     super(position, velocity, radius)
     this.durability = Settings.ASTEROID_DURABILITY
-    this.shatterSound = new Sound(Asteroid.shatterSound.media.src)
-    this.hitSound = new Sound(Asteroid.hitSound.media.src)
+    this.shatterSounds = [new Sound(Asteroid.shatterSound.media.src),
+                          new Sound(Asteroid.shatterSound2.media.src),
+                          new Sound(Asteroid.shatterSound3.media.src),
+                        ]
+    this.hitSounds = [new Sound(Asteroid.hitSound.media.src),
+                      new Sound(Asteroid.hitSound2.media.src),
+                      new Sound(Asteroid.hitSound3.media.src),
+                    ]
     
   }
 
   static shatterSound = new Sound("/src/sfx/asteroid_shatter.wav")
+  static shatterSound2 = new Sound("/src/sfx/asteroid_shatter2.wav")
+  static shatterSound3 = new Sound("/src/sfx/asteroid_shatter3.wav")
   static hitSound = new Sound("/src/sfx/asteroid_hit.wav")
+  static hitSound2 = new Sound("/src/sfx/asteroid_hit2.wav")
+  static hitSound3 = new Sound("/src/sfx/asteroid_hit3.wav")
 
   static createLarge(position,velocity) {
     return new Asteroid(position, velocity, Settings.LARGE_ASTEROID_RADIUS)
@@ -47,11 +57,11 @@ class Asteroid extends GameObject {
   handleCollision(obj) {
     if (obj.constructor.name === "Projectile"){
       this.durability--
-      this.hitSound.play()
+      this.hitSounds[Math.floor((Math.random()*3))].play()
     }
     if (this.durability < 1) {
-      this.hitSound.stop()
-      this.shatterSound.play()
+      this.hitSounds.forEach(each => each.stop())
+      this.shatterSounds[Math.floor((Math.random()*3))].play()
       this.shatter()
       this.delete()
     }

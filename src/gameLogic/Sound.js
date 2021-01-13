@@ -12,6 +12,10 @@ class Sound {
   stop() {
     this.media.pause()
   }
+
+  static pitches = [
+    1
+  ]
 }
 
 export default Sound
