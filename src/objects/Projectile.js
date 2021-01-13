@@ -2,6 +2,7 @@ import GameObject from "./GameObject.js"
 import EventCoordinator from "./EventCoordinator.js"
 import Settings from "../gameLogic/Settings.js"
 import diamond from "../draw/Diamond.js";
+import Sound from "../gameLogic/Sound.js";
 
 
 class Projectile extends GameObject {
@@ -10,6 +11,8 @@ class Projectile extends GameObject {
     this.timeToLive = Settings.PROJECTILE_TIME_TO_LIVE
     this.rotation = rotationVector.degrees()
     this.draw = Projectile.draw.bind(this)
+    this.shootSound = new Sound(Projectile.shootSound.media.src)
+    this.shootSound.play()
   }
   update () {
     super.update()
@@ -19,7 +22,10 @@ class Projectile extends GameObject {
 
   handleCollision(obj){
     super.handleCollision(obj)
-    if (obj.constructor.name === "Asteroid") this.delete()
+    if (obj.constructor.name === "Asteroid") {
+      this.shootSound.stop()
+      this.delete()
+    }
   }
 
   delete() {
@@ -32,6 +38,7 @@ class Projectile extends GameObject {
   static draw(position = this.position) {
     diamond(position, this.rotation)
   }
+  static shootSound = new Sound("/src/sfx/shoot.wav")
 }
 
 export default Projectile

@@ -27,7 +27,8 @@ class Settings {
     GamePaused: "pause",
     ProjectileDeleted: "ProjectileDeleted",
     ObjectDeleted: "ObjectDeleted",
-    GameReset: "reset"
+    GameReset: "reset",
+    ProjectileCreated: "ProjectileCreated",
   }
 
   //Used in Player
