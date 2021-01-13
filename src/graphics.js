@@ -30,12 +30,6 @@ class GRAPHICS {
         ctx.rotate(Math.PI * 2 / 360 * rotation)
         ctx.translate(-x,-y)
     }
-    static runDraw(drawFunc) {
-        let ctx = Canvas.context
-        ctx.save()
-        drawFunc()
-        ctx.restore()
-    }
     static clear() { 
         let ctx = Canvas.context
         ctx.fillRect(-10, -10, Canvas.width+15, Canvas.height+15)

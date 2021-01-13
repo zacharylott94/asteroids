@@ -5,20 +5,7 @@ import Vector from "./Vector.js";
 import Controller from "./Controller.js"
 import EventCoordinator from "./EventCoordinator.js";
 import Settings from "../gameLogic/Settings.js"
-import GRAPHICS from "../graphics.js";
-
-//Draws a triangle for the player.
-const triangle = (position, rotation) => {
-    const ctx = Canvas.context
-    const {x,y} = position
-    GRAPHICS.rotate(position, rotation)
-    ctx.beginPath();
-    ctx.moveTo(x-4, y+7);
-    ctx.lineTo(x-4, y-7);
-    ctx.lineTo(x+10, y);
-    ctx.lineTo(x-4, y+7);
-    ctx.stroke();
-};
+import triangle from "../draw/Triangle.js";
 
 class State {
     constructor(defaultState = false) {
@@ -41,7 +28,7 @@ class State {
 class Player extends GameObject {
     constructor(position = new Vector(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = Settings.PLAYER_RADIUS) {
         super(position, velocity, radius)
-        this.draw = Player.draw
+        this.draw = Player.draw.bind(this)
         this.rotation = 0
         this.impulse = Settings.IMPULSE
         this.state = {
@@ -71,7 +58,7 @@ class Player extends GameObject {
     }
     
     static draw(position = this.position) {
-        GRAPHICS.runDraw(() => triangle(position, this.rotation))
+        triangle(position, this.rotation)
     }
     
 

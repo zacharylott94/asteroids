@@ -1,4 +1,4 @@
-import Canvas from "./Canvas.js"
+import Canvas from "../objects/Canvas.js"
 //strokes a circle
 const Circle = (position, radius, color = Canvas.context.strokeStyle) => {
     let ctx = Canvas.context
