@@ -11,7 +11,7 @@ class Projectile extends GameObject {
     this.timeToLive = Settings.PROJECTILE_TIME_TO_LIVE
     this.rotation = rotationVector.degrees()
     this.draw = Projectile.draw.bind(this)
-    this.shootSound = new Sound(Projectile.shootSound.media.src)
+    this.shootSound = new Sound(Projectile.shootSounds[Math.floor((Math.random()*3))].media.src)
     this.shootSound.play()
   }
   update () {
@@ -37,8 +37,12 @@ class Projectile extends GameObject {
   }
   static draw(position = this.position) {
     diamond(position, this.rotation)
-  }
-  static shootSound = new Sound("/src/sfx/shoot.wav")
+  } 
+  static shootSounds = [
+    new Sound("/src/sfx/shoot.wav"),
+    new Sound("/src/sfx/shoot2.wav"),
+    new Sound("/src/sfx/shoot3.wav"),
+  ]
 }
 
 export default Projectile
