@@ -8,7 +8,7 @@ import Settings from "../gameLogic/Settings.js"
 class Asteroid extends GameObject {
   constructor(position, velocity, radius) {
     super(position, velocity, radius)
-    this.durability = 3
+    this.durability = Settings.ASTEROID_DURABILITY
   }
 
   static createLarge(position,velocity) {

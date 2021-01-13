@@ -11,6 +11,7 @@ class Settings {
   static LARGE_ASTEROID_RADIUS = 40
   static MEDIUM_ASTEROID_RADIUS = 25
   static SMALL_ASTEROID_RADIUS = 16
+  static ASTEROID_DURABILITY = 3
 
   //Used in Controller
   static BUTTONS = {
