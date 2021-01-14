@@ -1,8 +1,6 @@
 class Random {
-  int(max) {
-    const random = Math.random()
-    const multiplier = max+1
-    return random * multiplier
+  static int(max) {
+    return Math.floor(Math.random()*(max+1))
   }
 }
 
