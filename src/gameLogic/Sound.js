@@ -1,16 +1,20 @@
-class Sound {
+class Sound extends Audio{
   constructor(url){
-    this.media = new Audio(url)
-    this.media.volume = .5
+    super(url)
+    this.volume = .5
   }
 
   play() {
-    this.media.currentTime = 0
-    this.media.play()
+    this.currentTime = 0
+    super.play()
   }
 
   stop() {
-    this.media.pause()
+    super.pause()
+  }
+
+  getSrc() {
+    return this.src
   }
 }
 

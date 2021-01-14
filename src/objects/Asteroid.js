@@ -11,13 +11,13 @@ class Asteroid extends GameObject {
   constructor(position, velocity, radius) {
     super(position, velocity, radius)
     this.durability = Settings.ASTEROID_DURABILITY
-    this.shatterSounds = [new Sound(Asteroid.shatterSound.media.src),
-                          new Sound(Asteroid.shatterSound2.media.src),
-                          new Sound(Asteroid.shatterSound3.media.src),
+    this.shatterSounds = [new Sound(Asteroid.shatterSound.getSrc()),
+                          new Sound(Asteroid.shatterSound2.getSrc()),
+                          new Sound(Asteroid.shatterSound3.getSrc()),
                         ]
-    this.hitSounds = [new Sound(Asteroid.hitSound.media.src),
-                      new Sound(Asteroid.hitSound2.media.src),
-                      new Sound(Asteroid.hitSound3.media.src),
+    this.hitSounds = [new Sound(Asteroid.hitSound.getSrc()),
+                      new Sound(Asteroid.hitSound2.getSrc()),
+                      new Sound(Asteroid.hitSound3.getSrc()),
                     ]
     
   }

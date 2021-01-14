@@ -3,6 +3,7 @@ import EventCoordinator from "./EventCoordinator.js"
 import Settings from "../gameLogic/Settings.js"
 import diamond from "../draw/Diamond.js";
 import Sound from "../gameLogic/Sound.js";
+import Random from "../gameLogic/random.js";
 
 
 class Projectile extends GameObject {
@@ -11,7 +12,7 @@ class Projectile extends GameObject {
     this.timeToLive = Settings.PROJECTILE_TIME_TO_LIVE
     this.rotation = rotationVector.degrees()
     this.draw = Projectile.draw.bind(this)
-    this.shootSound = new Sound(Projectile.shootSounds[Math.floor((Math.random()*3))].media.src)
+    this.shootSound = new Sound(Projectile.shootSounds[Random.int(2)].getSrc())
     this.shootSound.play()
   }
   update () {
