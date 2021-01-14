@@ -18,7 +18,7 @@ let STATE = {
     paused: false
 }
 
-let pauseSound = new Sound("/src/sfx/pause.wav")
+let pauseSound = new Sound("/asteroids/src/sfx/pause.wav")
 
 //The rendering loop here
 const renderLoop = () => {
