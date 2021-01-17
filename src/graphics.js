@@ -8,11 +8,9 @@ class GRAPHICS {
         //Assumption: All objects' draw functions will take or ignore these specific parameters
         //            So, all object draw functions should take a position and radius
         //            If a draw function ever doesn't follow this, rendering will break
-        object.draw()
-    
-        //The above assumption exists in this function as well
-        GRAPHICS.showClones(object)
-    
+
+        object?.renderComponent.render()
+
         // Everything below is for debugging
         if (Settings.RENDER_DEBUG){
             GRAPHICS.showCenter(object)
@@ -58,18 +56,6 @@ class GRAPHICS {
         ctx.lineTo(end.x, end.y)
         ctx.stroke()
         ctx.restore()
-    }
-    static showClones(object){
-
-        const {x,y} = object.position
-        object.draw(new Vector(x + Canvas.width, y))               //right clone
-        object.draw(new Vector(x, y + Canvas.height))              //bottom clone
-        object.draw(new Vector(x - Canvas.width, y))               //left clone
-        object.draw(new Vector(x, y - Canvas.height))              //top clone
-        object.draw(new Vector(x + Canvas.width, y + Canvas.height))  //bottom-right clone
-        object.draw(new Vector(x - Canvas.width, y + Canvas.height))  //bottom-left clone
-        object.draw(new Vector(x + Canvas.width, y - Canvas.height))  //top-right clone
-        object.draw(new Vector(x - Canvas.width, y - Canvas.height))  //top-left clone
     }
 
     static drawText(text, x, y, {color = "rgb(0,255,0)", size = "1em"} = {}) {

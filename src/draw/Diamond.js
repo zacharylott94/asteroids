@@ -2,7 +2,7 @@ import GRAPHICS from "../graphics.js";
 import Canvas from "../objects/Canvas.js";
 
 //Draws a diamond for the projectile
-const diamond = (position, rotation, length = 4, width = 2) => {
+const diamond = ({position, rotation} ={}, length = 4, width = 2) => {
   const ctx = Canvas.context;
   const { x, y } = position;
   ctx.save();

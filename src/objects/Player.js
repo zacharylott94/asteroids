@@ -7,6 +7,7 @@ import EventCoordinator from "./EventCoordinator.js";
 import Settings from "../gameLogic/Settings.js"
 import triangle from "../draw/Triangle.js";
 import Sound from "../gameLogic/Sound.js";
+import RenderComponent from "./components/renderComponent.js";
 
 class State {
     constructor(defaultState = false) {
@@ -29,7 +30,6 @@ class State {
 class Player extends GameObject {
     constructor(position = new Vector(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = Settings.PLAYER_RADIUS) {
         super(position, velocity, radius)
-        this.draw = Player.draw.bind(this)
         this.rotation = 0
         this.impulse = Settings.IMPULSE
         this.state = {
@@ -41,6 +41,7 @@ class Player extends GameObject {
         }
         this.activeProjectiles = new Set()
         this.decrementActiveProjectiles = Player.decrementActiveProjectiles.bind(this)
+        this.renderComponent = new RenderComponent(triangle, this)
 
         {   //I did this so that the below lines wouldn't be insanely long due to long-winded property indexing
             //I.E. this.state.accelerating.on.bind(this.state.accelerating)
@@ -57,11 +58,6 @@ class Player extends GameObject {
 
 
     }
-    
-    static draw(position = this.position) {
-        triangle(position, this.rotation)
-    }
-    
 
     handleCollision(obj) {
         super.handleCollision(obj)

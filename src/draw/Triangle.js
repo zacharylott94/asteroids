@@ -1,7 +1,7 @@
 import Canvas from "../objects/Canvas.js";
 import GRAPHICS from "../graphics.js";
 
-const triangle = (position, rotation) => {
+const triangle = ({position, rotation} = {}) => {
     const ctx = Canvas.context;
     const { x, y } = position;
     ctx.save();

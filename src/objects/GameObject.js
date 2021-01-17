@@ -2,6 +2,7 @@
 
 import ObjectPool from "../gameLogic/ObjectPool.js"
 import Circle from "../draw/Circle.js"
+import RenderComponent from "./components/renderComponent.js"
 
 class GameObject {
     constructor(position, velocity, radius){
@@ -11,8 +12,7 @@ class GameObject {
         this.position = position
         this.velocity = velocity
         this.radius = radius
-        this.draw = GameObject.draw.bind(this)
-        // this.collided = false
+        this.renderComponent = new RenderComponent(Circle, this)
         ObjectPool.add(this)
     }
     move () { 
@@ -30,10 +30,6 @@ class GameObject {
 
     update() {
         this.move()
-    }
-
-    static draw(position = this.position) {
-        Circle(position, this.radius)
     }
 }
 
