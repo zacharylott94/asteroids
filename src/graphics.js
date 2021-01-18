@@ -5,10 +5,6 @@ import Vector from "./objects/Vector.js"
 
 class GRAPHICS {
     static render(object){
-        //Assumption: All objects' draw functions will take or ignore these specific parameters
-        //            So, all object draw functions should take a position and radius
-        //            If a draw function ever doesn't follow this, rendering will break
-
         object?.renderComponent.render()
 
         // Everything below is for debugging
