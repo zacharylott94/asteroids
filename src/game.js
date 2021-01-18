@@ -1,4 +1,3 @@
-import Constrain from "./gameLogic/constrain.js"
 import GRAPHICS from "./graphics.js"
 import Player from "./objects/Player.js"
 import hasCollided from "./gameLogic/hasCollided.js"
@@ -43,7 +42,6 @@ const physicsLoop = () => {
     while (objects.length > 0) {
         let obj1 = objects.shift()
         obj1.update()
-        Constrain.object(obj1, Canvas.width, Canvas.height)
         objects.forEach((obj2) => {
              if (hasCollided(obj1, obj2, Canvas.width, Canvas.height)){
                 obj1.handleCollision?.(obj2)

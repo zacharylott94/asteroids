@@ -8,6 +8,7 @@ import Settings from "../gameLogic/Settings.js"
 import triangle from "../draw/Triangle.js";
 import Sound from "../gameLogic/Sound.js";
 import RenderComponent from "./components/renderComponent.js";
+import Position from "./vector/Position.js";
 
 class State {
     constructor(defaultState = false) {
@@ -28,7 +29,7 @@ class State {
 }
 
 class Player extends GameObject {
-    constructor(position = new Vector(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = Settings.PLAYER_RADIUS) {
+    constructor(position = new Position(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = Settings.PLAYER_RADIUS) {
         super(position, velocity, radius)
         this.rotation = 0
         this.impulse = Settings.IMPULSE

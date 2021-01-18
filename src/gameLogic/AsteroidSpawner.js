@@ -3,6 +3,7 @@ import Vector from "../objects/vector/Vector.js"
 import ObjectPool from "./ObjectPool.js"
 import Asteroid from '../objects/Asteroid.js'
 import Settings from './Settings.js'
+import Position from "../objects/vector/Position.js"
 
 class AsteroidSpawner {
   static workLoop(difficulty) {
@@ -11,11 +12,11 @@ class AsteroidSpawner {
   }
   static generateSpawnLocation() {
     const player = ObjectPool.getPlayer()
-    if(player === undefined) return new Vector()
+    if(player === undefined) return new Position()
     
     //Get random positions until one of them is outside a radius around the player
     while (true) {
-      let newPosition = new Vector(Math.random() * Canvas.width, Math.random() * Canvas.height)
+      let newPosition = new Position(Math.random() * Canvas.width, Math.random() * Canvas.height)
       if (Vector.distanceSquared(newPosition, player.position, canvas.width, canvas.height) > Settings.PLAYER_SAFETY_RADIUS*Settings.PLAYER_SAFETY_RADIUS){
         return newPosition
       }
