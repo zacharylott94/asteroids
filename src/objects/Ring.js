@@ -19,11 +19,13 @@ class Ring {
   previous() {
     this.currentIndex--
     if (this.currentIndex < 0)
-      this.currentIndex = this.array.length
+      this.currentIndex = this.array.length - 1
     return this.current()
   }
-  forEach(func) {
-    this.array.forEach(func)
+  map(func) {
+    console.log(this.array)
+    this.array = this.array.map(func)
+    console.log(this.array)
   }
 }
 export default Ring
