@@ -44,8 +44,8 @@ const physicsLoop = () => {
         obj1.update()
         objects.forEach((obj2) => {
              if (hasCollided(obj1, obj2, Canvas.width, Canvas.height)){
-                obj1.handleCollision?.(obj2)
-                obj2.handleCollision?.(obj1)
+                obj1.handleCollision(obj2)
+                obj2.handleCollision(obj1)
              }
         })
     }

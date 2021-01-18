@@ -26,7 +26,7 @@ class GameObject {
     }
 
     handleCollision(obj) {
-        // console.log(`Collided with: ${obj.constructor.name}`)
+        throw("This method must be overridden.")
     }
 
     update() {

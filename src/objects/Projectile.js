@@ -23,7 +23,6 @@ class Projectile extends GameObject {
   }
 
   handleCollision(obj){
-    super.handleCollision(obj)
     if (obj.constructor.name === "Asteroid") {
       this.shootSound.stop()
       this.delete()
