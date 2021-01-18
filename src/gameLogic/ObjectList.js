@@ -1,6 +1,6 @@
-const ObjectPool = new Set()
+const ObjectList = new Set()
 
-ObjectPool.count = function(type) {
+ObjectList.count = function(type) {
   let count = 0
   for (const each of this.values()){
     if (each.constructor.name === type)
@@ -10,15 +10,15 @@ ObjectPool.count = function(type) {
 }
 
 //Returns first object only
-ObjectPool.getPlayer = function() {
+ObjectList.getPlayer = function() {
   for (const each of this.values()){
     if (each.constructor.name === "Player")
       return each
   }
 }
 
-ObjectPool.reset = function() {
+ObjectList.reset = function() {
   for (const each of this.values()) this.delete(each)
 }
 
-export default ObjectPool
+export default ObjectList

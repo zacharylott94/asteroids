@@ -1,7 +1,7 @@
 import GRAPHICS from "./graphics.js"
 import Player from "./objects/Player.js"
 import hasCollided from "./gameLogic/hasCollided.js"
-import ObjectPool from "./gameLogic/ObjectPool.js"
+import ObjectList from "./gameLogic/ObjectList.js"
 import Canvas from "./objects/Canvas.js"
 import AsteroidSpawner from "./gameLogic/AsteroidSpawner.js"
 import EventCoordinator from "./objects/EventCoordinator.js"
@@ -26,14 +26,14 @@ const renderLoop = () => {
         HUD.paused()
         return
     }
-    ObjectPool.forEach(object => GRAPHICS.render (object))
+    ObjectList.forEach(object => GRAPHICS.render (object))
     HUD.draw()
 }
 
 //Main game loop here
 const physicsLoop = () => {
     if (STATE.paused) return
-    let objectIterator = ObjectPool.values()
+    let objectIterator = ObjectList.values()
     let objects = new Array()
     for (const each of objectIterator){
         objects.push(each)
@@ -61,7 +61,7 @@ EventCoordinator.registerCallback(EventCoordinator.event.ObjectDeleted, ([object
 })
 function resetGame() {
     STATE.difficulty = Settings.STARTING_DIFFICULTY
-    ObjectPool.reset()
+    ObjectList.reset()
     HUD.reset()
     new Player()
     STATE.timer = 0

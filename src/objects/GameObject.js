@@ -1,6 +1,6 @@
 //creates a generic game object
 
-import ObjectPool from "../gameLogic/ObjectPool.js"
+import ObjectList from "../gameLogic/ObjectList.js"
 import Circle from "../draw/Circle.js"
 import RenderComponent from "./components/renderComponent.js"
 import Position from "./vector/Position.js"
@@ -14,7 +14,7 @@ class GameObject {
         this.velocity = velocity
         this.radius = radius
         this.renderComponent = new RenderComponent(Circle, this)
-        ObjectPool.add(this)
+        ObjectList.add(this)
     }
     move () { 
         this.position = Position.add(this.position, this.velocity)
@@ -22,7 +22,7 @@ class GameObject {
     }
 
     delete() {
-        ObjectPool.delete(this)
+        ObjectList.delete(this)
     }
 
     handleCollision(obj) {
