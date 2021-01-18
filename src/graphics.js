@@ -1,6 +1,6 @@
 import Settings from "./gameLogic/Settings.js"
 import Canvas from "./objects/Canvas.js"
-import Vector from "./objects/Vector.js"
+import Vector from "./objects/vector/Vector.js"
 
 
 class GRAPHICS {

@@ -1,5 +1,5 @@
 import Canvas from "../Canvas.js";
-import Vector from "../Vector.js";
+import Vector from "../vector/Vector.js";
 
 class RenderComponent {
   constructor(drawingFunction, boundObject) {

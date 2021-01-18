@@ -1,4 +1,4 @@
-import Vector from "../objects/Vector.js";
+import Vector from "../objects/vector/Vector.js";
 const hasCollided = (obj, obj2, width, height) => {
     if (obj === obj2) return false //don't check for the same object
     if (obj.constructor.name === obj2.constructor.name) return false //same object classes don't interact

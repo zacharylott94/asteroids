@@ -1,4 +1,4 @@
-import Vector from "../objects/Vector.js"
+import Vector from "../objects/vector/Vector.js"
 //makes sure the object stays in the playing field
 
 class Constrain {

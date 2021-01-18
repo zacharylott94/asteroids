@@ -1,5 +1,5 @@
 import Canvas from "../objects/Canvas.js"
-import Vector from "../objects/Vector.js"
+import Vector from "../objects/vector/Vector.js"
 import ObjectPool from "./ObjectPool.js"
 import Asteroid from '../objects/Asteroid.js'
 import Settings from './Settings.js'
