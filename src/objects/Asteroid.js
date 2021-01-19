@@ -4,6 +4,7 @@ import EventCoordinator from "./EventCoordinator.js"
 import Settings from "../gameLogic/Settings.js"
 import Sound from "../gameLogic/Sound.js"
 import Random from "../gameLogic/random.js"
+import ColliderComponent from "./components/colliderComponent.js"
 
 
 
@@ -19,6 +20,7 @@ class Asteroid extends GameObject {
                       new Sound(Asteroid.hitSound2.getSrc()),
                       new Sound(Asteroid.hitSound3.getSrc()),
                     ]
+    this.collider = new ColliderComponent(this)
     
   }
 
@@ -59,6 +61,7 @@ class Asteroid extends GameObject {
   }
 
   handleCollision(obj) {
+    if(!this.collider.collidedWith(obj)) return
     if (obj.constructor.name === "Projectile"){
       this.durability--
       this.hitSounds[Random.int(2)].play()
@@ -70,6 +73,7 @@ class Asteroid extends GameObject {
       this.delete()
     }
   }
+
   delete() {
     EventCoordinator.call(EventCoordinator.event.ObjectDeleted, this)
     super.delete()

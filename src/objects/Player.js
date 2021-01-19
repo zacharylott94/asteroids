@@ -9,6 +9,7 @@ import triangle from "../draw/Triangle.js";
 import Sound from "../gameLogic/Sound.js";
 import RenderComponent from "./components/renderComponent.js";
 import Position from "./vector/Position.js";
+import ColliderComponent from "./components/colliderComponent.js"
 
 class State {
     constructor(defaultState = false) {
@@ -40,6 +41,7 @@ class Player extends GameObject {
             fired:         new State,
             firing:        new State
         }
+        this.collider = new ColliderComponent(this)
         this.activeProjectiles = new Set()
         this.decrementActiveProjectiles = Player.decrementActiveProjectiles.bind(this)
         this.renderComponent = new RenderComponent(triangle, this)
@@ -61,6 +63,7 @@ class Player extends GameObject {
     }
 
     handleCollision(obj) {
+        if(!this.collider.collidedWith(obj)) return
         if (obj.constructor.name === "Asteroid") this.delete()
     }
 

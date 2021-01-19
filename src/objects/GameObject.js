@@ -5,6 +5,7 @@ import Circle from "../draw/Circle.js"
 import RenderComponent from "./components/renderComponent.js"
 import Position from "./vector/Position.js"
 
+
 class GameObject {
     constructor(position, velocity, radius){
         if (position.constructor.name !== 'Position') throw TypeError('position is not an instance of class Vector')
@@ -23,10 +24,6 @@ class GameObject {
 
     delete() {
         ObjectList.delete(this)
-    }
-
-    handleCollision(obj) {
-        throw("This method must be overridden.")
     }
 
     update() {

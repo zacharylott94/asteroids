@@ -38,17 +38,14 @@ const physicsLoop = () => {
     for (const each of objectIterator){
         objects.push(each)
     }
+    objects.forEach(obj => obj.update())
 
-    while (objects.length > 0) {
-        let obj1 = objects.shift()
-        obj1.update()
+    objects.forEach((obj1) => {
         objects.forEach((obj2) => {
-             if (hasCollided(obj1, obj2, Canvas.width, Canvas.height)){
-                obj1.handleCollision(obj2)
-                obj2.handleCollision(obj1)
-             }
+            obj1.handleCollision?.(obj2)
         })
-    }
+    })
+    
     if (STATE.timer % 100 === 0) AsteroidSpawner.workLoop(STATE.difficulty)
     STATE.timer++
 }

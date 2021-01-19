@@ -5,6 +5,7 @@ import diamond from "../draw/Diamond.js";
 import Sound from "../gameLogic/Sound.js";
 import Random from "../gameLogic/random.js";
 import RenderComponent from "./components/renderComponent.js";
+import ColliderComponent from "./components/colliderComponent.js"
 
 
 class Projectile extends GameObject {
@@ -15,6 +16,7 @@ class Projectile extends GameObject {
     this.shootSound = new Sound(Projectile.shootSounds[Random.int(2)].getSrc())
     this.shootSound.play()
     this.renderComponent = new RenderComponent(diamond, this)
+    this.collider = new ColliderComponent(this)
   }
   update () {
     super.update()
@@ -23,6 +25,7 @@ class Projectile extends GameObject {
   }
 
   handleCollision(obj){
+    if(!this.collider.collidedWith(obj)) return
     if (obj.constructor.name === "Asteroid") {
       this.shootSound.stop()
       this.delete()
