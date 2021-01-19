@@ -18,9 +18,9 @@ describe('Ring', () => {
     expect(ring.previous()).toBe(2)
     expect(ring.previous()).toBe(1)
   });
-  it('should expose map', () => {
+  it('should map', () => {
     let ring = new Ring(1,2,3,4)
-    ring.map(e => e+1)
-    expect(ring.array).toStrictEqual([2,3,4,5])
+    ring = ring.map(e => e+1)
+    expect(ring).toStrictEqual(new Ring(2,3,4,5))
   });
 });
