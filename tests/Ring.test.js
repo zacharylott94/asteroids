@@ -23,4 +23,8 @@ describe('Ring', () => {
     ring = ring.map(e => e+1)
     expect(ring).toStrictEqual(new Ring(2,3,4,5))
   });
+  it('new can make a new empty ring of arbitrary size',() => {
+    let ring = new Ring(6)
+    expect(ring.length).toBe(6)
+  })
 });
