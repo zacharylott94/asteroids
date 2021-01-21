@@ -58,6 +58,7 @@ class Player extends GameObject {
             Controller.registerCallback(Controller.button.fire, firing.on, firing.off)
             EventCoordinator.registerCallback(EventCoordinator.event.ProjectileDeleted, this.decrementActiveProjectiles)
         }
+        Object.assign(this, canAccelerate(this), canRotate(this))
 
 
     }
@@ -97,14 +98,6 @@ class Player extends GameObject {
         super.delete()
     }
 
-    accelerate() {
-        this.velocity = Vector.add(this.velocity,Vector.fromDegreesAndMagnitude(this.rotation, this.impulse))
-    }
-
-    rotate(angle) {
-        this.rotation+=angle
-    }
-
     //must be explicitly bound to objects
     static decrementActiveProjectiles ([projectile]) {
         this.activeProjectiles.delete(projectile)
@@ -113,4 +106,18 @@ class Player extends GameObject {
     static destructionSound = new Sound("/asteroids/src/sfx/player_kill.wav")
 }
 
-export default Player
+const canAccelerate = (object) =>  {
+    const accelerate = () => object.velocity = Vector.add(object.velocity,Vector.fromDegreesAndMagnitude(object.rotation, object.impulse))
+    return {accelerate}
+}
+
+const canRotate = (object) => {
+    const rotate = (angle) => {
+        object.rotation+=angle
+    }
+    return {rotate}
+}
+
+const playerFactory = () => new Player
+
+export default playerFactory

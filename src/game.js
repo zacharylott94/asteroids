@@ -1,5 +1,5 @@
 import GRAPHICS from "./graphics.js"
-import Player from "./objects/Player.js"
+import playerFactory from "./objects/Player.js"
 import hasCollided from "./gameLogic/hasCollided.js"
 import ObjectList from "./gameLogic/ObjectList.js"
 import Canvas from "./objects/Canvas.js"
@@ -40,27 +40,27 @@ const physicsLoop = () => {
     }
     objects.forEach(obj => obj.update())
 
-    objects.forEach((obj1) => {
-        objects.forEach((obj2) => {
-            obj1.handleCollision?.(obj2)
-        })
-    })
+    // objects.forEach((obj1) => {
+    //     objects.forEach((obj2) => {
+    //         obj1.handleCollision?.(obj2)
+    //     })
+    // })
     
-    if (STATE.timer % 100 === 0) AsteroidSpawner.workLoop(STATE.difficulty)
-    STATE.timer++
+    // if (STATE.timer % 100 === 0) AsteroidSpawner.workLoop(STATE.difficulty)
+    // STATE.timer++
 }
 
-EventCoordinator.registerCallback(EventCoordinator.event.ObjectDeleted, ([object]) => {
-    if (object.constructor.name === "Asteroid"){
-        STATE.difficulty+=Settings.DIFFICULTY_RAMPUP
-        console.log(`difficulty is: ${STATE.difficulty}`)
-    }
-})
+// EventCoordinator.registerCallback(EventCoordinator.event.ObjectDeleted, ([object]) => {
+//     if (object.constructor.name === "Asteroid"){
+//         STATE.difficulty+=Settings.DIFFICULTY_RAMPUP
+//         console.log(`difficulty is: ${STATE.difficulty}`)
+//     }
+// })
 function resetGame() {
     STATE.difficulty = Settings.STARTING_DIFFICULTY
     ObjectList.reset()
     HUD.reset()
-    new Player()
+    playerFactory()
     STATE.timer = 0
     STATE.paused = false
 }
