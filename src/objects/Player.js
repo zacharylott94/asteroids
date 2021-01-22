@@ -43,13 +43,14 @@ class Player extends GameObject {
         }
         this.collider = new ColliderComponent(this)
         this.activeProjectiles = new Set()
-        this.renderComponent = new RenderComponent(triangle, this)
+
 
         Object.assign(
             this,
             canAccelerate(this),
             canRotate(this),
             canFireProjectile(this),
+            canRender(this, triangle),
             )
         {   //I did this so that the below lines wouldn't be insanely long due to long-winded property indexing
             //I.E. this.state.accelerating.on.bind(this.state.accelerating)
@@ -122,6 +123,27 @@ const canFireProjectile = (object) => {
         object.activeProjectiles.delete(projectile)
     }
     return {fireProjectile, decrementActiveProjectiles}
+}
+
+const canRender = (object, drawingFunction) => {
+    const renderOffsets = [
+        new Vector(-Canvas.width, -Canvas.height), //top-left
+        new Vector(0, -Canvas.height),             //top
+        new Vector(Canvas.width, -Canvas.height),  //top-right
+        new Vector(-Canvas.width, 0),              //left
+        new Vector(0, 0),                          //center
+        new Vector(Canvas.width, 0),               //right
+        new Vector(-Canvas.width, Canvas.height), //bottom-left
+        new Vector(0, Canvas.height),             //bottom
+        new Vector(Canvas.width, Canvas.height),  //bottom-right
+    ]
+    const render = () => {
+        renderOffsets.map(offsetVector => {
+            let offsetPosition = Vector.add(object.position, offsetVector)
+            drawingFunction({...object, position: offsetPosition})
+          })
+    }
+    return {render}
 }
 
 const playerFactory = () => new Player

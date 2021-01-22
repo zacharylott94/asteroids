@@ -14,7 +14,7 @@ class GameObject {
         this.position = position
         this.velocity = velocity
         this.radius = radius
-        this.renderComponent = new RenderComponent(Circle, this)
+        // this.renderComponent = new RenderComponent(Circle, this)
         ObjectList.add(this)
     }
     move () { 

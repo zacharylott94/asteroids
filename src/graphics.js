@@ -5,7 +5,8 @@ import Vector from "./objects/vector/Vector.js"
 
 class GRAPHICS {
     static render(object){
-        object?.renderComponent.render()
+        object?.renderComponent?.render?.()
+        object.render?.()
 
         // Everything below is for debugging
         if (Settings.RENDER_DEBUG){
