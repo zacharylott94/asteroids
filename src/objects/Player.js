@@ -43,9 +43,14 @@ class Player extends GameObject {
         }
         this.collider = new ColliderComponent(this)
         this.activeProjectiles = new Set()
-        this.decrementActiveProjectiles = Player.decrementActiveProjectiles.bind(this)
         this.renderComponent = new RenderComponent(triangle, this)
 
+        Object.assign(
+            this,
+            canAccelerate(this),
+            canRotate(this),
+            canFireProjectile(this),
+            )
         {   //I did this so that the below lines wouldn't be insanely long due to long-winded property indexing
             //I.E. this.state.accelerating.on.bind(this.state.accelerating)
             const accelerating = this.state.accelerating
@@ -58,7 +63,6 @@ class Player extends GameObject {
             Controller.registerCallback(Controller.button.fire, firing.on, firing.off)
             EventCoordinator.registerCallback(EventCoordinator.event.ProjectileDeleted, this.decrementActiveProjectiles)
         }
-        Object.assign(this, canAccelerate(this), canRotate(this))
 
 
     }
@@ -68,11 +72,6 @@ class Player extends GameObject {
         if (obj.constructor.name === "Asteroid") this.delete()
     }
 
-    fireProjectile() {
-        if (this.activeProjectiles.size < 3) {
-            this.activeProjectiles.add(new Projectile(this.position, Vector.fromDegreesAndMagnitude(this.rotation,1)))
-        }
-    }
 
     update() {
         super.update()
@@ -98,11 +97,6 @@ class Player extends GameObject {
         super.delete()
     }
 
-    //must be explicitly bound to objects
-    static decrementActiveProjectiles ([projectile]) {
-        this.activeProjectiles.delete(projectile)
-    }
-
     static destructionSound = new Sound("/asteroids/src/sfx/player_kill.wav")
 }
 
@@ -116,6 +110,18 @@ const canRotate = (object) => {
         object.rotation+=angle
     }
     return {rotate}
+}
+
+const canFireProjectile = (object) => {
+    const fireProjectile = () => {
+        if (object.activeProjectiles.size < 3) {
+            object.activeProjectiles.add(new Projectile(object.position, Vector.fromDegreesAndMagnitude(object.rotation,1)))
+        }
+    }
+    const decrementActiveProjectiles = ([projectile]) => {
+        object.activeProjectiles.delete(projectile)
+    }
+    return {fireProjectile, decrementActiveProjectiles}
 }
 
 const playerFactory = () => new Player
