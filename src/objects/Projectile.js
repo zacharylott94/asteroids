@@ -6,17 +6,27 @@ import Sound from "../gameLogic/Sound.js";
 import Random from "../gameLogic/random.js";
 import RenderComponent from "./components/renderComponent.js";
 import ColliderComponent from "./components/colliderComponent.js"
+import ObjectList from "../gameLogic/ObjectList.js";
 
-
+const shootSounds = [
+  new Sound("/asteroids/src/sfx/shoot.wav"),
+  new Sound("/asteroids/src/sfx/shoot2.wav"),
+  new Sound("/asteroids/src/sfx/shoot3.wav"),
+]
 class Projectile extends GameObject {
   constructor(position, rotationVector) {
     super(position, rotationVector.scale(Settings.PROJECTILE_SPEED), Settings.PROJECTILE_SIZE)
     this.timeToLive = Settings.PROJECTILE_TIME_TO_LIVE
     this.rotation = rotationVector.degrees()
-    this.shootSound = new Sound(Projectile.shootSounds[Random.int(2)].getSrc())
+    this.shootSound = new Sound(shootSounds[Random.int(2)].getSrc())
     this.shootSound.play()
     this.renderComponent = new RenderComponent(diamond, this)
     this.collider = new ColliderComponent(this)
+
+    Object.assign(
+      this,
+      canDelete(this)
+    )
   }
   update () {
     super.update()
@@ -32,18 +42,16 @@ class Projectile extends GameObject {
     }
   }
 
-  delete() {
-    //Note that there is nothing in the event call identifying the player ship
-    //The assumption is that there is only one player
-    //Any projectile would raise the event for any player
-    EventCoordinator.call(EventCoordinator.event.ProjectileDeleted, this)
-    super.delete()
+
   }
-  static shootSounds = [
-    new Sound("/asteroids/src/sfx/shoot.wav"),
-    new Sound("/asteroids/src/sfx/shoot2.wav"),
-    new Sound("/asteroids/src/sfx/shoot3.wav"),
-  ]
+
+const canDelete = projectile => {
+  const deleteThis = _ => {
+    EventCoordinator.call(EventCoordinator.event.ProjectileDeleted, projectile)
+    ObjectList.delete(projectile)
+  }
+  return {delete:deleteThis}
+}
 }
 
 export default Projectile
