@@ -6,6 +6,7 @@ import Random from "../gameLogic/random.js";
 import ObjectList from "../gameLogic/ObjectList.js";
 import { canMove } from "./behaviors/canMove.js"
 import { canRender } from "./behaviors/canRender.js";
+import { canHandleCollision } from "./behaviors/canHandleCollision.js";
 
 const shootSounds = [
   new Sound("/asteroids/src/sfx/shoot.wav"),
@@ -20,6 +21,16 @@ class Projectile{
       this.delete()
     }
   }
+}
+
+const canCollide = (projectile) => {
+  const onCollide = obj => {
+    if (obj.type === "Asteroid") {
+      // projectile.shootSound.stop()
+      projectile.delete()
+    }
+  }
+  return {onCollide}
 }
 
 const canDelete = projectile => {
@@ -41,6 +52,7 @@ const canUpdate = (projectile) => {
 
 const ProjectileFactory = (position, rotationVector) => {
   let projectile = {
+    type: "Projectile",
     position,
     velocity: rotationVector.scale(Settings.PROJECTILE_SPEED),
     radius: Settings.PROJECTILE_SIZE,
@@ -56,6 +68,8 @@ const ProjectileFactory = (position, rotationVector) => {
     canUpdate(projectile),
     canDelete(projectile),
     canMove(projectile),
+    canHandleCollision(projectile),
+    canCollide(projectile),
 
 
   )
