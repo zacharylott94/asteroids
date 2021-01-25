@@ -1,5 +1,5 @@
-import Canvas from "./Canvas.js";
-import Vector from "./vector/Vector.js";
+import Canvas from "../Canvas.js";
+import Vector from "../vector/Vector.js";
 
 export const canRender = (object, drawingFunction) => {
     const renderOffsets = [
