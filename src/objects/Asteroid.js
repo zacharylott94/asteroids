@@ -99,6 +99,7 @@ const canShatter = asteroid => {
 
 const AsteroidFactory = (position, velocity, radius) => {
   let asteroid = {
+    type: "Asteroid",
     position,
     velocity,
     radius,
