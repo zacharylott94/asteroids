@@ -7,6 +7,7 @@ import ObjectList from "../gameLogic/ObjectList.js";
 import { canMove } from "./behaviors/canMove.js"
 import { canRender } from "./behaviors/canRender.js";
 import { canHandleCollision } from "./behaviors/canHandleCollision.js";
+import { hasTimeToLive } from "./behaviors/hasTimeToLive.js";
 
 const shootSounds = [
   Sound("/asteroids/src/sfx/shoot.wav"),
@@ -36,8 +37,7 @@ const canDelete = projectile => {
 const canUpdate = (projectile) => {
   const update = _ => {
     projectile.move()
-    if (projectile.timeToLive < 1) projectile.delete()
-    projectile.timeToLive--
+    projectile?.updateCallbacks?.forEach?.(callback => callback())
   }
   return {update}
 }
@@ -48,7 +48,6 @@ const ProjectileFactory = (position, rotationVector) => {
     position,
     velocity: rotationVector.scale(Settings.PROJECTILE_SPEED),
     radius: Settings.PROJECTILE_SIZE,
-    timeToLive: Settings.PROJECTILE_TIME_TO_LIVE,
     rotation: rotationVector.degrees(),
     sound: Sound(shootSounds[Random.int(2)].getSrc()),
   }
@@ -61,7 +60,7 @@ const ProjectileFactory = (position, rotationVector) => {
     canMove(projectile),
     canHandleCollision(projectile),
     canCollide(projectile),
-
+    hasTimeToLive(projectile, Settings.PROJECTILE_TIME_TO_LIVE)
 
   )
   projectile.sound.play()
