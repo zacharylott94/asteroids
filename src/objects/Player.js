@@ -13,21 +13,17 @@ import { canRender } from "./canRender.js";
 import { canFireProjectile } from "./behaviors/canFireProjectile.js";
 import { canRotate } from "./behaviors/canRotate.js";
 
-class State {
-    constructor(defaultState = false) {
-        this.state = defaultState
-        this.get = State.get.bind(this)
-        this.off = State.off.bind(this)
-        this.on = State.on.bind(this)
-    }
-    static get() {
-        return this.state
-    }
-    static off() {
-        this.state = false
-    }
-    static on() {
-        this.state = true
+
+const State = _ => {
+    let state = false
+    const get = _ => state
+    const set = bool => state = bool
+    const on = _ => set(true)
+    const off = _ => set(false)
+    return {
+        get,
+        on,
+        off,
     }
 }
 
@@ -37,11 +33,11 @@ class Player extends GameObject {
         this.rotation = 0
         this.impulse = Settings.IMPULSE
         this.state = {
-            accelerating:  new State,
-            rotatingLeft:  new State,
-            rotatingRight: new State,
-            fired:         new State,
-            firing:        new State
+            accelerating:  State(),
+            rotatingLeft:  State(),
+            rotatingRight: State(),
+            fired:         State(),
+            firing:        State()
         }
         this.collider = new ColliderComponent(this)
         this.activeProjectiles = new Set()
