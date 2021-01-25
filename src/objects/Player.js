@@ -9,7 +9,7 @@ import Sound from "../gameLogic/Sound.js";
 import Position from "./vector/Position.js";
 import ColliderComponent from "./components/colliderComponent.js"
 import { canAccelerate } from "./behaviors/canAccelerate.js";
-import { canRender } from "./canRender.js";
+import { canRender } from "./behaviors/canRender.js";
 import { canFireProjectile } from "./behaviors/canFireProjectile.js";
 import { canRotate } from "./behaviors/canRotate.js";
 import { State } from "./State.js";
@@ -27,12 +27,12 @@ class Player {
 const destructionSound = new Sound("/asteroids/src/sfx/player_kill.wav")
 
 
-const canDelete = (player, playerData) => {
+const canDelete = (player) => {
     const deleteThis =  _ => {
-        Controller.unregisterCallback(Controller.button.accelerate, playerData.state.accelerating.on, playerData.state.accelerating.off)
-        Controller.unregisterCallback(Controller.button.left, playerData.state.rotatingLeft.on, playerData.state.rotatingLeft.off)
-        Controller.unregisterCallback(Controller.button.right, playerData.state.rotatingRight.on, playerData.state.rotatingRight.off)
-        Controller.unregisterCallback(Controller.button.fire, playerData.state.firing.on, playerData.state.firing.off)
+        Controller.unregisterCallback(Controller.button.accelerate, player.state.accelerating.on, player.state.accelerating.off)
+        Controller.unregisterCallback(Controller.button.left, player.state.rotatingLeft.on, player.state.rotatingLeft.off)
+        Controller.unregisterCallback(Controller.button.right, player.state.rotatingRight.on, player.state.rotatingRight.off)
+        Controller.unregisterCallback(Controller.button.fire, player.state.firing.on, player.state.firing.off)
         EventCoordinator.unregisterCallback(EventCoordinator.event.ProjectileDeleted, player.decrementActiveProjectiles)
         destructionSound.play()
         ObjectList.delete(player)
@@ -40,17 +40,17 @@ const canDelete = (player, playerData) => {
 
     return {delete:deleteThis}
 }
-const canUpdate = (object, objectData) => {
+const canUpdate = (player) => {
     const update = _ => {
-        object.move()
-        if (objectData.state.accelerating.get()) object.accelerate()
-        if (objectData.state.rotatingRight.get()) object.rotate(Settings.ROTATION_RATE)
-        if (objectData.state.rotatingLeft.get()) object.rotate(-Settings.ROTATION_RATE)
-        if (objectData.state.firing.get() && !objectData.state.fired.get()){
-            objectData.state.fired.on()
-            object.fireProjectile()
-        } else if (!objectData.state.firing.get()) {
-            objectData.state.fired.off()
+        player.move()
+        if (player.state.accelerating.get()) player.accelerate()
+        if (player.state.rotatingRight.get()) player.rotate(Settings.ROTATION_RATE)
+        if (player.state.rotatingLeft.get()) player.rotate(-Settings.ROTATION_RATE)
+        if (player.state.firing.get() && !player.state.fired.get()){
+            player.state.fired.on()
+            player.fireProjectile()
+        } else if (!player.state.firing.get()) {
+            player.state.fired.off()
         }    
     }
     return {update}
@@ -71,12 +71,12 @@ const registerEvents = player => {
     EventCoordinator.registerCallback(EventCoordinator.event.ProjectileDeleted, player.decrementActiveProjectiles)
 }
 
-const playerFactory = (position = new Position(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = Settings.PLAYER_RADIUS) => {
+const PlayerFactory = (position = new Position(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = Settings.PLAYER_RADIUS) => {
     if (position.constructor.name !== 'Position') throw TypeError('position is not an instance of class Vector')
         if (velocity.constructor.name !== 'Vector') throw TypeError('velocity is not an instance of class Vector')
         if (typeof radius !== 'number' || Number.isNaN(radius)) throw TypeError('radius is not of type Number')
 
-        let playerData = {
+        let player = {
             position,
             velocity,
             radius,
@@ -93,18 +93,17 @@ const playerFactory = (position = new Position(Canvas.width/2, Canvas.height/2),
             activeProjectiles: new Set(),
         }
 
-        let player = {}
         Object.assign(
             player,
-            canAccelerate(playerData),
-            canRotate(playerData),
-            canFireProjectile(playerData),
-            canRender(playerData, triangle),
-            canMove(playerData),
-            canUpdate(player, playerData),
-            canDelete(player, playerData),
+            canAccelerate(player),
+            canRotate(player),
+            canFireProjectile(player),
+            canRender(player, triangle),
+            canMove(player),
+            canUpdate(player),
+            canDelete(player),
         )
-        registerController(playerData)
+        registerController(player)
         registerEvents(player)
         ObjectList.add(player)
         
@@ -116,4 +115,4 @@ const playerFactory = (position = new Position(Canvas.width/2, Canvas.height/2),
         return player
 }
 
-export default playerFactory
+export default PlayerFactory

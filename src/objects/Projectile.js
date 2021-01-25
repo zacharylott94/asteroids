@@ -5,7 +5,7 @@ import Sound from "../gameLogic/Sound.js";
 import Random from "../gameLogic/random.js";
 import ObjectList from "../gameLogic/ObjectList.js";
 import { canMove } from "./behaviors/canMove.js"
-import { canRender } from "./canRender.js";
+import { canRender } from "./behaviors/canRender.js";
 
 const shootSounds = [
   new Sound("/asteroids/src/sfx/shoot.wav"),
@@ -30,17 +30,17 @@ const canDelete = projectile => {
   return {delete:deleteThis}
 }
 
-const canUpdate = (projectile, projectileData) => {
+const canUpdate = (projectile) => {
   const update = _ => {
     projectile.move()
-    if (projectileData.timeToLive < 1) projectile.delete()
-    projectileData.timeToLive--
+    if (projectile.timeToLive < 1) projectile.delete()
+    projectile.timeToLive--
   }
   return {update}
 }
 
 const ProjectileFactory = (position, rotationVector) => {
-  let projectileData = {
+  let projectile = {
     position,
     velocity: rotationVector.scale(Settings.PROJECTILE_SPEED),
     radius: Settings.PROJECTILE_SIZE,
@@ -50,13 +50,12 @@ const ProjectileFactory = (position, rotationVector) => {
     // collider: new ColliderComponent(this),
   }
 
-  let projectile = {}
   Object.assign(
     projectile,
-    canRender(projectileData, diamond),
-    canUpdate(projectile, projectileData),
+    canRender(projectile, diamond),
+    canUpdate(projectile),
     canDelete(projectile),
-    canMove(projectileData),
+    canMove(projectile),
 
 
   )

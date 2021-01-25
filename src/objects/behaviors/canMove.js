@@ -1,7 +1,7 @@
 import Position from "../vector/Position.js";
 
-export const canMove = (state) => {
+export const canMove = (object) => {
     return {
-        move: _ => { state.position = Position.add(state.position, state.velocity); }
+        move: _ => { object.position = Position.add(object.position, object.velocity); }
     };
 };
