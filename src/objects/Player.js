@@ -1,15 +1,17 @@
 import Canvas from "./Canvas.js"
 import GameObject from "./GameObject.js"
-import Projectile from "./Projectile.js"
 import Vector from "./vector/Vector.js";
 import Controller from "./Controller.js"
 import EventCoordinator from "./EventCoordinator.js";
 import Settings from "../gameLogic/Settings.js"
 import triangle from "../draw/Triangle.js";
 import Sound from "../gameLogic/Sound.js";
-import RenderComponent from "./components/renderComponent.js";
 import Position from "./vector/Position.js";
 import ColliderComponent from "./components/colliderComponent.js"
+import { canAccelerate } from "./behaviors/canAccelerate.js";
+import { canRender } from "./canRender.js";
+import { canFireProjectile } from "./behaviors/canFireProjectile.js";
+import { canRotate } from "./behaviors/canRotate.js";
 
 class State {
     constructor(defaultState = false) {
@@ -99,51 +101,6 @@ class Player extends GameObject {
     }
 
     static destructionSound = new Sound("/asteroids/src/sfx/player_kill.wav")
-}
-
-const canAccelerate = (object) =>  {
-    const accelerate = () => object.velocity = Vector.add(object.velocity,Vector.fromDegreesAndMagnitude(object.rotation, object.impulse))
-    return {accelerate}
-}
-
-const canRotate = (object) => {
-    const rotate = (angle) => {
-        object.rotation+=angle
-    }
-    return {rotate}
-}
-
-const canFireProjectile = (object) => {
-    const fireProjectile = () => {
-        if (object.activeProjectiles.size < 3) {
-            object.activeProjectiles.add(new Projectile(object.position, Vector.fromDegreesAndMagnitude(object.rotation,1)))
-        }
-    }
-    const decrementActiveProjectiles = ([projectile]) => {
-        object.activeProjectiles.delete(projectile)
-    }
-    return {fireProjectile, decrementActiveProjectiles}
-}
-
-const canRender = (object, drawingFunction) => {
-    const renderOffsets = [
-        new Vector(-Canvas.width, -Canvas.height), //top-left
-        new Vector(0, -Canvas.height),             //top
-        new Vector(Canvas.width, -Canvas.height),  //top-right
-        new Vector(-Canvas.width, 0),              //left
-        new Vector(0, 0),                          //center
-        new Vector(Canvas.width, 0),               //right
-        new Vector(-Canvas.width, Canvas.height), //bottom-left
-        new Vector(0, Canvas.height),             //bottom
-        new Vector(Canvas.width, Canvas.height),  //bottom-right
-    ]
-    const render = () => {
-        renderOffsets.map(offsetVector => {
-            let offsetPosition = Vector.add(object.position, offsetVector)
-            drawingFunction({...object, position: offsetPosition})
-          })
-    }
-    return {render}
 }
 
 const playerFactory = () => new Player
