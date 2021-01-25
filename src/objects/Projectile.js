@@ -9,19 +9,10 @@ import { canRender } from "./behaviors/canRender.js";
 import { canHandleCollision } from "./behaviors/canHandleCollision.js";
 
 const shootSounds = [
-  new Sound("/asteroids/src/sfx/shoot.wav"),
-  new Sound("/asteroids/src/sfx/shoot2.wav"),
-  new Sound("/asteroids/src/sfx/shoot3.wav"),
+  Sound("/asteroids/src/sfx/shoot.wav"),
+  Sound("/asteroids/src/sfx/shoot2.wav"),
+  Sound("/asteroids/src/sfx/shoot3.wav"),
 ]
-class Projectile{
-  handleCollision(obj){
-    if(!this.collider.collidedWith(obj)) return
-    if (obj.constructor.name === "Asteroid") {
-      this.shootSound.stop()
-      this.delete()
-    }
-  }
-}
 
 const canCollide = (projectile) => {
   const onCollide = obj => {
@@ -35,6 +26,7 @@ const canCollide = (projectile) => {
 
 const canDelete = projectile => {
   const deleteThis = _ => {
+    projectile.sound.stop()
     EventCoordinator.call(EventCoordinator.event.ProjectileDeleted, projectile)
     ObjectList.delete(projectile)
   }
@@ -58,8 +50,7 @@ const ProjectileFactory = (position, rotationVector) => {
     radius: Settings.PROJECTILE_SIZE,
     timeToLive: Settings.PROJECTILE_TIME_TO_LIVE,
     rotation: rotationVector.degrees(),
-    // renderComponent: new RenderComponent(diamond, this),
-    // collider: new ColliderComponent(this),
+    sound: Sound(shootSounds[Random.int(2)].getSrc()),
   }
 
   Object.assign(
@@ -73,7 +64,7 @@ const ProjectileFactory = (position, rotationVector) => {
 
 
   )
-  shootSounds[Random.int(2)].play()
+  projectile.sound.play()
   ObjectList.add(projectile)
   return projectile
 }

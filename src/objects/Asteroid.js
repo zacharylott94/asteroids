@@ -10,12 +10,16 @@ import { canHandleCollision } from "./behaviors/canHandleCollision.js"
 import Circle from "../draw/Circle.js"
 import ObjectList from "../gameLogic/ObjectList.js"
 
-const shatterSound = new Sound("/asteroids/src/sfx/asteroid_shatter.wav")
-const shatterSound2 = new Sound("/asteroids/src/sfx/asteroid_shatter2.wav")
-const shatterSound3 = new Sound("/asteroids/src/sfx/asteroid_shatter3.wav")
-const hitSound = new Sound("/asteroids/src/sfx/asteroid_hit.wav")
-const hitSound2 = new Sound("/asteroids/src/sfx/asteroid_hit2.wav")
-const hitSound3 = new Sound("/asteroids/src/sfx/asteroid_hit3.wav")
+const shatterSounds = [
+  Sound("/asteroids/src/sfx/asteroid_shatter.wav"),
+  Sound("/asteroids/src/sfx/asteroid_shatter2.wav"),
+  Sound("/asteroids/src/sfx/asteroid_shatter3.wav"),
+]
+const hitSounds = [
+  Sound("/asteroids/src/sfx/asteroid_hit.wav"),
+  Sound("/asteroids/src/sfx/asteroid_hit2.wav"),
+  Sound("/asteroids/src/sfx/asteroid_hit3.wav"),
+]
 
 export const LargeAsteroid = (position, velocity) => {
   return AsteroidFactory(position, velocity, Settings.LARGE_ASTEROID_RADIUS)
@@ -26,36 +30,16 @@ const MediumAsteroid = (position,velocity) => {
 const SmallAsteroid = (position,velocity) => {
   return AsteroidFactory(position, velocity, Settings.SMALL_ASTEROID_RADIUS)
 }
-class Asteroid extends GameObject {
 
-  onCollide(obj) {
-    if(!this.collider.collidedWith(obj)) return
-    if (obj.constructor.name === "Projectile"){
-      this.durability--
-      this.hitSounds[Random.int(2)].play()
-    }
-    if (this.durability < 1) {
-      this.hitSounds.forEach(each => each.stop())
-      this.shatterSounds[Random.int(2)].play()
-      this.shatter()
-      this.delete()
-    }
-  }
-
-  delete() {
-    EventCoordinator.call(EventCoordinator.event.ObjectDeleted, this)
-    super.delete()
-  }
-}
 const canCollide = asteroid => {
   const onCollide = obj => {
     if (obj.type === "Projectile"){
       asteroid.durability--
-      // asteroid.hitSounds[Random.int(2)].play()
+      asteroid.hitSounds[Random.int(2)].play()
     }
     if (asteroid.durability < 1) {
-      // asteroid.hitSounds.forEach(each => each.stop())
-      // asteroid.shatterSounds[Random.int(2)].play()
+      asteroid.hitSounds.forEach(each => each.stop())
+      asteroid.shatterSounds[Random.int(2)].play()
       asteroid.shatter()
       asteroid.delete()
     }
@@ -71,7 +55,7 @@ const canDelete = asteroid => {
   return {delete:deleteThis}
 }
 
-const canUpdate = (asteroid) => {
+const canUpdate = asteroid => {
   const update = _ => {
     asteroid.move()
   }
@@ -104,6 +88,8 @@ const AsteroidFactory = (position, velocity, radius) => {
     velocity,
     radius,
     durability: Settings.ASTEROID_DURABILITY,
+    hitSounds: hitSounds.map(s => Sound(s.getSrc())),
+    shatterSounds: shatterSounds.map(s => Sound(s.getSrc())),
 
   }
   Object.assign(

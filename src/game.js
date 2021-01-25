@@ -1,5 +1,5 @@
 import GRAPHICS from "./graphics.js"
-import playerFactory from "./objects/Player.js"
+import Player from "./objects/Player.js"
 import hasCollided from "./gameLogic/hasCollided.js"
 import ObjectList from "./gameLogic/ObjectList.js"
 import Canvas from "./objects/Canvas.js"
@@ -9,6 +9,9 @@ import Settings from "./gameLogic/Settings.js"
 import HUD from "./objects/HUD.js"
 import Controller from "./objects/Controller.js"
 import Sound from "./gameLogic/Sound.js"
+import { LargeAsteroid } from "./objects/Asteroid.js"
+import Position from "./objects/vector/Position.js"
+import Vector from "./objects/vector/Vector.js"
 
 //---------------Initialize Game--------------------
 let STATE = {
@@ -17,7 +20,7 @@ let STATE = {
     paused: false
 }
 
-let pauseSound = new Sound("/asteroids/src/sfx/pause.wav")
+let pauseSound = Sound("/asteroids/src/sfx/pause.wav")
 
 //The rendering loop here
 const renderLoop = () => {
@@ -40,11 +43,11 @@ const physicsLoop = () => {
     }
     objects.forEach(obj => obj.update())
 
-    // objects.forEach((obj1) => {
-    //     objects.forEach((obj2) => {
-    //         obj1.handleCollision?.(obj2)
-    //     })
-    // })
+    objects.forEach((obj1) => {
+        objects.forEach((obj2) => {
+            obj1.handleCollision?.(obj2)
+        })
+    })
     
     // if (STATE.timer % 100 === 0) AsteroidSpawner.workLoop(STATE.difficulty)
     // STATE.timer++
@@ -60,7 +63,8 @@ function resetGame() {
     STATE.difficulty = Settings.STARTING_DIFFICULTY
     ObjectList.reset()
     HUD.reset()
-    playerFactory()
+    Player()
+    LargeAsteroid(new Position(100,100), new Vector(.5,.5), 30)
     STATE.timer = 0
     STATE.paused = false
 }

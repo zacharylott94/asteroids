@@ -17,15 +17,7 @@ import ObjectList from "../gameLogic/ObjectList.js"
 import { canMove } from "./behaviors/canMove.js"
 import { canHandleCollision } from "./behaviors/canHandleCollision.js";
 
-
-class Player {
-    handleCollision(obj) {
-        if(!this.collider.collidedWith(obj)) return
-        if (obj.constructor.name === "Asteroid") this.delete()
-    }
-
-}
-const destructionSound = new Sound("/asteroids/src/sfx/player_kill.wav")
+const destructionSound = Sound("/asteroids/src/sfx/player_kill.wav")
 
 
 const canDelete = (player) => {
@@ -78,7 +70,7 @@ const registerEvents = player => {
     EventCoordinator.registerCallback(EventCoordinator.event.ProjectileDeleted, player.decrementActiveProjectiles)
 }
 
-const PlayerFactory = (position = new Position(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = Settings.PLAYER_RADIUS) => {
+const Player = (position = new Position(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = Settings.PLAYER_RADIUS) => {
     if (position.constructor.name !== 'Position') throw TypeError('position is not an instance of class Vector')
         if (velocity.constructor.name !== 'Vector') throw TypeError('velocity is not an instance of class Vector')
         if (typeof radius !== 'number' || Number.isNaN(radius)) throw TypeError('radius is not of type Number')
@@ -124,4 +116,4 @@ const PlayerFactory = (position = new Position(Canvas.width/2, Canvas.height/2),
         return player
 }
 
-export default PlayerFactory
+export default Player

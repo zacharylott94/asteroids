@@ -1,21 +1,24 @@
-class Sound extends Audio{
-  constructor(url){
-    super(url)
-    this.volume = .5
+const Sound = (url) => {
+  let sound = new Audio(url)
+  sound.volume = .5
+
+  const play = _ => {
+    sound.currentTime = 0
+    sound.play()
   }
 
-  play() {
-    this.currentTime = 0
-    super.play()
+  const stop = _ => {
+    sound.pause()
   }
 
-  stop() {
-    super.pause()
+  const getSrc = _ => sound.src
+
+  return {
+    play,
+    stop,
+    getSrc,
   }
 
-  getSrc() {
-    return this.src
-  }
 }
 
 export default Sound
