@@ -14,100 +14,106 @@ import { canFireProjectile } from "./behaviors/canFireProjectile.js";
 import { canRotate } from "./behaviors/canRotate.js";
 import { State } from "./State.js";
 import ObjectList from "../gameLogic/ObjectList.js"
+import { canMove } from "./behaviors/canMove.js"
 
 
 class Player {
-    constructor(position = new Position(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = Settings.PLAYER_RADIUS) {
-        if (position.constructor.name !== 'Position') throw TypeError('position is not an instance of class Vector')
-        if (velocity.constructor.name !== 'Vector') throw TypeError('velocity is not an instance of class Vector')
-        if (typeof radius !== 'number' || Number.isNaN(radius)) throw TypeError('radius is not of type Number')
-        this.position = position
-        this.velocity = velocity
-        this.radius = radius
-        // this.renderComponent = new RenderComponent(Circle, this)
-        ObjectList.add(this)
-
-        this.rotation = 0
-        this.impulse = Settings.IMPULSE
-        this.state = {
-            accelerating:  State(),
-            rotatingLeft:  State(),
-            rotatingRight: State(),
-            fired:         State(),
-            firing:        State()
-        }
-        this.collider = new ColliderComponent(this)
-        this.activeProjectiles = new Set()
-
-
-        Object.assign(
-            this,
-            canAccelerate(this),
-            canRotate(this),
-            canFireProjectile(this),
-            canRender(this, triangle),
-            canMove(this),
-            )
-        {   //I did this so that the below lines wouldn't be insanely long due to long-winded property indexing
-            //I.E. this.state.accelerating.on.bind(this.state.accelerating)
-            const accelerating = this.state.accelerating
-            const rotatingLeft = this.state.rotatingLeft
-            const rotatingRight = this.state.rotatingRight
-            const firing = this.state.firing
-            Controller.registerCallback(Controller.button.accelerate, accelerating.on, accelerating.off)
-            Controller.registerCallback(Controller.button.left, rotatingLeft.on, rotatingLeft.off)
-            Controller.registerCallback(Controller.button.right, rotatingRight.on, rotatingRight.off)
-            Controller.registerCallback(Controller.button.fire, firing.on, firing.off)
-            EventCoordinator.registerCallback(EventCoordinator.event.ProjectileDeleted, this.decrementActiveProjectiles)
-        }
-
-
-    }
-
     handleCollision(obj) {
         if(!this.collider.collidedWith(obj)) return
         if (obj.constructor.name === "Asteroid") this.delete()
     }
 
-    delete() {
-        ObjectList.delete(this)
+}
+const destructionSound = new Sound("/asteroids/src/sfx/player_kill.wav")
+
+
+const canDelete = (player, playerData) => {
+    const deleteThis =  _ => {
+        Controller.unregisterCallback(Controller.button.accelerate, playerData.state.accelerating.on, playerData.state.accelerating.off)
+        Controller.unregisterCallback(Controller.button.left, playerData.state.rotatingLeft.on, playerData.state.rotatingLeft.off)
+        Controller.unregisterCallback(Controller.button.right, playerData.state.rotatingRight.on, playerData.state.rotatingRight.off)
+        Controller.unregisterCallback(Controller.button.fire, playerData.state.firing.on, playerData.state.firing.off)
+        EventCoordinator.unregisterCallback(EventCoordinator.event.ProjectileDeleted, player.decrementActiveProjectiles)
+        destructionSound.play()
+        ObjectList.delete(player)
     }
 
+    return {delete:deleteThis}
+}
+const canUpdate = (object, objectData) => {
+    const update = _ => {
+        object.move()
+        if (objectData.state.accelerating.get()) object.accelerate()
+        if (objectData.state.rotatingRight.get()) object.rotate(Settings.ROTATION_RATE)
+        if (objectData.state.rotatingLeft.get()) object.rotate(-Settings.ROTATION_RATE)
+        if (objectData.state.firing.get() && !objectData.state.fired.get()){
+            objectData.state.fired.on()
+            object.fireProjectile()
+        } else if (!objectData.state.firing.get()) {
+            objectData.state.fired.off()
+        }    
+    }
+    return {update}
+}
 
-    update() {
-        this.move()
-        if (this.state.accelerating.get()) this.accelerate()
-        if (this.state.rotatingRight.get()) this.rotate(Settings.ROTATION_RATE)
-        if (this.state.rotatingLeft.get()) this.rotate(-Settings.ROTATION_RATE)
-        if (this.state.firing.get() && !this.state.fired.get()){
-            this.state.fired.on()
-            this.fireProjectile()
-        } else if (!this.state.firing.get()) {
-            this.state.fired.off()
+const registerController = playerData => {
+    const accelerating = playerData.state.accelerating
+    const rotatingLeft = playerData.state.rotatingLeft
+    const rotatingRight = playerData.state.rotatingRight
+    const firing = playerData.state.firing
+    Controller.registerCallback(Controller.button.accelerate, accelerating.on, accelerating.off)
+    Controller.registerCallback(Controller.button.left, rotatingLeft.on, rotatingLeft.off)
+    Controller.registerCallback(Controller.button.right, rotatingRight.on, rotatingRight.off)
+    Controller.registerCallback(Controller.button.fire, firing.on, firing.off)
+}
+
+const registerEvents = player => {
+    EventCoordinator.registerCallback(EventCoordinator.event.ProjectileDeleted, player.decrementActiveProjectiles)
+}
+
+const playerFactory = (position = new Position(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = Settings.PLAYER_RADIUS) => {
+    if (position.constructor.name !== 'Position') throw TypeError('position is not an instance of class Vector')
+        if (velocity.constructor.name !== 'Vector') throw TypeError('velocity is not an instance of class Vector')
+        if (typeof radius !== 'number' || Number.isNaN(radius)) throw TypeError('radius is not of type Number')
+
+        let playerData = {
+            position,
+            velocity,
+            radius,
+            rotation: 0,
+            impulse: Settings.IMPULSE,
+            state: {
+                accelerating:  State(),
+                rotatingLeft:  State(),
+                rotatingRight: State(),
+                fired:         State(),
+                firing:        State(),
+            },
+            collider: "Broken",
+            activeProjectiles: new Set(),
         }
 
+        let player = {}
+        Object.assign(
+            player,
+            canAccelerate(playerData),
+            canRotate(playerData),
+            canFireProjectile(playerData),
+            canRender(playerData, triangle),
+            canMove(playerData),
+            canUpdate(player, playerData),
+            canDelete(player, playerData),
+        )
+        registerController(playerData)
+        registerEvents(player)
+        ObjectList.add(player)
         
-    }
-    delete () {
-        Controller.unregisterCallback(Controller.button.accelerate, this.state.accelerating.on, this.state.accelerating.off)
-        Controller.unregisterCallback(Controller.button.left, this.state.rotatingLeft.on, this.state.rotatingLeft.off)
-        Controller.unregisterCallback(Controller.button.right, this.state.rotatingRight.on, this.state.rotatingRight.off)
-        Controller.unregisterCallback(Controller.button.fire, this.state.firing.on, this.state.firing.off)
-        EventCoordinator.unregisterCallback(EventCoordinator.event.ProjectileDeleted, this.decrementActiveProjectiles)
-        Player.destructionSound.play()
-        super.delete()
-    }
+        const handleCollision = (obj) => {
+            if(!this.collider.collidedWith(obj)) return
+            if (obj.constructor.name === "Asteroid") this.delete()
+        }
 
-    static destructionSound = new Sound("/asteroids/src/sfx/player_kill.wav")
+        return player
 }
-
-const canMove = (state) => {
-
-    return {
-        move: _ => {state.position = Position.add(state.position, state.velocity)}
-    }
-}
-
-const playerFactory = () => new Player
 
 export default playerFactory
