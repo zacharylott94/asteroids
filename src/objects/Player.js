@@ -12,20 +12,8 @@ import { canAccelerate } from "./behaviors/canAccelerate.js";
 import { canRender } from "./canRender.js";
 import { canFireProjectile } from "./behaviors/canFireProjectile.js";
 import { canRotate } from "./behaviors/canRotate.js";
+import { State } from "./State.js";
 
-
-const State = _ => {
-    let state = false
-    const get = _ => state
-    const set = bool => state = bool
-    const on = _ => set(true)
-    const off = _ => set(false)
-    return {
-        get,
-        on,
-        off,
-    }
-}
 
 class Player extends GameObject {
     constructor(position = new Position(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = Settings.PLAYER_RADIUS) {
@@ -49,6 +37,7 @@ class Player extends GameObject {
             canRotate(this),
             canFireProjectile(this),
             canRender(this, triangle),
+            canMove(this),
             )
         {   //I did this so that the below lines wouldn't be insanely long due to long-winded property indexing
             //I.E. this.state.accelerating.on.bind(this.state.accelerating)
@@ -73,7 +62,7 @@ class Player extends GameObject {
 
 
     update() {
-        super.update()
+        this.move()
         if (this.state.accelerating.get()) this.accelerate()
         if (this.state.rotatingRight.get()) this.rotate(Settings.ROTATION_RATE)
         if (this.state.rotatingLeft.get()) this.rotate(-Settings.ROTATION_RATE)
@@ -97,6 +86,13 @@ class Player extends GameObject {
     }
 
     static destructionSound = new Sound("/asteroids/src/sfx/player_kill.wav")
+}
+
+const canMove = (state) => {
+
+    return {
+        move: _ => {state.position = Position.add(state.position, state.velocity)}
+    }
 }
 
 const playerFactory = () => new Player
