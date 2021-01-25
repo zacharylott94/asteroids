@@ -13,11 +13,20 @@ import { canRender } from "./canRender.js";
 import { canFireProjectile } from "./behaviors/canFireProjectile.js";
 import { canRotate } from "./behaviors/canRotate.js";
 import { State } from "./State.js";
+import ObjectList from "../gameLogic/ObjectList.js"
 
 
-class Player extends GameObject {
+class Player {
     constructor(position = new Position(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = Settings.PLAYER_RADIUS) {
-        super(position, velocity, radius)
+        if (position.constructor.name !== 'Position') throw TypeError('position is not an instance of class Vector')
+        if (velocity.constructor.name !== 'Vector') throw TypeError('velocity is not an instance of class Vector')
+        if (typeof radius !== 'number' || Number.isNaN(radius)) throw TypeError('radius is not of type Number')
+        this.position = position
+        this.velocity = velocity
+        this.radius = radius
+        // this.renderComponent = new RenderComponent(Circle, this)
+        ObjectList.add(this)
+
         this.rotation = 0
         this.impulse = Settings.IMPULSE
         this.state = {
@@ -58,6 +67,10 @@ class Player extends GameObject {
     handleCollision(obj) {
         if(!this.collider.collidedWith(obj)) return
         if (obj.constructor.name === "Asteroid") this.delete()
+    }
+
+    delete() {
+        ObjectList.delete(this)
     }
 
 
