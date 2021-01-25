@@ -1,7 +1,7 @@
 import Canvas from "../objects/Canvas.js"
 import Vector from "../objects/vector/Vector.js"
 import ObjectList from "./ObjectList.js"
-import Asteroid from '../objects/Asteroid.js'
+import { LargeAsteroid }  from '../objects/Asteroid.js'
 import Settings from './Settings.js'
 import Position from "../objects/vector/Position.js"
 
@@ -27,7 +27,7 @@ class AsteroidSpawner {
                                           Math.max(Settings.MIN_ASTEROID_VELOCITY, Math.random() * difficulty * Settings.ASTEROID_DIFFICULTY_VELOCITY_RATIO))
   }
   static spawnAsteroid(difficulty) {
-    Asteroid.createLarge(AsteroidSpawner.generateSpawnLocation(), AsteroidSpawner.generateRandomVelocity(difficulty))
+    LargeAsteroid(AsteroidSpawner.generateSpawnLocation(), AsteroidSpawner.generateRandomVelocity(difficulty))
   }
 }
 

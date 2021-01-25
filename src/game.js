@@ -49,22 +49,21 @@ const physicsLoop = () => {
         })
     })
     
-    // if (STATE.timer % 100 === 0) AsteroidSpawner.workLoop(STATE.difficulty)
-    // STATE.timer++
+    if (STATE.timer % 100 === 0) AsteroidSpawner.workLoop(STATE.difficulty)
+    STATE.timer++
 }
 
-// EventCoordinator.registerCallback(EventCoordinator.event.ObjectDeleted, ([object]) => {
-//     if (object.constructor.name === "Asteroid"){
-//         STATE.difficulty+=Settings.DIFFICULTY_RAMPUP
-//         console.log(`difficulty is: ${STATE.difficulty}`)
-//     }
-// })
+EventCoordinator.registerCallback(EventCoordinator.event.ObjectDeleted, ([object]) => {
+    if (object.type === "Asteroid"){
+        STATE.difficulty+=Settings.DIFFICULTY_RAMPUP
+        console.log(`difficulty is: ${STATE.difficulty}`)
+    }
+})
 function resetGame() {
     STATE.difficulty = Settings.STARTING_DIFFICULTY
     ObjectList.reset()
     HUD.reset()
     Player()
-    LargeAsteroid(new Position(100,100), new Vector(.5,.5), 30)
     STATE.timer = 0
     STATE.paused = false
 }

@@ -76,6 +76,7 @@ const Player = (position = new Position(Canvas.width/2, Canvas.height/2), veloci
         if (typeof radius !== 'number' || Number.isNaN(radius)) throw TypeError('radius is not of type Number')
 
         let player = {
+            type: "Player",
             position,
             velocity,
             radius,
