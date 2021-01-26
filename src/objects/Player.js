@@ -92,13 +92,11 @@ const Player = (position = new Position(Canvas.width/2, Canvas.height/2), veloci
                 fired:         State(),
                 firing:        State(),
             },
-            collider: "Broken",
             activeProjectiles: new Set(),
             updateCallbacks: [],
         }
 
-        
-        
+        //compose player object via mutation functions
         playerUpdate(player)
         canAccelerate(player)
         canRotate(player)
@@ -112,11 +110,6 @@ const Player = (position = new Position(Canvas.width/2, Canvas.height/2), veloci
         registerController(player)
         registerEvents(player)
         ObjectList.add(player)
-        
-        const handleCollision = (obj) => {
-            if(!this.collider.collidedWith(obj)) return
-            if (obj.constructor.name === "Asteroid") this.delete()
-        }
 
         return player
 }
