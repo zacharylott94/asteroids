@@ -17,6 +17,7 @@ import ObjectList from "../gameLogic/ObjectList.js"
 import { canMove } from "./behaviors/canMove.js"
 import { canHandleCollision } from "./behaviors/canHandleCollision.js";
 import { canUpdate } from "./behaviors/canUpdate.js";
+import { classGuard, typeofGuard } from "../gameLogic/guards/Guard.js";
 
 const destructionSound = Sound("/asteroids/src/sfx/player_kill.wav")
 
@@ -74,44 +75,44 @@ const registerEvents = player => {
 }
 
 const Player = (position = new Position(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = Settings.PLAYER_RADIUS) => {
-    if (position.constructor.name !== 'Position') throw TypeError('position is not an instance of class Vector')
-        if (velocity.constructor.name !== 'Vector') throw TypeError('velocity is not an instance of class Vector')
-        if (typeof radius !== 'number' || Number.isNaN(radius)) throw TypeError('radius is not of type Number')
+    classGuard(position, "Position")
+    classGuard(velocity, "Vector")
+    typeofGuard(radius, 'number')
 
-        let player = {
-            type: "Player",
-            position,
-            velocity,
-            radius,
-            rotation: 0,
-            impulse: Settings.IMPULSE,
-            state: {
-                accelerating:  State(),
-                rotatingLeft:  State(),
-                rotatingRight: State(),
-                fired:         State(),
-                firing:        State(),
-            },
-            activeProjectiles: new Set(),
-            updateCallbacks: [],
-        }
+    let player = {
+        type: "Player",
+        position,
+        velocity,
+        radius,
+        rotation: 0,
+        impulse: Settings.IMPULSE,
+        state: {
+            accelerating:  State(),
+            rotatingLeft:  State(),
+            rotatingRight: State(),
+            fired:         State(),
+            firing:        State(),
+        },
+        activeProjectiles: new Set(),
+        updateCallbacks: [],
+    }
 
-        //compose player object via mutation functions
-        playerUpdate(player)
-        canAccelerate(player)
-        canRotate(player)
-        canFireProjectile(player)
-        canRender(player, triangle)
-        canMove(player)
-        canDelete(player)
-        canHandleCollision(player)
-        canCollide(player)
-        
-        registerController(player)
-        registerEvents(player)
-        ObjectList.add(player)
+    //compose player object via mutation functions
+    playerUpdate(player)
+    canAccelerate(player)
+    canRotate(player)
+    canFireProjectile(player)
+    canRender(player, triangle)
+    canMove(player)
+    canDelete(player)
+    canHandleCollision(player)
+    canCollide(player)
+    
+    registerController(player)
+    registerEvents(player)
+    ObjectList.add(player)
 
-        return player
+    return player
 }
 
 export default Player

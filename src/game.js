@@ -7,6 +7,9 @@ import Settings from "./gameLogic/Settings.js"
 import HUD from "./objects/HUD.js"
 import Controller from "./objects/Controller.js"
 import Sound from "./gameLogic/Sound.js"
+import { Particle } from "./objects/Particle.js"
+import Vector from "./objects/vector/Vector.js"
+import Position from "./objects/vector/Position.js"
 
 //---------------Initialize Game--------------------
 let STATE = {
@@ -59,6 +62,7 @@ function resetGame() {
     ObjectList.reset()
     HUD.reset()
     Player()
+    Particle(new Position(10,10), new Vector(1,1))
     STATE.timer = 0
     STATE.paused = false
 }

@@ -1,6 +1,6 @@
 import Canvas from "../objects/Canvas.js"
 //strokes a circle
-const Circle = ({position, radius, color = Canvas.context.strokeStyle} = {}) => {
+const Circle = ({position, radius = 1, color = Canvas.context.strokeStyle} = {}) => {
     let ctx = Canvas.context
     ctx.save()
     ctx.strokeStyle = color
