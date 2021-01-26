@@ -1,17 +1,12 @@
 import GRAPHICS from "./graphics.js"
 import Player from "./objects/Player.js"
-import hasCollided from "./gameLogic/hasCollided.js"
 import ObjectList from "./gameLogic/ObjectList.js"
-import Canvas from "./objects/Canvas.js"
 import AsteroidSpawner from "./gameLogic/AsteroidSpawner.js"
 import EventCoordinator from "./objects/EventCoordinator.js"
 import Settings from "./gameLogic/Settings.js"
 import HUD from "./objects/HUD.js"
 import Controller from "./objects/Controller.js"
 import Sound from "./gameLogic/Sound.js"
-import { LargeAsteroid } from "./objects/Asteroid.js"
-import Position from "./objects/vector/Position.js"
-import Vector from "./objects/vector/Vector.js"
 
 //---------------Initialize Game--------------------
 let STATE = {
