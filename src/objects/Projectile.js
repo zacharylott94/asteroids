@@ -8,6 +8,7 @@ import { canMove } from "./behaviors/canMove.js"
 import { canRender } from "./behaviors/canRender.js";
 import { canHandleCollision } from "./behaviors/canHandleCollision.js";
 import { hasTimeToLive } from "./behaviors/hasTimeToLive.js";
+import { canUpdate } from "./behaviors/canUpdate.js";
 
 const shootSounds = [
   Sound("/asteroids/src/sfx/shoot.wav"),
@@ -22,7 +23,7 @@ const canCollide = (projectile) => {
       projectile.delete()
     }
   }
-  return {onCollide}
+  projectile.onCollide = onCollide
 }
 
 const canDelete = projectile => {
@@ -31,15 +32,7 @@ const canDelete = projectile => {
     EventCoordinator.call(EventCoordinator.event.ProjectileDeleted, projectile)
     ObjectList.delete(projectile)
   }
-  return {delete:deleteThis}
-}
-
-const canUpdate = (projectile) => {
-  const update = _ => {
-    projectile.move()
-    projectile?.updateCallbacks?.forEach?.(callback => callback())
-  }
-  return {update}
+  projectile.delete = deleteThis
 }
 
 const ProjectileFactory = (position, rotationVector) => {
@@ -50,19 +43,19 @@ const ProjectileFactory = (position, rotationVector) => {
     radius: Settings.PROJECTILE_SIZE,
     rotation: rotationVector.degrees(),
     sound: Sound(shootSounds[Random.int(2)].getSrc()),
+    updateCallbacks: [],
   }
 
-  Object.assign(
-    projectile,
-    canRender(projectile, diamond),
-    canUpdate(projectile),
-    canDelete(projectile),
-    canMove(projectile),
-    canHandleCollision(projectile),
-    canCollide(projectile),
-    hasTimeToLive(projectile, Settings.PROJECTILE_TIME_TO_LIVE)
 
-  )
+  canRender(projectile, diamond),
+  canUpdate(projectile)
+  canDelete(projectile)
+  canMove(projectile)
+  canHandleCollision(projectile)
+  canCollide(projectile)
+  hasTimeToLive(projectile, Settings.PROJECTILE_TIME_TO_LIVE)
+
+
   projectile.sound.play()
   ObjectList.add(projectile)
   return projectile

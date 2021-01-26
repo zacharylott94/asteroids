@@ -16,6 +16,7 @@ import { State } from "./State.js";
 import ObjectList from "../gameLogic/ObjectList.js"
 import { canMove } from "./behaviors/canMove.js"
 import { canHandleCollision } from "./behaviors/canHandleCollision.js";
+import { canUpdate } from "./behaviors/canUpdate.js";
 
 const destructionSound = Sound("/asteroids/src/sfx/player_kill.wav")
 
@@ -31,11 +32,12 @@ const canDelete = (player) => {
         ObjectList.delete(player)
     }
 
-    return {delete:deleteThis}
+    player.delete = deleteThis
 }
-const canUpdate = (player) => {
+const playerUpdate = (player) => {
+    canUpdate(player)
     const update = _ => {
-        player.move()
+        // player.move()
         if (player.state.accelerating.get()) player.accelerate()
         if (player.state.rotatingRight.get()) player.rotate(Settings.ROTATION_RATE)
         if (player.state.rotatingLeft.get()) player.rotate(-Settings.ROTATION_RATE)
@@ -46,13 +48,14 @@ const canUpdate = (player) => {
             player.state.fired.off()
         }    
     }
-    return {update}
+    player.updateCallbacks.push(update)
+    // return {update}
 }
 const canCollide = player => {
     const onCollide = obj => {
         if (obj.type === "Asteroid") player.delete()
     }
-    return {onCollide}
+    player.onCollide = onCollide
 }
 
 const registerController = playerData => {
@@ -91,20 +94,21 @@ const Player = (position = new Position(Canvas.width/2, Canvas.height/2), veloci
             },
             collider: "Broken",
             activeProjectiles: new Set(),
+            updateCallbacks: [],
         }
 
-        Object.assign(
-            player,
-            canAccelerate(player),
-            canRotate(player),
-            canFireProjectile(player),
-            canRender(player, triangle),
-            canMove(player),
-            canUpdate(player),
-            canDelete(player),
-            canHandleCollision(player),
-            canCollide(player),
-        )
+        
+        
+        playerUpdate(player)
+        canAccelerate(player)
+        canRotate(player)
+        canFireProjectile(player)
+        canRender(player, triangle)
+        canMove(player)
+        canDelete(player)
+        canHandleCollision(player)
+        canCollide(player)
+        
         registerController(player)
         registerEvents(player)
         ObjectList.add(player)

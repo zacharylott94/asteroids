@@ -7,6 +7,7 @@ import Random from "../gameLogic/random.js"
 import { canRender } from "./behaviors/canRender.js"
 import { canMove } from "./behaviors/canMove.js"
 import { canHandleCollision } from "./behaviors/canHandleCollision.js"
+import { canUpdate } from "./behaviors/canUpdate.js"
 import Circle from "../draw/Circle.js"
 import ObjectList from "../gameLogic/ObjectList.js"
 
@@ -44,7 +45,7 @@ const canCollide = asteroid => {
       asteroid.delete()
     }
   }
-  return {onCollide}
+  asteroid.onCollide = onCollide
 }
 
 const canDelete = asteroid => {
@@ -52,15 +53,9 @@ const canDelete = asteroid => {
     EventCoordinator.call(EventCoordinator.event.ObjectDeleted, asteroid)
     ObjectList.delete(asteroid)
   }
-  return {delete:deleteThis}
+  asteroid.delete = deleteThis
 }
 
-const canUpdate = asteroid => {
-  const update = _ => {
-    asteroid.move()
-  }
-  return {update}
-}
 
 const canShatter = asteroid => {
   const shatter = _=> {
@@ -78,7 +73,7 @@ const canShatter = asteroid => {
     }
 
   }
-  return {shatter}
+  asteroid.shatter = shatter
 }
 
 const AsteroidFactory = (position, velocity, radius) => {
@@ -90,18 +85,17 @@ const AsteroidFactory = (position, velocity, radius) => {
     durability: Settings.ASTEROID_DURABILITY,
     hitSounds: hitSounds.map(s => Sound(s.getSrc())),
     shatterSounds: shatterSounds.map(s => Sound(s.getSrc())),
+    updateCallbacks: [],
 
   }
-  Object.assign(
-    asteroid,
-    canMove(asteroid),
-    canRender(asteroid, Circle),
-    canUpdate(asteroid),
-    canCollide(asteroid),
-    canHandleCollision(asteroid),
-    canShatter(asteroid),
-    canDelete(asteroid),
-  )
+
+  canMove(asteroid)
+  canRender(asteroid, Circle)
+  canUpdate(asteroid)
+  canCollide(asteroid)
+  canHandleCollision(asteroid)
+  canShatter(asteroid)
+  canDelete(asteroid)
   
   ObjectList.add(asteroid)
   return asteroid

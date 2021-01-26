@@ -13,11 +13,10 @@ export const canRender = (object, drawingFunction) => {
         new Vector(0, Canvas.height),
         new Vector(Canvas.width, Canvas.height),
     ];
-    const render = () => {
+    object.render = () => {
         renderOffsets.map(offsetVector => {
             let offsetPosition = Vector.add(object.position, offsetVector);
             drawingFunction({ ...object, position: offsetPosition });
         });
     };
-    return { render };
 };

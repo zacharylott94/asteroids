@@ -4,9 +4,6 @@ export const hasTimeToLive = (object, ttl) => {
       object.delete();
     object.timeToLive--;
   };
-  let timeToLive = {
-    timeToLive: ttl,
-    updateCallbacks: [...object.updateCallbacks ?? [], tickTTL]
-  };
-  return timeToLive;
-};
+  object.timeToLive = ttl
+  object.updateCallbacks.push(tickTTL)
+}

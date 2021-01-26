@@ -1,7 +1,7 @@
 import Vector from "../vector/Vector.js"
 import Canvas from "../Canvas.js"
 export const canHandleCollision = (object) => {
-  const handleCollision = otherObject => {
+  object.handleCollision = otherObject => {
     // let object = this.parent
     if (object === otherObject) return
     if (object.type === otherObject.type) return
@@ -11,5 +11,5 @@ export const canHandleCollision = (object) => {
     const squaredRadiiOfObjects = summedRadiiOfObjects * summedRadiiOfObjects
     if (squaredDistanceBetweenObjects <= squaredRadiiOfObjects) object.onCollide(otherObject)
   }
-  return {handleCollision}
+
 }
