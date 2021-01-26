@@ -3,12 +3,12 @@ import ObjectList from "../src/gameLogic/ObjectList.js"
 //Stubs
 class Asteroid {
   constructor() {
-
+    this.type = "Asteroid"
   }
 }
 class Projectile {
   constructor() {
-
+    this.type = "Projectile"
   }
 }
 describe('ObjectList', () => {
