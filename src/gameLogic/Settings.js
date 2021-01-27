@@ -22,14 +22,7 @@ class Settings {
     reset: "o",
     pause: "p"
   }
-  //Used in EventCoordinator
-  static EVENTS = {
-    GamePaused: "pause",
-    ProjectileDeleted: "ProjectileDeleted",
-    ObjectDeleted: "ObjectDeleted",
-    GameReset: "reset",
-    ProjectileCreated: "ProjectileCreated",
-  }
+
 
   //Used in Player
   static PLAYER_RADIUS = 6

@@ -29,7 +29,7 @@ const canCollide = (projectile) => {
 const canDelete = projectile => {
   const deleteThis = _ => {
     projectile.sound.stop()
-    EventCoordinator.call(EventCoordinator.event.ProjectileDeleted, projectile)
+    EventCoordinator.call(EventCoordinator.event.ObjectDeleted, projectile)
     ObjectList.delete(projectile)
   }
   projectile.delete = deleteThis

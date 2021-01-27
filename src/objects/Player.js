@@ -69,7 +69,7 @@ const registerController = playerData => {
 }
 
 const registerEvents = player => {
-    EventCoordinator.registerCallback(EventCoordinator.event.ProjectileDeleted, player.decrementActiveProjectiles)
+    EventCoordinator.registerCallback(EventCoordinator.event.ObjectDeleted, player.decrementActiveProjectiles)
 }
 
 const Player = (position = new Position(Canvas.width/2, Canvas.height/2), velocity = new Vector(), radius = Settings.PLAYER_RADIUS) => {
