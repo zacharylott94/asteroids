@@ -5,8 +5,8 @@ class HUD {
   static draw() {
     GRAPHICS.drawText(`Score: ${HUD.score}`, Canvas.width/2, 10)
   }
-  static tickScore() {
-    HUD.score += 1
+  static tickScore([obj]) {
+    if (obj.type === "Asteroid") HUD.score += 1
   }
   static reset() {
     HUD.score = 0

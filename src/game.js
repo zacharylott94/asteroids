@@ -20,6 +20,8 @@ let STATE = {
 
 let pauseSound = Sound("/asteroids/src/sfx/pause.wav")
 
+// EventCoordinator.registerCallback(EventCoordinator.event.ObjectDeleted, ([args]) => {console.log(`${args.type} was deleted`)})
+
 //The rendering loop here
 const renderLoop = () => {
     GRAPHICS.clear()
