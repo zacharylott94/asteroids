@@ -1,5 +1,3 @@
-import Settings from "../gameLogic/Settings.js"
-
 const callbacks = {}
 const event = {
   GamePaused: "pause",

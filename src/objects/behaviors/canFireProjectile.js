@@ -1,4 +1,4 @@
-import ProjectileFactory from "../Projectile.js";
+import ProjectileFactory from "../gameObjects/Projectile.js";
 import Vector from "../vector/Vector.js";
 
 export const canFireProjectile = (object) => {

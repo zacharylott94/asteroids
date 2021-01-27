@@ -1,13 +1,12 @@
-import EventCoordinator from "./EventCoordinator.js"
-import Settings from "../gameLogic/Settings.js"
-import diamond from "../draw/Diamond.js";
-import Sound from "../gameLogic/Sound.js";
-import Random from "../gameLogic/random.js";
-import ObjectList from "../gameLogic/ObjectList.js";
-import { canRender } from "./behaviors/canRender.js";
-import { canHandleCollision } from "./behaviors/canHandleCollision.js";
-import { hasTimeToLive } from "./behaviors/hasTimeToLive.js";
-import { commonBehaviors } from "./behaviors/commonBehavior.js";
+import Settings from "../../gameLogic/Settings.js"
+import diamond from "../../draw/Diamond.js";
+import Sound from "../../gameLogic/Sound.js";
+import Random from "../../gameLogic/random.js";
+import ObjectList from "../../gameLogic/ObjectList.js";
+import { canRender } from "../behaviors/canRender.js";
+import { canHandleCollision } from "../behaviors/canHandleCollision.js";
+import { hasTimeToLive } from "../behaviors/hasTimeToLive.js";
+import { commonBehaviors } from "../behaviors/commonBehavior.js";
 
 const shootSounds = [
   Sound("/asteroids/src/sfx/shoot.wav"),

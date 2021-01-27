@@ -1,22 +1,20 @@
-import Canvas from "./Canvas.js"
-import Vector from "./vector/Vector.js";
-import Controller from "./Controller.js"
-import EventCoordinator from "./EventCoordinator.js";
-import Settings from "../gameLogic/Settings.js"
-import triangle from "../draw/Triangle.js";
-import Sound from "../gameLogic/Sound.js";
-import Position from "./vector/Position.js";
-import { canAccelerate } from "./behaviors/canAccelerate.js";
-import { canRender } from "./behaviors/canRender.js";
-import { canFireProjectile } from "./behaviors/canFireProjectile.js";
-import { canRotate } from "./behaviors/canRotate.js";
-import { State } from "./State.js";
-import ObjectList from "../gameLogic/ObjectList.js"
-import { canMove } from "./behaviors/canMove.js"
-import { canHandleCollision } from "./behaviors/canHandleCollision.js";
-import { canUpdate } from "./behaviors/canUpdate.js";
-import { classGuard, typeofGuard } from "../gameLogic/guards/Guard.js";
-import { commonBehaviors } from "./behaviors/commonBehavior.js";
+import Canvas from "../Canvas.js"
+import Vector from "../vector/Vector.js";
+import Controller from "../Controller.js"
+import EventCoordinator from "../EventCoordinator.js";
+import Settings from "../../gameLogic/Settings.js"
+import triangle from "../../draw/Triangle.js";
+import Sound from "../../gameLogic/Sound.js";
+import Position from "../vector/Position.js";
+import { canAccelerate } from "../behaviors/canAccelerate.js";
+import { canRender } from "../behaviors/canRender.js";
+import { canFireProjectile } from "../behaviors/canFireProjectile.js";
+import { canRotate } from "../behaviors/canRotate.js";
+import { State } from "../State.js";
+import ObjectList from "../../gameLogic/ObjectList.js"
+import { canHandleCollision } from "../behaviors/canHandleCollision.js";
+import { classGuard, typeofGuard } from "../../gameLogic/guards/Guard.js";
+import { commonBehaviors } from "../behaviors/commonBehavior.js";
 
 const destructionSound = Sound("/asteroids/src/sfx/player_kill.wav")
 

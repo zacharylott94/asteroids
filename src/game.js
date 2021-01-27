@@ -1,5 +1,5 @@
 import GRAPHICS from "./graphics.js"
-import Player from "./objects/Player.js"
+import Player from "./objects/gameObjects/Player.js"
 import ObjectList from "./gameLogic/ObjectList.js"
 import AsteroidSpawner from "./gameLogic/AsteroidSpawner.js"
 import EventCoordinator from "./objects/EventCoordinator.js"

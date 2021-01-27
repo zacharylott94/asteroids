@@ -1,7 +1,7 @@
 import Canvas from "../objects/Canvas.js"
 import Vector from "../objects/vector/Vector.js"
 import ObjectList from "./ObjectList.js"
-import { LargeAsteroid }  from '../objects/Asteroid.js'
+import { LargeAsteroid }  from '../objects/gameObjects/Asteroid.js'
 import Settings from './Settings.js'
 import Position from "../objects/vector/Position.js"
 
