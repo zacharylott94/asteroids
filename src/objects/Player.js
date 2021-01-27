@@ -16,6 +16,7 @@ import { canMove } from "./behaviors/canMove.js"
 import { canHandleCollision } from "./behaviors/canHandleCollision.js";
 import { canUpdate } from "./behaviors/canUpdate.js";
 import { classGuard, typeofGuard } from "../gameLogic/guards/Guard.js";
+import { commonBehaviors } from "./behaviors/commonBehavior.js";
 
 const destructionSound = Sound("/asteroids/src/sfx/player_kill.wav")
 
@@ -34,7 +35,6 @@ const canDelete = (player) => {
     player.delete = deleteThis
 }
 const playerUpdate = (player) => {
-    canUpdate(player)
     const update = _ => {
         // player.move()
         if (player.state.accelerating.get()) player.accelerate()
@@ -96,13 +96,12 @@ const Player = (position = new Position(Canvas.width/2, Canvas.height/2), veloci
     }
 
     //compose player object via mutation functions
+    commonBehaviors(player)
     playerUpdate(player)
     canAccelerate(player)
     canRotate(player)
     canFireProjectile(player)
     canRender(player, triangle)
-    canMove(player)
-    canDelete(player)
     canHandleCollision(player)
     canCollide(player)
     
