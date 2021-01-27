@@ -1,4 +1,3 @@
-import GameObject from "./GameObject.js"
 import Vector from "./vector/Vector.js"
 import EventCoordinator from "./EventCoordinator.js"
 import Settings from "../gameLogic/Settings.js"

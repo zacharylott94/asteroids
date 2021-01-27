@@ -1,5 +1,4 @@
 import Canvas from "./Canvas.js"
-import GameObject from "./GameObject.js"
 import Vector from "./vector/Vector.js";
 import Controller from "./Controller.js"
 import EventCoordinator from "./EventCoordinator.js";
@@ -7,7 +6,6 @@ import Settings from "../gameLogic/Settings.js"
 import triangle from "../draw/Triangle.js";
 import Sound from "../gameLogic/Sound.js";
 import Position from "./vector/Position.js";
-import ColliderComponent from "./components/colliderComponent.js"
 import { canAccelerate } from "./behaviors/canAccelerate.js";
 import { canRender } from "./behaviors/canRender.js";
 import { canFireProjectile } from "./behaviors/canFireProjectile.js";
