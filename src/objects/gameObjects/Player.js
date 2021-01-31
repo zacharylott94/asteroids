@@ -27,12 +27,25 @@ const canDelete = (player) => {
         Controller.unregisterCallback(Controller.button.right, player.state.rotatingRight.on, player.state.rotatingRight.off)
         Controller.unregisterCallback(Controller.button.fire, player.state.firing.on, player.state.firing.off)
         EventCoordinator.unregisterCallback(EventCoordinator.event.ProjectileDeleted, player.decrementActiveProjectiles)
-        player.particleSpawner.emit(player.position)
+        // player.particleSpawner.emit(player.position)
         destructionSound.play()
         ObjectList.delete(player)
     }
 
     player.delete = deleteThis
+}
+
+const handleDeathParticles = player => {
+    const deathParticles = obj => {
+        let vectorBetween = Vector.subtract(player.position, obj.position)
+        let angle = vectorBetween.degrees()
+        let particleSpawner = ParticleSpawnerBuilder()
+            .atAngle(angle)
+            .withSpread(45)
+            .build()
+        particleSpawner.emit(player.position)
+    }
+    player.deathParticles = deathParticles
 }
 const playerUpdate = (player) => {
     const update = _ => {
@@ -52,7 +65,10 @@ const playerUpdate = (player) => {
 }
 const canCollide = player => {
     const onCollide = obj => {
-        if (obj.type === "Asteroid") player.delete()
+        if (obj.type === "Asteroid") {
+            player.deathParticles(obj)
+            player.delete()
+        }
     }
     player.onCollide = onCollide
 }
@@ -106,6 +122,7 @@ const Player = (position = new Position(Canvas.width/2, Canvas.height/2), veloci
     canHandleCollision(player)
     canCollide(player)
     canDelete(player)
+    handleDeathParticles(player)
     
     registerController(player)
     registerEvents(player)
