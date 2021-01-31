@@ -5,7 +5,7 @@ import { canRender } from "./behaviors/canRender.js"
 import { commonBehaviors } from "./behaviors/commonBehavior.js"
 import { hasTimeToLive } from "./behaviors/hasTimeToLive.js"
 
-export const Particle = (position, velocity, draw = Circle) => {
+export const Particle = ({position, velocity, draw = Circle, ttl}) => {
   classGuard(position, "Position")
   classGuard(velocity, "Vector")
   typeofGuard(draw, "function")
@@ -18,7 +18,7 @@ export const Particle = (position, velocity, draw = Circle) => {
 
   commonBehaviors(particle)
   canRender(particle, draw)
-  hasTimeToLive(particle, 200)
+  hasTimeToLive(particle, ttl)
 
 
   ObjectList.add(particle)

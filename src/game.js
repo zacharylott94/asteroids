@@ -10,6 +10,7 @@ import Sound from "./gameLogic/Sound.js"
 import { Particle } from "./objects/Particle.js"
 import Vector from "./objects/vector/Vector.js"
 import Position from "./objects/vector/Position.js"
+import { ParticleSpawnerBuilder } from "./objects/ParticleSpawner.js"
 
 //---------------Initialize Game--------------------
 let STATE = {
@@ -64,7 +65,12 @@ function resetGame() {
     ObjectList.reset()
     HUD.reset()
     Player()
-    Particle(new Position(10,10), new Vector(1,1))
+    let particleSpawner = ParticleSpawnerBuilder()
+                          .atPosition(new Position(100,100))
+                          .atAngle(0)
+                          .withDensity(20)
+                          .build()
+    particleSpawner.emit()
     STATE.timer = 0
     STATE.paused = false
 }

@@ -2,7 +2,7 @@ import Vector from "../vector/Vector.js"
 import EventCoordinator from "../EventCoordinator.js"
 import Settings from "../../gameLogic/Settings.js"
 import Sound from "../../gameLogic/Sound.js"
-import Random from "../../gameLogic/random.js"
+import { randomInt } from "../../gameLogic/random.js"
 import { canRender } from "../behaviors/canRender.js"
 import { canMove } from "../behaviors/canMove.js"
 import { canHandleCollision } from "../behaviors/canHandleCollision.js"
@@ -35,11 +35,11 @@ const canCollide = asteroid => {
   const onCollide = obj => {
     if (obj.type === "Projectile"){
       asteroid.durability--
-      asteroid.hitSounds[Random.int(2)].play()
+      asteroid.hitSounds[randomInt(2)].play()
     }
     if (asteroid.durability < 1) {
       asteroid.hitSounds.forEach(each => each.stop())
-      asteroid.shatterSounds[Random.int(2)].play()
+      asteroid.shatterSounds[randomInt(2)].play()
       asteroid.shatter()
       asteroid.delete()
     }
