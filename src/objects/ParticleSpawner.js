@@ -10,18 +10,13 @@ const defaults = {
   density: 10,
   draw: Circle,
   ttl: 20,
-  position: new Position(10,10),
   speed: 2
 }
 
 export const ParticleSpawnerBuilder = _ => {
   let builder = {spawner: {...defaults}}
   const build = _ => {
-    return {emit: _ => emit(builder.spawner)}
-  }
-  const atPosition = position => {
-    builder.spawner.position = position
-    return builder
+    return {emit}
   }
   const withSpread = spread => {
     builder.spawner.spread = spread
@@ -51,7 +46,6 @@ export const ParticleSpawnerBuilder = _ => {
   Object.assign(
     builder,
     {build,
-    atPosition,
     withSpread,
     withDensity,
     withDraw,
@@ -61,12 +55,12 @@ export const ParticleSpawnerBuilder = _ => {
   }
   )
 
-  const emit = spawner => {
-    console.log(spawner)
-    // let velocity = Vector.fromDegreesAndMagnitude(spawner.angle)
-    for (let i = 0; i < spawner.density; i++) {
-      let velocity = Vector.fromDegreesAndMagnitude(randomAngle(spawner.angle, spawner.spread), Math.random() * spawner.speed)
-      Particle({...spawner, velocity})
+  const emit = position => {
+    // console.log(builder.spawner)
+    // let velocity = Vector.fromDegreesAndMagnitude(builder.spawner.angle)
+    for (let i = 0; i < builder.spawner.density; i++) {
+      let velocity = Vector.fromDegreesAndMagnitude(randomAngle(builder.spawner.angle, builder.spawner.spread), Math.random() * builder.spawner.speed)
+      Particle({...builder.spawner, velocity, position})
     }
   }
 

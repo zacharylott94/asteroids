@@ -66,11 +66,10 @@ function resetGame() {
     HUD.reset()
     Player()
     let particleSpawner = ParticleSpawnerBuilder()
-                          .atPosition(new Position(100,100))
                           .atAngle(0)
                           .withDensity(20)
                           .build()
-    particleSpawner.emit()
+    particleSpawner.emit(new Position(100,100))
     STATE.timer = 0
     STATE.paused = false
 }

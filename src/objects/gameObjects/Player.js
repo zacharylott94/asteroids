@@ -15,6 +15,7 @@ import ObjectList from "../../gameLogic/ObjectList.js"
 import { canHandleCollision } from "../behaviors/canHandleCollision.js";
 import { classGuard, typeofGuard } from "../../gameLogic/guards/Guard.js";
 import { commonBehaviors } from "../behaviors/commonBehavior.js";
+import { ParticleSpawnerBuilder } from "../ParticleSpawner.js";
 
 const destructionSound = Sound("/asteroids/src/sfx/player_kill.wav")
 
@@ -26,6 +27,7 @@ const canDelete = (player) => {
         Controller.unregisterCallback(Controller.button.right, player.state.rotatingRight.on, player.state.rotatingRight.off)
         Controller.unregisterCallback(Controller.button.fire, player.state.firing.on, player.state.firing.off)
         EventCoordinator.unregisterCallback(EventCoordinator.event.ProjectileDeleted, player.decrementActiveProjectiles)
+        player.particleSpawner.emit(player.position)
         destructionSound.play()
         ObjectList.delete(player)
     }
@@ -91,6 +93,7 @@ const Player = (position = new Position(Canvas.width/2, Canvas.height/2), veloci
         },
         activeProjectiles: new Set(),
         updateCallbacks: [],
+        particleSpawner: ParticleSpawnerBuilder().build()
     }
 
     //compose player object via mutation functions
@@ -102,6 +105,7 @@ const Player = (position = new Position(Canvas.width/2, Canvas.height/2), veloci
     canRender(player, triangle)
     canHandleCollision(player)
     canCollide(player)
+    canDelete(player)
     
     registerController(player)
     registerEvents(player)
