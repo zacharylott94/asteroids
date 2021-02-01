@@ -1,6 +1,7 @@
 import Circle from "../draw/Circle.js";
 import { randomAngle } from "../gameLogic/random.js";
 import { Particle } from "./Particle.js";
+import Position from "./vector/Position.js";
 import Vector from "./vector/Vector.js"
 
 const defaults = {
@@ -9,7 +10,8 @@ const defaults = {
   density: 10,
   draw: Circle,
   ttl: 20,
-  speed: 2
+  speed: 2,
+  position: new Position( 100, 100 ),
 }
 
 export const ParticleSpawnerBuilder = _ => {
@@ -42,6 +44,12 @@ export const ParticleSpawnerBuilder = _ => {
 
   const withSpeed = speed => {
     spawner.speed = speed
+    return builder
+  }
+
+  const withPosition = position => {
+    spawner.position = position
+    return builder
   }
   Object.assign(
     builder,
@@ -53,13 +61,14 @@ export const ParticleSpawnerBuilder = _ => {
       withParticleTTL,
       atAngle,
       withSpeed,
+      withPosition,
     }
   )
 
-  const emit = position => {
+  const emit = _ => {
     for (let i = 0; i < spawner.density; i++) {
       let velocity = Vector.fromDegreesAndMagnitude(randomAngle(spawner.angle, spawner.spread), Math.random() * spawner.speed)
-      Particle({...spawner, velocity, position})
+      Particle({...spawner, velocity})
     }
   }
 

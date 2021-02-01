@@ -7,6 +7,8 @@ import { canRender } from "../behaviors/canRender.js";
 import { canHandleCollision } from "../behaviors/canHandleCollision.js";
 import { hasTimeToLive } from "../behaviors/hasTimeToLive.js";
 import { commonBehaviors } from "../behaviors/commonBehavior.js";
+import { ParticleSpawnerBuilder } from "../ParticleSpawner.js";
+import Vector from "../vector/Vector.js";
 
 const shootSounds = [
   Sound("/asteroids/src/sfx/shoot.wav"),
@@ -18,6 +20,17 @@ const canCollide = (projectile) => {
   const onCollide = obj => {
     if (obj.type === "Asteroid") {
       // projectile.shootSound.stop()
+      let angle = Vector.subtract(projectile.position, obj.position).degrees()
+      ParticleSpawnerBuilder()
+      .withPosition(projectile.position)
+      .withDensity(2)
+      .withSpeed(4)
+      .atAngle(angle)
+      .withSpread(60)
+      .withParticleTTL(10)
+      .build()
+      .emit()
+
       projectile.delete()
     }
   }

@@ -10,8 +10,13 @@ class Position extends Vector {
   }  
   static subtract(vec1, vec2) {
     let result = Vector.subtract(vec1, vec2)
+    result = Position.abs(result)
     result = Position.constrain(result)
     return result
+  }
+
+  static abs (vec) {
+    return new Position(Math.abs(vec.x), Math.abs(vec.y))
   }
   static constrain(pos) {
     let result = new Position(pos.x,pos.y)

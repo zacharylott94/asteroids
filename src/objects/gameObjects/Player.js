@@ -42,8 +42,9 @@ const handleDeathParticles = player => {
         let particleSpawner = ParticleSpawnerBuilder()
             .atAngle(angle)
             .withSpread(45)
+            .withPosition(player.position)
             .build()
-        particleSpawner.emit(player.position)
+        particleSpawner.emit()
     }
     player.deathParticles = deathParticles
 }
@@ -109,7 +110,6 @@ const Player = (position = new Position(Canvas.width/2, Canvas.height/2), veloci
         },
         activeProjectiles: new Set(),
         updateCallbacks: [],
-        particleSpawner: ParticleSpawnerBuilder().build()
     }
 
     //compose player object via mutation functions
