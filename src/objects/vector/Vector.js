@@ -1,3 +1,5 @@
+import Settings from "../../gameLogic/Settings.js"
+
 class Vector{
   
   constructor(x, y) {
@@ -54,8 +56,9 @@ class Vector{
     const y = this.y
     return (x*x + y*y)
   }
-  static distanceSquared(vector1, vector2, gameWidth, gameHeight){
-
+  static distanceSquared(vector1, vector2){
+    let gameWidth = Settings.GAME_WIDTH
+    let gameHeight = Settings.GAME_HEIGHT
     let dx = Math.abs(vector2.x - vector1.x)
     let dy = Math.abs(vector2.y - vector1.y)
     let cx = gameWidth - dx //the c stands for complimentary, lol

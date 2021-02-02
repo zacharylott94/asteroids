@@ -6,10 +6,6 @@ import { commonBehaviors } from "./behaviors/commonBehavior.js"
 import { hasTimeToLive } from "./behaviors/hasTimeToLive.js"
 
 export const Particle = ({position, velocity, draw = Circle, ttl}) => {
-  classGuard(position, "Position")
-  classGuard(velocity, "Vector")
-  typeofGuard(draw, "function")
-
   let particle = {
     position,
     velocity,
