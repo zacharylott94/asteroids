@@ -22,4 +22,9 @@ describe('Position static class', () => {
 
       
     });
+
+    it('can create from components', () => {
+      let position = Position.fromComponents(10,10)
+      expect(Position.real(position)).toStrictEqual(Vector.fromComponents(10,10))
+    });
 });

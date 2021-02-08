@@ -36,6 +36,12 @@ export default class Position {
     let newPosition = offsets
     return Position.addVector(newPosition, vector)
   }
+
+  static fromComponents(x:number, y:number): TPosition {
+    let newPosition = offsets
+    return Position.addVector(newPosition, Vector.fromComponents(x,y))
+  }
+
   static addVector(position:TPosition,vector:TVector): TPosition {
     let newPosition: TPosition = [
       ...position

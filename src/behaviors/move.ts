@@ -1,5 +1,4 @@
-import { IPosition } from "../gameObjects/Position.js";
-import Position from "../gameObjects/Position.js"
+import Position, { IPosition } from "../gameObjects/Position.js";
 import { TVector } from "../gameObjects/Vector";
 
 interface IVelocity {
