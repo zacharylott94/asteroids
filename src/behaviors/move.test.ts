@@ -1,5 +1,4 @@
 import Position from "../gameObjects/Position";
-import Vector from "../gameObjects/Vector.js";
 import move from "./move.js";
 
 describe('move', () => {
