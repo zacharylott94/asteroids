@@ -1,9 +1,7 @@
 import Position, { IPosition } from "../gameObjects/Position.js";
-import { TVector } from "../gameObjects/Vector";
+import { IVelocity } from "../interfaces.js";
 
-interface IVelocity {
-  velocity: TVector
-}
+
 export default function (obj: IPosition & IVelocity): IPosition & IVelocity {
   let newPosition = Position.addVector(obj.position, obj.velocity) 
   let newObject: IPosition & IVelocity = {...obj,position:newPosition}
