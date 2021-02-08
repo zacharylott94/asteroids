@@ -1,7 +1,10 @@
 import { Settings } from "../settings.js"
-import Vector, { IVector } from "./Vector.js"
+import Vector, { TVector } from "./Vector.js"
 
-type TPosition = [IVector,IVector,IVector,IVector,IVector,IVector,IVector,IVector,IVector,]
+export type TPosition = [TVector,TVector,TVector,TVector,TVector,TVector,TVector,TVector,TVector,]
+export interface IPosition {
+  position: TPosition,
+}
 
 enum EPosition {
   topLeft,
@@ -29,11 +32,11 @@ const offsets: TPosition = [
 ]
 
 export default class Position {
-  static fromVector(vector:IVector): TPosition {
+  static fromVector(vector:TVector): TPosition {
     let newPosition = offsets
     return Position.addVector(newPosition, vector)
   }
-  static addVector(position:TPosition,vector:IVector): TPosition {
+  static addVector(position:TPosition,vector:TVector): TPosition {
     let newPosition: TPosition = [
       ...position
     ]
@@ -41,11 +44,11 @@ export default class Position {
     return newPosition
   }
 
-  static real(position:TPosition):IVector {
+  static real(position:TPosition):TVector {
     return position[EPosition.real]
   }
 
-  static closestTo(position:TPosition, point:IVector) {
+  static closestTo(position:TPosition, point:TVector) {
     let closest = Vector.ZERO
     let closestDistance = Number.MAX_SAFE_INTEGER
     position.forEach(each => {
