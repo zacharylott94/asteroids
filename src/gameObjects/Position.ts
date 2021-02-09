@@ -1,10 +1,6 @@
 import { Settings } from "../settings.js"
-import Vector, { TVector } from "./Vector.js"
-
-export type TPosition = [TVector,TVector,TVector,TVector,TVector,TVector,TVector,TVector,TVector,]
-export interface IPosition {
-  position: TPosition,
-}
+import Vector from "./Vector.js"
+import { TVector, TPosition } from "../types.js"
 
 enum EPosition {
   topLeft,

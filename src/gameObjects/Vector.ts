@@ -1,15 +1,4 @@
-// export interface IVector {
-//   x:number
-//   y:number
-// }
-export type TVector = {
-  x:number,
-  y:number
-}
-
-// export function Vector(x:number, y:number): IVector {
-//   return {x,y}
-// }
+import { TVector } from "../types.js"
 
 export default class Vector {
 

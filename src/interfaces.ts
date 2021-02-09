@@ -1,4 +1,4 @@
-import { TVector } from "./gameObjects/Vector.js"
+import { TVector, TPosition } from "./types.js"
 
 export interface IAcceleration {
   acceleration: TVector
@@ -7,3 +7,8 @@ export interface IAcceleration {
 export interface IVelocity {
   velocity: TVector
 }
+
+export interface IPosition {
+  position: TPosition,
+}
+

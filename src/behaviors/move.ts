@@ -1,5 +1,5 @@
-import Position, { IPosition } from "../gameObjects/Position.js";
-import { IVelocity } from "../interfaces.js";
+import Position from "../gameObjects/Position.js";
+import { IVelocity, IPosition } from "../interfaces.js";
 
 
 export default function (obj: IPosition & IVelocity): IPosition & IVelocity {
