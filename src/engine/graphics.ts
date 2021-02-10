@@ -1,9 +1,4 @@
-// import { TPosition } from "../gameObjects/Position.js";
-// function object(obj: any):void {}
-
-// import { IPosition, IRenderable } from "../interfaces.js";
 import { Settings } from "../settings.js";
-// import { TVector } from "../types.js"
 import { context } from "./canvas.js";
 
 

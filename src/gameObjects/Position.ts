@@ -1,6 +1,5 @@
 import { Settings } from "../settings.js"
 import Vector from "./Vector.js"
-import { TVector, TPosition } from "../types.js"
 
 enum EPosition {
   topLeft,

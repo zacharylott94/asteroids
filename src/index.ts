@@ -1,8 +1,6 @@
-// import Circle from "./draw/circle.js"
-import { Canvas } from "./engine/canvas.js"
+import circle from "./draw/circle.js"
 import Graphics from "./engine/graphics.js"
-// import Position from "./gameObjects/Position.js"
-console.log("Hello World", Canvas)
+import Position from "./gameObjects/Position.js"
 
 
 

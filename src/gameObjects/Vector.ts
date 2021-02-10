@@ -1,5 +1,3 @@
-import { TVector } from "../types.js"
-
 export default class Vector {
 
   static fromComponents(x:number, y:number):TVector {
