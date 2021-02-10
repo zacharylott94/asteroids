@@ -1,12 +1,34 @@
+import move from "./behaviors/move.js"
 import circle from "./draw/circle.js"
 import Graphics from "./engine/graphics.js"
 import Position from "./gameObjects/Position.js"
+import Vector from "./gameObjects/Vector.js"
+import { isMoveable } from "./typeGuards.js"
 
-
-
-
-let x = () => {
-  console.log("Looping")
-  Graphics.clear()
+function objectFactory() {
+  let object = {
+    position: Position.fromComponents(Math.random()*500, Math.random()*500),
+    velocity: Vector.fromComponents(Math.random()*3,Math.random()*3),
+    renderAt: circle,
+    radius: Math.random() * 30
+  }
+  return object
 }
-setInterval(x, 1000)
+let objectList: any[] = new Array(10).fill("").map(_ => objectFactory())
+
+let graphicsLoop = () => {
+  Graphics.clear()
+
+  //test stuff below
+  objectList.forEach(object => Graphics.renderObject(object))
+}
+
+let physicsLoop = () => {
+  objectList = objectList.map(object => {
+    if(isMoveable(object)) return move(object)
+    return object
+  })
+}
+
+setInterval(graphicsLoop, 1000/60)
+setInterval(physicsLoop, 1000/60)
