@@ -3,19 +3,21 @@ import { context } from "./canvas.js";
 
 
 export default class Graphics {
-//   static render(object: IRenderable & IPosition){
-    //   object.position.forEach((eachPosition: TVector ) => object.renderAt(eachPosition))
+  static renderObject(object: IRenderable):void{
+    // let image = object.render(object)
+    object.position.forEach((eachPosition: TVector ) => object.renderAt(eachPosition, object))
 
-      // Everything below is for debugging
-    //   if (Settings.RENDER_DEBUG){
-    //       Graphics.showCenter(object)
-    //       Graphics.showVelocity(object)
-    //       //Rotation Viewer Hack
-    //       if(object.rotation != undefined) Graphics.drawRay(object.position, Vector.add(object.position, Vector.fromDegreesAndMagnitude(object.rotation, 20)), "aqua")
-    //   }
-  
-  
-//   }
+    // Everything below is for debugging
+    // if (Settings.RENDER_DEBUG){
+    //     Graphics.showCenter(object)
+    //     Graphics.showVelocity(object)
+    //     //Rotation Viewer Hack
+    //     if(object.rotation != undefined) Graphics.drawRay(object.position, Vector.add(object.position, Vector.fromDegreesAndMagnitude(object.rotation, 20)), "aqua")
+    // }
+    object
+
+
+  } 
   //rotates context at point and rotation
 //   static rotate({x,y}, rotation) {
 //       let ctx = Canvas.context
