@@ -27,4 +27,12 @@ describe('Position static class', () => {
       let position = Position.fromComponents(10,10)
       expect(Position.real(position)).toStrictEqual(Vector.fromComponents(10,10))
     });
+    it('can constrain positions to the game field', () => {
+      //Spooky manipulation of global values
+      Settings.GAME_HEIGHT = 100
+      Settings.GAME_WIDTH = 100
+      let position = Position.fromComponents(101,101)
+      let expected = Position.fromComponents(1,1)
+      expect(Position.constrain(position)).toStrictEqual(expected)
+    });
 });
