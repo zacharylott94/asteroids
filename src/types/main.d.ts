@@ -14,6 +14,10 @@ interface IRenderable extends IPosition{
   renderAt: (location:TVector, object: any) => void
 }
 
+interface IRotatable {
+  rotation: number
+}
+
 type TMoveable = IVelocity & IPosition
 
 type TVector = {
