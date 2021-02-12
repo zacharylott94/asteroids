@@ -18,6 +18,11 @@ interface IRotatable {
   rotation: number
 }
 
+interface ICollidable extends IPosition {
+  radius: number
+  handleCollision: (thisObject: ICollidable, otherObject: ICollidable) => ICollidable
+}
+
 type TMoveable = IVelocity & IPosition
 
 type TVector = {

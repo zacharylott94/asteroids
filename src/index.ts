@@ -5,16 +5,20 @@ import Position from "./gameObjects/Position.js"
 import Vector from "./gameObjects/Vector.js"
 import { isMoveable } from "./typeGuards.js"
 
-function objectFactory() {
+function objectFactory(p = Vector.fromComponents(Math.random()*500, Math.random()*500),
+                       v = Vector.fromComponents(Math.random()*3,Math.random()*3),
+                       r = Math.random() * 30) {
   let object = {
-    position: Position.fromComponents(Math.random()*500, Math.random()*500),
-    velocity: Vector.fromComponents(Math.random()*3,Math.random()*3),
+    position: Position.fromVector(p),
+    velocity: v,
     renderAt: circle,
-    radius: Math.random() * 30
+    radius: r
   }
   return object
 }
 let objectList: any[] = new Array(10).fill("").map(_ => objectFactory())
+objectList[0] = objectFactory(Vector.ZERO, Vector.ZERO, 10)
+objectList[1] = objectFactory(Vector.fromComponents(10,10), Vector.ZERO, 10)
 
 let graphicsLoop = () => {
   Graphics.clear()

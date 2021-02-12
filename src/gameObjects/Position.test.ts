@@ -11,11 +11,11 @@ describe('Position static class', () => {
       //Mutates global Settings to test. Fair Warning
       Settings.GAME_WIDTH = 500
       Settings.GAME_HEIGHT = 500
-      let position = Position.fromVector(Vector.fromComponents(50,50))
+      let position = Position.fromComponents(50,50)
       let point = Vector.fromComponents(480,480)
       let expected = Vector.fromComponents(550,550)
       expect(Position.closestTo(position,point)).toStrictEqual(expected)
-      position = Position.fromVector(Vector.fromComponents(400,250))
+      position = Position.fromComponents(400,250)
       point = Vector.fromComponents(0,480)
       expected = Vector.fromComponents(-100,250)
       expect(Position.closestTo(position,point)).toStrictEqual(expected)
