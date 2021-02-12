@@ -34,5 +34,9 @@ describe('Position static class', () => {
       let position = Position.fromComponents(101,101)
       let expected = Position.fromComponents(1,1)
       expect(Position.constrain(position)).toStrictEqual(expected)
+      position = Position.fromComponents(-99,-99)
+      expected = Position.fromComponents(1,1)
+      expect(Position.constrain(position)).toStrictEqual(expected)
+
     });
 });
