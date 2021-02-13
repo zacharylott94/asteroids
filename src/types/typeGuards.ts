@@ -7,3 +7,8 @@ export function isRotatable(object:any):boolean {
   if ("rotation" in object) return true
   return false
 }
+
+export function isUpdateable(object:any):boolean {
+  if ("update" in object) return true
+  return false
+}

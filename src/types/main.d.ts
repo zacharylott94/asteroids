@@ -20,6 +20,10 @@ interface IRotatable {
   rotation: Degrees
 }
 
+interface IUpdateable {
+  update: (object:any) => any
+}
+
 interface ICollidable extends IPosition {
   radius: number
   handleCollision: (thisObject: ICollidable, otherObject: ICollidable) => ICollidable

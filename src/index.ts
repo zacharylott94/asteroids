@@ -3,9 +3,10 @@ import circle from "./draw/circle.js"
 import Graphics from "./engine/graphics.js"
 import Position from "./dataStructures/Position.js"
 import Vector from "./dataStructures/Vector.js"
-import { isMoveable } from "./types/typeGuards.js"
+import { isUpdateable } from "./types/typeGuards.js"
 import playerShipGraphic from "./draw/playerShipGraphic.js"
 import projectileGraphic from "./draw/projectileGraphic.js"
+import rotate from "./behaviors/rotate.js"
 
 function objectFactory(p = Vector.fromComponents(Math.random()*500, Math.random()*500),
                        v = Vector.fromComponents(Math.random()*3,Math.random()*3),
@@ -14,7 +15,8 @@ function objectFactory(p = Vector.fromComponents(Math.random()*500, Math.random(
     position: Position.fromVector(p),
     velocity: v,
     renderAt: circle,
-    radius: r
+    radius: r,
+    update: move
   }
   return object
 }
@@ -24,12 +26,18 @@ objectList[0] = {
   velocity: Vector.fromComponents(2,2),
   rotation: 45,
   renderAt: playerShipGraphic,
+  update: (obj:any) => {
+    obj = rotate(obj,1),
+    obj = move(obj)
+    return obj
+  }
 }
 objectList[1] = {
   position: Position.fromComponents(50,50),
   velocity: Vector.fromDegreesAndMagnitude(30,2),
   rotation: 30,
   renderAt: projectileGraphic,
+  update: move
 }
 
 let graphicsLoop = () => {
@@ -41,7 +49,7 @@ let graphicsLoop = () => {
 
 let physicsLoop = () => {
   objectList = objectList.map(object => {
-    if(isMoveable(object)) return move(object)
+    if(isUpdateable(object)) return object.update(object)
     return object
   })
 }
