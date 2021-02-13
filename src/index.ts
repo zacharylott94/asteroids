@@ -5,6 +5,7 @@ import Position from "./dataStructures/Position.js"
 import Vector from "./dataStructures/Vector.js"
 import { isMoveable } from "./types/typeGuards.js"
 import playerShipGraphic from "./draw/playerShipGraphic.js"
+import projectileGraphic from "./draw/projectileGraphic.js"
 
 function objectFactory(p = Vector.fromComponents(Math.random()*500, Math.random()*500),
                        v = Vector.fromComponents(Math.random()*3,Math.random()*3),
@@ -24,7 +25,12 @@ objectList[0] = {
   rotation: 45,
   renderAt: playerShipGraphic,
 }
-objectList[1] = objectFactory(Vector.fromComponents(10,10), Vector.ZERO, 10)
+objectList[1] = {
+  position: Position.fromComponents(50,50),
+  velocity: Vector.fromDegreesAndMagnitude(30,2),
+  rotation: 30,
+  renderAt: projectileGraphic,
+}
 
 let graphicsLoop = () => {
   Graphics.clear()
