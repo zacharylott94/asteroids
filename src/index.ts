@@ -1,8 +1,8 @@
 import move from "./behaviors/move.js"
 import circle from "./draw/circle.js"
 import Graphics from "./engine/graphics.js"
-import Position from "./gameObjects/Position.js"
-import Vector from "./gameObjects/Vector.js"
+import Position from "./dataStructures/Position.js"
+import Vector from "./dataStructures/Vector.js"
 import { isMoveable } from "./typeGuards.js"
 
 function objectFactory(p = Vector.fromComponents(Math.random()*500, Math.random()*500),

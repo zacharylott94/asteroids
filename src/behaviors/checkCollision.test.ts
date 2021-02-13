@@ -1,4 +1,4 @@
-import Position from "../gameObjects/Position";
+import Position from "../dataStructures/Position";
 import checkCollision from "./checkCollision"
 
 describe('checkCollision', () => {

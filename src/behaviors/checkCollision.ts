@@ -1,5 +1,5 @@
-import Position from "../gameObjects/Position.js"
-import Vector from "../gameObjects/Vector.js"
+import Position from "../dataStructures/Position.js"
+import Vector from "../dataStructures/Vector.js"
 
 export default function checkCollision(object: ICollidable, otherObject: ICollidable): boolean {
   const realPosition = Position.real(object.position)

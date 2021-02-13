@@ -1,4 +1,4 @@
-import Vector from "../gameObjects/Vector.js";
+import Vector from "../dataStructures/Vector.js";
 
 export default function (obj: IVelocity & IAcceleration): IVelocity & IAcceleration {
   let newVelocity = Vector.add(obj.velocity, obj.acceleration)

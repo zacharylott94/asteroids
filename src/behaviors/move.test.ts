@@ -1,4 +1,4 @@
-import Position from "../gameObjects/Position.js";
+import Position from "../dataStructures/Position.js";
 import move from "./move.js";
 
 describe('move', () => {

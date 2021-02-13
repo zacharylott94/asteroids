@@ -1,5 +1,5 @@
-import Position from "./gameObjects/Position.js";
-import Vector from "./gameObjects/Vector.js";
+import Position from "./dataStructures/Position.js";
+import Vector from "./dataStructures/Vector.js";
 import { isMoveable, isRotatable } from "./typeGuards.js";
 
 describe('Typeguards', () => {
