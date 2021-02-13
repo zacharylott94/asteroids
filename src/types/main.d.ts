@@ -11,11 +11,13 @@ interface IPosition {
 }
 
 interface IRenderable extends IPosition{
-  renderAt: (location:TVector, object: any) => void
+  renderAt: TRenderFunction
 }
 
+type TRenderFunction = (location: TVector, object: any) => void
+
 interface IRotatable {
-  rotation: number
+  rotation: Degrees
 }
 
 interface ICollidable extends IPosition {
@@ -30,3 +32,5 @@ type TVector = {
   y:number
 }
 type TPosition = [TVector,TVector,TVector,TVector,TVector,TVector,TVector,TVector,TVector,]
+
+type Degrees = number

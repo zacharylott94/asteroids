@@ -4,6 +4,7 @@ import Graphics from "./engine/graphics.js"
 import Position from "./dataStructures/Position.js"
 import Vector from "./dataStructures/Vector.js"
 import { isMoveable } from "./types/typeGuards.js"
+import playerShipGraphic from "./draw/playerShipGraphic.js"
 
 function objectFactory(p = Vector.fromComponents(Math.random()*500, Math.random()*500),
                        v = Vector.fromComponents(Math.random()*3,Math.random()*3),
@@ -17,7 +18,12 @@ function objectFactory(p = Vector.fromComponents(Math.random()*500, Math.random(
   return object
 }
 let objectList: any[] = new Array(10).fill("").map(_ => objectFactory())
-objectList[0] = objectFactory(Vector.ZERO, Vector.ZERO, 10)
+objectList[0] = {
+  position: Position.fromVector(Vector.ZERO),
+  velocity: Vector.fromComponents(2,2),
+  rotation: 45,
+  renderAt: playerShipGraphic,
+}
 objectList[1] = objectFactory(Vector.fromComponents(10,10), Vector.ZERO, 10)
 
 let graphicsLoop = () => {

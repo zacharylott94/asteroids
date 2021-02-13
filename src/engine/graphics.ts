@@ -18,13 +18,12 @@ export default class Graphics {
 
 
   } 
-  //rotates context at point and rotation
-//   static rotate({x,y}, rotation) {
-//       let ctx = Canvas.context
-//       ctx.translate(x,y)
-//       ctx.rotate(Math.PI * 2 / 360 * rotation)
-//       ctx.translate(-x,-y)
-//   }
+  // rotates context at point and rotation
+  static rotate({x,y}:TVector, rotation:Degrees) {
+      context.translate(x,y)
+      context.rotate(Math.PI * 2 / 360 * rotation)
+      context.translate(-x,-y)
+  }
   static clear() { 
     context.fillRect(-10, -10, Settings.GAME_WIDTH+15, Settings.GAME_HEIGHT+15)
   }
