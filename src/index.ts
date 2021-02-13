@@ -3,7 +3,7 @@ import circle from "./draw/circle.js"
 import Graphics from "./engine/graphics.js"
 import Position from "./dataStructures/Position.js"
 import Vector from "./dataStructures/Vector.js"
-import { isMoveable } from "./typeGuards.js"
+import { isMoveable } from "./types/typeGuards.js"
 
 function objectFactory(p = Vector.fromComponents(Math.random()*500, Math.random()*500),
                        v = Vector.fromComponents(Math.random()*3,Math.random()*3),
