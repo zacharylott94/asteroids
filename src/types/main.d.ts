@@ -13,9 +13,11 @@ interface IRotatable {
   rotation: Degrees
 }
 
-interface ICircleRenderable extends IPosition {
+interface IRadius {
   radius: number
 }
+
+interface ICircleRenderable extends IPosition, IRadius { }
 interface IRotatableRenderable extends IPosition, IRotatable { }
 
 type TRenderFunction = (location: TVector, object: any) => void
@@ -34,7 +36,7 @@ interface IAsteroid extends ICircleRenderable, IVelocity { }
 
 interface IProjectile extends IRotatableRenderable, IVelocity { }
 
-interface IPlayer extends IRotatableRenderable, IVelocity { }
+interface IPlayer extends IRotatableRenderable, IVelocity, IRadius { }
 
 
 type TMoveable = IVelocity & IPosition
