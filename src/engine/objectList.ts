@@ -1,4 +1,4 @@
-let objectList: any[][] = [ //had weird type hangups
+let objectList: Array<(IAsteroid | IProjectile | IPlayer)>[] = [ //had weird type hangups
   new Array<IAsteroid>(),
   new Array<IProjectile>(),
   new Array<IPlayer>(),
