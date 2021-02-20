@@ -10,8 +10,8 @@ interface IPosition {
   position: TPosition,
 }
 
-interface IRenderable extends IPosition{
-  renderAt: TRenderFunction
+interface ICircleRenderable extends IPosition {
+  radius: number
 }
 
 type TRenderFunction = (location: TVector, object: any) => void
@@ -21,7 +21,7 @@ interface IRotatable {
 }
 
 interface IUpdateable {
-  update: (object:any) => any
+  update: (object: any) => any
 }
 
 interface ICollidable extends IPosition {
@@ -32,9 +32,9 @@ interface ICollidable extends IPosition {
 type TMoveable = IVelocity & IPosition
 
 type TVector = {
-  x:number,
-  y:number
+  x: number,
+  y: number
 }
-type TPosition = [TVector,TVector,TVector,TVector,TVector,TVector,TVector,TVector,TVector,]
+type TPosition = [TVector, TVector, TVector, TVector, TVector, TVector, TVector, TVector, TVector,]
 
 type Degrees = number
