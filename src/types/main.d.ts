@@ -9,16 +9,17 @@ interface IVelocity {
 interface IPosition {
   position: TPosition,
 }
+interface IRotatable {
+  rotation: Degrees
+}
 
 interface ICircleRenderable extends IPosition {
   radius: number
 }
+interface IRotatableRenderable extends IPosition, IRotatable { }
 
 type TRenderFunction = (location: TVector, object: any) => void
 
-interface IRotatable {
-  rotation: Degrees
-}
 
 interface IUpdateable {
   update: (object: any) => any
@@ -28,6 +29,13 @@ interface ICollidable extends IPosition {
   radius: number
   handleCollision: (thisObject: ICollidable, otherObject: ICollidable) => ICollidable
 }
+
+interface IAsteroid extends ICircleRenderable, IVelocity { }
+
+interface IProjectile extends IRotatableRenderable, IVelocity { }
+
+interface IPlayer extends IRotatableRenderable, IVelocity { }
+
 
 type TMoveable = IVelocity & IPosition
 

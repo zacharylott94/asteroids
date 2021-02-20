@@ -1,7 +1,7 @@
-import Position from "../dataStructures/Position.js";
+import Position from "../dataStructures/Position.js"
 
-export default function (obj: TMoveable): TMoveable {
-  let newPosition = Position.constrain(Position.addVector(obj.position, obj.velocity) )
-  let newObject: TMoveable = {...obj,position:newPosition}
+export default function <T>(obj: T & TMoveable): T {
+  let newPosition = Position.constrain(Position.addVector(obj.position, obj.velocity))
+  let newObject: T = { ...obj, position: newPosition }
   return newObject
 }
