@@ -3,11 +3,10 @@ import circle from "./draw/circle.js"
 import Graphics from "./engine/graphics.js"
 import Vector from "./dataStructures/Vector.js"
 import Renderer from "./draw/renderer.js"
-import objectList, { objectType } from "./engine/objectList.js"
+import objectList, { deleteObject, objectType } from "./engine/objectList.js"
 import { SmallAsteroidFactory, MediumAsteroidFactory, LargeAsteroidFactory } from "./dataStructures/Asteroid.js"
 import playerShipGraphic from "./draw/playerShipGraphic.js"
 import PlayerFactory from "./dataStructures/Player.js"
-import Position from "./dataStructures/Position.js"
 
 for (let i = 0; i < 3; i++) {
   objectList[objectType.Asteroid].push(SmallAsteroidFactory(Vector.fromComponents(Math.random() * 500, Math.random() * 500),
@@ -39,6 +38,8 @@ let physicsLoop = () => {
   objectList[objectType.Asteroid] = objectList[objectType.Asteroid].map(move)
   objectList[objectType.Player] = objectList[objectType.Player].map(move)
 }
+
+setInterval(() => objectList[objectType.Asteroid] = deleteObject(objectList[objectType.Asteroid], objectList[objectType.Asteroid][0]), 1000)
 
 setInterval(graphicsLoop, 1000 / 60)
 setInterval(physicsLoop, 1000 / 60)

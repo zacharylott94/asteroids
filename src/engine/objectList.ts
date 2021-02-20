@@ -9,6 +9,10 @@ let objectList: any[][] = [ //had weird type hangups
 //   players: new Array<IPlayer>(),
 // }
 
+export function deleteObject(list: Array<(IAsteroid | IProjectile)>, object: any) {
+  return list.filter(each => each != object)
+}
+
 export enum objectType {
   Asteroid,
   Projectile,
