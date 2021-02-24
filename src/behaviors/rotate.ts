@@ -1,5 +1,5 @@
-export default function rotate(object:IRotatable, rotationAmount:number):IRotatable {
-  let newObject: IRotatable = {
+export default function rotate(object: IRotation, rotationAmount: number): IRotation {
+  let newObject: IRotation = {
     ...object,
     rotation: object.rotation + rotationAmount
   }

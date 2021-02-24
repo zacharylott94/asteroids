@@ -1,45 +1,16 @@
-interface IAcceleration {
-  acceleration: TVector
-}
-
-interface IVelocity {
-  velocity: TVector
-}
-
-interface IPosition {
-  position: TPosition,
-}
-interface IRotatable {
-  rotation: Degrees
-}
-
-interface IRadius {
-  radius: number
-}
-
 interface ICircleRenderable extends IPosition, IRadius { }
-interface IRotatableRenderable extends IPosition, IRotatable { }
+interface ICollidable extends IPosition, IRadius { }
 
-type TRenderFunction = (location: TVector, object: any) => void
+interface IRotatableRenderable extends IPosition, IRotation { }
 
-
-interface IUpdateable {
-  update: (object: any) => any
-}
-
-interface ICollidable extends IPosition {
-  radius: number
-  handleCollision: (thisObject: ICollidable, otherObject: ICollidable) => ICollidable
-}
+interface IMoveable extends IVelocity, IPosition { }
 
 interface IAsteroid extends ICircleRenderable, IVelocity { }
 
-interface IProjectile extends IRotatableRenderable, IVelocity { }
+interface IRotatableObject extends IRotatableRenderable, IVelocity, IRadius { }
 
-interface IPlayer extends IRotatableRenderable, IVelocity, IRadius { }
+type TRenderFunction<T> = (location: TVector, object: T) => void
 
-
-type TMoveable = IVelocity & IPosition
 
 type TVector = {
   x: number,

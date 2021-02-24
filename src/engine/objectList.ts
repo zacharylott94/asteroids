@@ -1,7 +1,7 @@
-let objectList: Array<(IAsteroid | IProjectile | IPlayer)>[] = [ //had weird type hangups
+let objectList: Array<(IAsteroid | IRotatableObject)>[] = [ //had weird type hangups
   new Array<IAsteroid>(),
-  new Array<IProjectile>(),
-  new Array<IPlayer>(),
+  new Array<IRotatableObject>(),
+  new Array<IRotatableObject>(),
 ]
 // let objectList = {
 //   asteroids: new Array<IAsteroid>(),
@@ -9,7 +9,7 @@ let objectList: Array<(IAsteroid | IProjectile | IPlayer)>[] = [ //had weird typ
 //   players: new Array<IPlayer>(),
 // }
 
-export function deleteObject(list: Array<(IAsteroid | IProjectile)>, object: any) {
+export function deleteObject(list: Array<(IAsteroid | IRotatableObject)>, object: any) {
   return list.filter(each => each != object)
 }
 

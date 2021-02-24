@@ -1,7 +1,7 @@
 import { Settings } from "../settings.js"
 import Position from "./Position.js"
 
-export default function PlayerFactory(location: TVector, velocity: TVector, rotation: Degrees): IPlayer {
+export default function PlayerFactory(location: TVector, velocity: TVector, rotation: Degrees): IRotatableObject {
   return {
     position: Position.fromVector(location),
     radius: Settings.PLAYER_RADIUS,
