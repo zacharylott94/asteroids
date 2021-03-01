@@ -5,9 +5,9 @@ interface IRotatableRenderable extends IPosition, IRotation { }
 
 interface IMoveable extends IVelocity, IPosition { }
 
-interface IAsteroid extends ICircleRenderable, IVelocity { }
+interface IAsteroid extends ICircleRenderable, IVelocity, ITypeable { }
 
-interface IRotatableObject extends IRotatableRenderable, IVelocity, IRadius { }
+interface IRotatableObject extends IRotatableRenderable, IVelocity, IRadius, ITypeable { }
 
 type TRenderFunction<T> = (location: TVector, object: T) => void
 

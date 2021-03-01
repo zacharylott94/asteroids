@@ -1,11 +1,13 @@
 import { Settings } from "../settings.js"
 import Position from "./Position.js"
 
+
 export default function AsteroidFactory(location: TVector, velocity: TVector, radius: number): IAsteroid {
   return {
     position: Position.fromVector(location),
     radius,
-    velocity
+    velocity,
+    type: ObjectType.Asteroid
   }
 }
 

@@ -6,6 +6,7 @@ export default function PlayerFactory(location: TVector, velocity: TVector, rota
     position: Position.fromVector(location),
     radius: Settings.PLAYER_RADIUS,
     rotation,
-    velocity
+    velocity,
+    type: ObjectType.Player,
   }
 }

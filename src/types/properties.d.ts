@@ -22,3 +22,12 @@ interface ITimeToLive {
   ttl: number
 }
 
+interface ITypeable {
+  type: ObjectType
+}
+
+const enum ObjectType {
+  Asteroid,
+  Player,
+  Projectile
+}
