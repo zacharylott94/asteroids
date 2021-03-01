@@ -17,3 +17,8 @@ interface IRotation {
 interface IRadius {
   radius: number
 }
+
+interface ITimeToLive {
+  ttl: number
+}
+
