@@ -8,9 +8,7 @@ import { SmallAsteroidFactory, MediumAsteroidFactory, LargeAsteroidFactory } fro
 import playerShipGraphic from "./draw/playerShipGraphic.js"
 import PlayerFactory from "./dataStructures/Player.js"
 import Projectile from "./dataStructures/Projectile.js"
-// import updateProjectile from "./behaviors/updaters/updateProjectile.js"
 import projectileGraphic from "./draw/projectileGraphic.js"
-import Updater from "./behaviors/updaters/updater.js"
 import tickTTL from "./behaviors/tickTTL.js"
 
 let objectList = ObjectList()
@@ -48,29 +46,11 @@ let graphicsLoop = () => {
 
 }
 
-let updateAsteroid = Updater(ObjectType.Asteroid, (asteroid: IAsteroid) => move(asteroid))
-let updatePlayer = Updater(ObjectType.Player, (player: IRotatableObject) => move(player))
-let updateProjectile = Updater(ObjectType.Projectile, (projectile: IRotatableObject & ITimeToLive) => {
-  move(projectile)
-  tickTTL(projectile)
-})
-
 
 let physicsLoop = () => {
   //update
-  objectList.forEach(each => {
-    updateProjectile(each)
-    updatePlayer(each)
-    updateAsteroid(each)
-
-
-    // return updateAsteroid(updatePlayer(updateProjectile(each))) //equivalent to the above
-
-  })
-  // objectList = objectList.map(updateProjectile) //broken
-
-  //clean up
-  // objectList[objectType.Projectile] = objectList[objectType.Projectile].filter(projectile => projectile.ttl > 0)
+  objectList.forEach(move)
+  getObjects(objectList, ObjectType.Projectile).forEach(tickTTL)
 }
 
 // setInterval(() => objectList[objectType.Asteroid] = deleteObject(objectList[objectType.Asteroid], objectList[objectType.Asteroid][0]), 1000)
