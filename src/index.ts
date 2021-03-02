@@ -3,7 +3,7 @@ import circle from "./draw/circle.js"
 import Graphics from "./engine/graphics.js"
 import Vector from "./dataStructures/Vector.js"
 import Renderer from "./draw/renderer.js"
-import ObjectList from "./engine/objectList.js"
+import ObjectList, { getObjects } from "./engine/objectList.js"
 import { SmallAsteroidFactory, MediumAsteroidFactory, LargeAsteroidFactory } from "./dataStructures/Asteroid.js"
 import playerShipGraphic from "./draw/playerShipGraphic.js"
 import PlayerFactory from "./dataStructures/Player.js"
@@ -42,19 +42,9 @@ let graphicsLoop = () => {
   Graphics.clear()
 
   //test stuff below
-  objectList.forEach(each => {
-    switch (each.type) {
-      case ObjectType.Asteroid:
-        circleRenderer(each)
-        break
-      case ObjectType.Player:
-        playerRenderer(each)
-        break
-      case ObjectType.Projectile:
-        projectileRenderer(each)
-        break
-    }
-  })
+  getObjects(objectList, ObjectType.Asteroid).forEach(circleRenderer)
+  getObjects(objectList, ObjectType.Player).forEach(playerRenderer)
+  getObjects(objectList, ObjectType.Projectile).forEach(projectileRenderer)
 
 }
 
@@ -71,6 +61,8 @@ let physicsLoop = () => {
       ...updatePlayer(each),
       ...updateAsteroid(each),
     }
+
+    // return updateAsteroid(updatePlayer(updateProjectile(each))) //equivalent to the above
 
   })
   // objectList = objectList.map(updateProjectile) //broken
