@@ -51,9 +51,12 @@ let physicsLoop = () => {
   //update
   objectList.forEach(move)
   getObjects(objectList, ObjectType.Projectile).forEach(tickTTL)
+
+
+  objectList = objectList.filter(each => !each.delete)
 }
 
-// setInterval(() => objectList[objectType.Asteroid] = deleteObject(objectList[objectType.Asteroid], objectList[objectType.Asteroid][0]), 1000)
+setInterval(() => { objectList[0].delete = true }, 1000) //testing
 
 setInterval(graphicsLoop, 1000 / 60)
 setInterval(physicsLoop, 1000 / 60)

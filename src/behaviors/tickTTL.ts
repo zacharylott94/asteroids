@@ -1,3 +1,5 @@
-export default function tickTTL<T>(obj: T & ITimeToLive): void {
+export default function tickTTL(obj: IDeleteable & ITimeToLive): void {
   obj.ttl--
+  if (obj.ttl < 1)
+    obj.delete = true
 }

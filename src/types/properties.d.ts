@@ -26,6 +26,10 @@ interface ITypeable {
   type: ObjectType
 }
 
+interface IDeleteable {
+  delete: bool
+}
+
 const enum ObjectType {
   Asteroid,
   Player,
