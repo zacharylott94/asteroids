@@ -9,6 +9,7 @@ describe('rotate', () => {
       rotation: 10
     }
     let rotateAmount = 10
-    expect(rotate(object, rotateAmount)).toStrictEqual(expected)
+    rotate(object, rotateAmount)
+    expect(object).toStrictEqual(expected)
   })
 })

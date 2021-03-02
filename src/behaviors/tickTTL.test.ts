@@ -1,10 +1,10 @@
 import tickTTL from "./tickTTL"
 
 describe('tickTTL', () => {
-  it('returns a new object with a ttl property one less than the object it was passed', () => {
+  it('mutates an object by subtracting 1 from its ttl property', () => {
     let obj = { ttl: 10 }
-    let result = tickTTL(obj)
+    tickTTL(obj)
     let expected = { ttl: 9 }
-    expect(result).toStrictEqual(expected)
+    expect(obj).toStrictEqual(expected)
   })
 })

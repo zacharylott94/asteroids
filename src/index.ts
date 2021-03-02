@@ -50,17 +50,19 @@ let graphicsLoop = () => {
 
 let updateAsteroid = Updater(ObjectType.Asteroid, (asteroid: IAsteroid) => move(asteroid))
 let updatePlayer = Updater(ObjectType.Player, (player: IRotatableObject) => move(player))
-let updateProjectile = Updater(ObjectType.Projectile, (projectile: IRotatableObject & ITimeToLive) => move(tickTTL(projectile)))
+let updateProjectile = Updater(ObjectType.Projectile, (projectile: IRotatableObject & ITimeToLive) => {
+  move(projectile)
+  tickTTL(projectile)
+})
 
 
 let physicsLoop = () => {
   //update
-  objectList = objectList.map(each => {
-    return {
-      ...updateProjectile(each),
-      ...updatePlayer(each),
-      ...updateAsteroid(each),
-    }
+  objectList.forEach(each => {
+    updateProjectile(each)
+    updatePlayer(each)
+    updateAsteroid(each)
+
 
     // return updateAsteroid(updatePlayer(updateProjectile(each))) //equivalent to the above
 

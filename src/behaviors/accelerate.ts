@@ -1,7 +1,6 @@
-import Vector from "../dataStructures/Vector.js";
+import Vector from "../dataStructures/Vector.js"
 
-export default function (obj: IVelocity & IAcceleration): IVelocity & IAcceleration {
-  let newVelocity = Vector.add(obj.velocity, obj.acceleration)
-  let newObject: IVelocity & IAcceleration = {...obj,velocity:newVelocity}
-  return newObject
+export default function (obj: IVelocity & IAcceleration): void {
+  obj.velocity = Vector.add(obj.velocity, obj.acceleration)
+
 }
