@@ -11,6 +11,7 @@ import tickTTL from "./behaviors/tickTTL.js"
 import checkCollision from "./behaviors/checkCollision.js"
 import { Settings } from "./settings.js"
 import AsteroidSpawnSystem from "./engine/asteroidSpawner.js"
+import global from "./engine/global.js"
 
 let objectList = ObjectList()
 
@@ -31,27 +32,26 @@ let graphicsLoop = () => {
 
 }
 
-let globalTimer = 0
-let difficulty = 1
 let physicsLoop = () => {
   //update
   objectList.forEach(move)
   getObjects(objectList, ObjectType.Projectile).forEach(tickTTL)
+  getObjects(objectList, ObjectType.Particle).forEach(tickTTL)
 
-  for (let obj of objectList) {
-    for (let obj2 of objectList) {
-      if (checkCollision(obj, obj2))
-        obj.delete = true
-    }
-  }
+  // for (let obj of objectList) {
+  //   for (let obj2 of objectList) {
+  //     if (checkCollision(obj, obj2))
+  //       obj.delete = true
+  //   }
+  // }
 
 
   objectList = objectList.filter(each => !each.delete)
-  if (globalTimer % 200 === 0) {
-    console.log(globalTimer)
-    AsteroidSpawnSystem(objectList, difficulty)
+  if (global.timer % 200 === 0) {
+    console.log(global.timer)
+    AsteroidSpawnSystem(objectList, global.difficulty)
   }
-  globalTimer++
+  global.timer++
 }
 
 // setInterval(() => { objectList[0].delete = true }, 1000) //testing

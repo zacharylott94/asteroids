@@ -33,5 +33,6 @@ interface IDeleteable {
 const enum ObjectType {
   Asteroid,
   Player,
-  Projectile
+  Projectile,
+  Particle
 }
