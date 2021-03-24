@@ -1,7 +1,7 @@
 import accelerate from "./accelerate.js"
 
 describe('accelerate', () => {
-  it('mutates an object by adding its acceleration property to its velocity property', () => {
+  it('returns a new object by adding the acceleration property of the old object to the velocity property', () => {
     let obj = {
       acceleration: { x: 10, y: 10 },
       velocity: {
@@ -18,7 +18,7 @@ describe('accelerate', () => {
       },
       dummy: "dummy data"
     }
-    accelerate(obj)
+    obj = accelerate(obj)
     expect(obj).toStrictEqual(expected)
   })
 })

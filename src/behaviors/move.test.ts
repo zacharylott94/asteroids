@@ -2,7 +2,7 @@ import Position from "../dataStructures/Position.js"
 import move from "./move.js"
 
 describe('move', () => {
-  it('takes an object and mutates its position by adding its velocity', () => {
+  it('takes an object and returns a new object with its old position plus velocity', () => {
     let obj = {
       position: Position.fromComponents(10, 10),
       velocity: {
@@ -19,7 +19,7 @@ describe('move', () => {
       },
       dummy: "dummy data"
     }
-    move(obj)
+    obj = move(obj)
     expect(obj).toStrictEqual(expected)
   })
 })
