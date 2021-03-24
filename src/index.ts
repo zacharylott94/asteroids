@@ -13,11 +13,16 @@ import { Settings } from "./settings.js"
 import AsteroidSpawnSystem from "./engine/asteroidSpawner.js"
 import global from "./engine/global.js"
 import mapIf from "./hof/mapIf.js"
-import { isMoveable } from "./types/typeGuards.js"
+import { hasTTL, isMoveable } from "./types/typeGuards.js"
+import tickTTL from "./behaviors/tickTTL.js"
+import Projectile from "./dataStructures/Projectile.js"
 
 let objectList = ObjectList()
 
 objectList.push(PlayerFactory(Vector.fromComponents(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT / 2), Vector.ZERO, 0))
+objectList.push(Projectile({ x: 10, y: 10 }, { x: 2, y: 2 }, 45))
+objectList.push(Projectile({ x: 10, y: 10 }, { x: 2, y: 1 }, 55))
+objectList.push(Projectile({ x: 10, y: 10 }, { x: 1, y: 2 }, 65))
 
 
 let circleRenderer = Renderer(circle)
@@ -39,6 +44,7 @@ let physicsLoop = () => {
   // getObjects(objectList, ObjectType.Projectile).forEach(tickTTL)
   // getObjects(objectList, ObjectType.Particle).forEach(tickTTL)
   objectList = mapIf(isMoveable, move, objectList)
+  objectList = mapIf(hasTTL, tickTTL, objectList)
 
   // for (let obj of objectList) {
   //   for (let obj2 of objectList) {
