@@ -1,12 +1,12 @@
-import Position from "../dataStructures/Position.js";
-import Vector from "../dataStructures/Vector.js";
-import { isMoveable, isRotatable, isUpdateable } from "./typeGuards.js";
+import Position from "../dataStructures/Position.js"
+import Vector from "../dataStructures/Vector.js"
+import { isMoveable, isRotatable, isUpdateable } from "./typeGuards.js"
 
 describe('Typeguards', () => {
   it('isMoveable returns true if the passed object has a velocity and position', () => {
     let object = {
-      velocity: Vector.fromComponents(2,2),
-      position: Position.fromComponents(2,2)
+      velocity: Vector.fromComponents(2, 2),
+      position: Position.fromComponents(2, 2)
     }
     let object2 = {}
     let object3 = {
@@ -15,7 +15,7 @@ describe('Typeguards', () => {
     expect(isMoveable(object)).toBe(true)
     expect(isMoveable(object2)).toBe(false)
     expect(isMoveable(object3)).toBe(false)
-  });
+  })
 
   it('isRotatable returns true if the passed object has a rotation', () => {
     let object = {
@@ -24,14 +24,14 @@ describe('Typeguards', () => {
     expect(isRotatable(object)).toBe(true)
     let object2 = {}
     expect(isRotatable(object2)).toBe(false)
-  });
+  })
 
   it('isUpdateable returns true if the passed object has a rotation', () => {
     let object = {
-      update: (obj:any) => obj
+      update: (obj: any) => obj
     }
     expect(isUpdateable(object)).toBe(true)
     let object2 = {}
     expect(isUpdateable(object2)).toBe(false)
-  });
-});
+  })
+})

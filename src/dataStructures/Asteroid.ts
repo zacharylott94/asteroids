@@ -1,15 +1,9 @@
 import { Settings } from "../settings.js"
-import Position from "./Position.js"
+import GenericFactory from "./genericObject.js"
 
 
 export default function AsteroidFactory(location: TVector, velocity: TVector, radius: number): IGeneric {
-  return {
-    position: Position.fromVector(location),
-    radius,
-    velocity,
-    type: ObjectType.Asteroid,
-    delete: false,
-  }
+  return GenericFactory(location, velocity, radius, ObjectType.Asteroid)
 }
 
 

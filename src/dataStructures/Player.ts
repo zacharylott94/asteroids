@@ -1,13 +1,9 @@
 import { Settings } from "../settings.js"
-import Position from "./Position.js"
+import GenericFactory from "./genericObject.js"
 
 export default function PlayerFactory(location: TVector, velocity: TVector, rotation: Degrees): IRotatableGeneric {
   return {
-    position: Position.fromVector(location),
-    radius: Settings.PLAYER_RADIUS,
+    ...GenericFactory(location, velocity, Settings.PLAYER_RADIUS, ObjectType.Player),
     rotation,
-    velocity,
-    type: ObjectType.Player,
-    delete: false
   }
 }

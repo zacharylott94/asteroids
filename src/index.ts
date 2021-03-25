@@ -7,7 +7,6 @@ import ObjectList, { getObjects } from "./engine/objectList.js"
 import playerShipGraphic from "./draw/playerShipGraphic.js"
 import PlayerFactory from "./dataStructures/Player.js"
 import projectileGraphic from "./draw/projectileGraphic.js"
-// import tickTTL from "./behaviors/tickTTL.js"
 // import checkCollision from "./behaviors/checkCollision.js"
 import { Settings } from "./settings.js"
 import AsteroidSpawnSystem from "./engine/asteroidSpawner.js"
@@ -41,8 +40,6 @@ let graphicsLoop = () => {
 
 let physicsLoop = () => {
   //update
-  // getObjects(objectList, ObjectType.Projectile).forEach(tickTTL)
-  // getObjects(objectList, ObjectType.Particle).forEach(tickTTL)
   objectList = mapIf(isMoveable, move, objectList)
   objectList = mapIf(hasTTL, tickTTL, objectList)
 
