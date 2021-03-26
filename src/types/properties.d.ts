@@ -1,5 +1,5 @@
 interface IAcceleration {
-  acceleration: TVector
+  acceleration: number
 }
 
 interface IVelocity {

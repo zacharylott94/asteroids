@@ -12,12 +12,20 @@ import { Settings } from "./settings.js"
 import AsteroidSpawnSystem from "./engine/asteroidSpawner.js"
 import global from "./engine/global.js"
 import mapIf from "./hof/mapIf.js"
-import { hasTTL, isMoveable } from "./types/typeGuards.js"
+import { hasTTL, isMoveable, isPlayer } from "./types/typeGuards.js"
 import tickTTL from "./behaviors/tickTTL.js"
 import Projectile from "./dataStructures/Projectile.js"
+import { controller } from "./dataStructures/controller.js"
+import rotate from "./behaviors/rotate.js"
+import accelerate from "./behaviors/accelerate.js"
+import { getButtonMapping, setButtonMapping } from "./libraries/storage.js"
+import "./libraries/inputViewer.js"
+
+let gamepad_buttons: any = []
+//@ts-ignore
+addEventListener("gamepadconnected", (e) => console.log(gamepad_buttons = e.gamepad))
 
 let objectList = ObjectList()
-
 objectList.push(PlayerFactory(Vector.fromComponents(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT / 2), Vector.ZERO, 0))
 objectList.push(Projectile({ x: 10, y: 10 }, { x: 2, y: 2 }, 45))
 objectList.push(Projectile({ x: 10, y: 10 }, { x: 2, y: 1 }, 55))
@@ -50,7 +58,11 @@ let physicsLoop = () => {
   //   }
   // }
 
+  //}
 
+  // let pressed_buttons = gamepad_buttons.map((button: any, index) => [index, button]).filter(tuple => tuple[1].pressed == 1.0)
+  // if (pressed_buttons.length > 0)
+  //   console.log(pressed_buttons)
   objectList = objectList.filter(each => !each.delete)
   if (global.timer % 200 === 0) {
     console.log(global.timer)
@@ -63,3 +75,6 @@ let physicsLoop = () => {
 
 setInterval(graphicsLoop, 1000 / 60)
 setInterval(physicsLoop, 1000 / 60)
+
+// setButtonMapping(["fire", "0"])
+// console.log(getButtonMapping("fire"))
