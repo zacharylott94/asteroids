@@ -15,15 +15,16 @@ import mapIf from "./hof/mapIf.js"
 import { hasTTL, isMoveable, isPlayer } from "./types/typeGuards.js"
 import tickTTL from "./behaviors/tickTTL.js"
 import Projectile from "./dataStructures/Projectile.js"
-import { controller } from "./dataStructures/controller.js"
+import "./dataStructures/controller.js"
 import rotate from "./behaviors/rotate.js"
 import accelerate from "./behaviors/accelerate.js"
 import { getButtonMapping, setButtonMapping } from "./libraries/storage.js"
 import "./libraries/inputViewer.js"
+import { pollGamepad } from "./dataStructures/controller.js"
 
-let gamepad_buttons: any = []
+
 //@ts-ignore
-addEventListener("gamepadconnected", (e) => console.log(gamepad_buttons = e.gamepad))
+// addEventListener("gamepadconnected", (e) => console.log(gamepad_buttons = e.gamepad))
 
 let objectList = ObjectList()
 objectList.push(PlayerFactory(Vector.fromComponents(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT / 2), Vector.ZERO, 0))
@@ -65,6 +66,7 @@ let physicsLoop = () => {
   //   console.log(pressed_buttons)
   objectList = objectList.filter(each => !each.delete)
   if (global.timer % 200 === 0) {
+    console.log(pollGamepad())
     console.log(global.timer)
     AsteroidSpawnSystem(objectList, global.difficulty)
   }
@@ -76,5 +78,7 @@ let physicsLoop = () => {
 setInterval(graphicsLoop, 1000 / 60)
 setInterval(physicsLoop, 1000 / 60)
 
-// setButtonMapping(["fire", "0"])
-// console.log(getButtonMapping("fire"))
+setButtonMapping(["fire", ["buttons", 0]])
+setButtonMapping(["left", ["buttons", 7]])
+setButtonMapping(["right", ["buttons", 8]])
+console.log(getButtonMapping("fire")[1])

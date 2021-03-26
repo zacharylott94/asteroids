@@ -3,19 +3,19 @@ export function resetStorage() {
 }
 
 export function getControllerMapping(keys) {
-  let mappings
+  let mappings: any[] = []
   for (let each of keys)
-    mappings.push([each, getButtonMapping(each)])
+    mappings.push(getButtonMapping(each))
   return mappings
 }
 
-export function getButtonMapping(button: string): [string, string] | null {
-  let mapping = localStorage.getItem(button)
-  return mapping === null ? null : [button, mapping]
+export function getButtonMapping(action: string) {
+  let mapping = localStorage.getItem(action)
+  return mapping === null ? null : [action, JSON.parse(mapping)]
 }
 
-export function setButtonMapping([button, mapping]: [string, string]): void {
-  localStorage.setItem(button, mapping)
+export function setButtonMapping([button, mapping]: [string, any]): void {
+  localStorage.setItem(button, JSON.stringify(mapping))
 }
 
 export function setControllerMapping(mapping: [string, string][]): void {
