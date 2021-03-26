@@ -51,7 +51,9 @@ let physicsLoop = () => {
   //update
   objectList = mapIf(isMoveable, move, objectList)
   objectList = mapIf(hasTTL, tickTTL, objectList)
-
+  let actions = pollGamepad()
+  if (actions.indexOf("left") != -1)
+    objectList = mapIf(isPlayer, (each) => rotate(each, -3), objectList)
   // for (let obj of objectList) {
   //   for (let obj2 of objectList) {
   //     if (checkCollision(obj, obj2))
@@ -66,7 +68,7 @@ let physicsLoop = () => {
   //   console.log(pressed_buttons)
   objectList = objectList.filter(each => !each.delete)
   if (global.timer % 200 === 0) {
-    console.log(pollGamepad())
+    // console.log(pollGamepad())
     console.log(global.timer)
     AsteroidSpawnSystem(objectList, global.difficulty)
   }

@@ -7,7 +7,7 @@ let gamepad
 addEventListener("gamepadconnected", (e: any) => gamepad = e.gamepad)
 
 export function pollGamepad() {
-  if (gamepad === undefined) return
+  if (gamepad === undefined) return []
   let pressed: any[] = []
   for (let each of controls) {
     if (!each) continue
@@ -18,5 +18,6 @@ export function pollGamepad() {
     let [type, index] = binding
     if (gamepad[type][index].value == 1) pressed.push(action)
   }
+  // console.log(pressed)
   return pressed
 }
