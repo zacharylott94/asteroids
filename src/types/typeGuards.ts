@@ -17,3 +17,7 @@ export function hasTTL(object: any): boolean {
 export function isPlayer(object: any): boolean {
   return (object.type === ObjectType.Player)
 }
+
+export function isCollidable(Object: any): boolean {
+  return (Object.type !== ObjectType.Particle)
+}

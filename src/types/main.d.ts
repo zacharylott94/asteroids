@@ -1,5 +1,7 @@
 interface ICircleRenderable extends IPosition, IRadius { }
-interface ICollidable extends IPosition, IRadius { }
+interface ICollidable extends IPosition, IRadius {
+  // type: !ObjectType.Particle
+}
 
 interface IRotatableRenderable extends IPosition, IRotation { }
 

@@ -1,11 +1,20 @@
-export function deleteObject(objectList: Array<any>, object: any) {
-  return objectList.filter(each => each != object)
-}
+
 
 export default function ObjectList() {
-  return new Array<any>()
+  return {
+    asteroids: <any>[],
+    player: <any>[],
+    particles: <any>[],
+    projectiles: <any>[],
+  }
 }
 
-export function getObjects(objectList: Array<any>, type: ObjectType) {
-  return objectList.filter(each => each.type === type)
+
+export function removeDeleted(objectList) {
+  let newList = ObjectList()
+  for (let [k, v] of Object.entries(objectList)) {
+    //@ts-ignore
+    newList[k] = v.filter((obj) => !obj.delete)
+  }
+  return newList
 }

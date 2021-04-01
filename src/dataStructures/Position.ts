@@ -46,6 +46,7 @@ export default class Position {
   }
 
   static real(position: TPosition): TVector {
+    if (!position) return { x: 0, y: 0 }
     return position[EPosition.real]
   }
 
