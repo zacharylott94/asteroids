@@ -21,6 +21,7 @@ import updateProjectile from "./behaviors/updaters/updateProjectile.js"
 import { Particle } from "./dataStructures/Particle.js"
 import Position from "./dataStructures/Position.js"
 import { randomAngle } from "./libraries/random.js"
+import { fireProjectile } from "./behaviors/actions/fireProjectile.js"
 
 
 //@ts-ignore
@@ -28,9 +29,9 @@ import { randomAngle } from "./libraries/random.js"
 
 let objectList = ObjectList()
 objectList.player.push(PlayerFactory(Vector.fromComponents(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT / 2), Vector.ZERO, 0))
-objectList.projectiles.push(Projectile({ x: 10, y: 10 }, { x: 2, y: 2 }, 45))
-objectList.projectiles.push(Projectile({ x: 10, y: 10 }, { x: 2, y: 1 }, 55))
-objectList.projectiles.push(Projectile({ x: 10, y: 10 }, { x: 1, y: 2 }, 65))
+objectList.projectiles.push(Projectile({ x: 10, y: 10 }, 45))
+objectList.projectiles.push(Projectile({ x: 10, y: 10 }, 55))
+objectList.projectiles.push(Projectile({ x: 10, y: 10 }, 65))
 
 
 let circleRenderer = Renderer(circle)
@@ -74,6 +75,7 @@ let physicsLoop = () => {
     // console.log(pollGamepad())
     console.log(global.timer)
     AsteroidSpawnSystem(objectList, global.difficulty)
+    objectList = fireProjectile(objectList)
   }
   global.timer++
 }

@@ -16,6 +16,7 @@ export const Settings = {
     "fire",
     "pause",
     "reset",
-  ]
+  ],
+  PROJECTILE_SPEED: 4,
 
 }
