@@ -12,7 +12,7 @@ import global from "./engine/global.js"
 import Projectile from "./dataStructures/Projectile.js"
 import "./dataStructures/controller.js"
 import rotate from "./behaviors/rotate.js"
-import { getButtonMapping, setButtonMapping } from "./libraries/storage.js"
+import { setButtonMapping } from "./libraries/storage.js"
 import "./libraries/inputViewer.js"
 import { pollGamepad } from "./dataStructures/controller.js"
 import updateAsteroid from "./behaviors/updaters/updateAsteroid.js"
@@ -88,4 +88,4 @@ setInterval(physicsLoop, 1000 / 60)
 setButtonMapping(["fire", ["buttons", 0]])
 setButtonMapping(["left", ["buttons", 7]])
 setButtonMapping(["right", ["buttons", 8]])
-console.log(getButtonMapping("fire")[1])
+// console.log(getButtonMapping("fire")[1])

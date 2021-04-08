@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { setButtonMapping } from "./storage"
 
 function bind() {

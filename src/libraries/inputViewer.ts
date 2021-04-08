@@ -1,3 +1,4 @@
+///@ts-nocheck
 import { Settings } from "../settings.js"
 
 let gamepad
