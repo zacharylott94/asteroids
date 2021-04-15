@@ -21,3 +21,9 @@ export function isPlayer(object: any): boolean {
 export function isCollidable(Object: any): boolean {
   return (Object.type !== ObjectType.Particle)
 }
+
+export let isNotPlayer = obj => !isPlayer(obj)
+
+export let isProjectile = obj => obj.type === ObjectType.Projectile
+
+export let isAsteroidOrParticle = obj => obj.type === ObjectType.Particle || obj.type === ObjectType.Asteroid

@@ -1,7 +1,5 @@
-export default function tickTTL(obj: IDeleteable & ITimeToLive): IDeleteable & ITimeToLive {
-  let deleteIt = false
-  let ttl = obj.ttl - 1
-  if (ttl < 1)
-    deleteIt = true
-  return { ...obj, ttl, delete: deleteIt }
+export default function tickTTL<T>(obj: T & ITimeToLive): T & ITimeToLive {
+  const ttl = obj.ttl - 1
+  if (ttl < 1) return { ...obj, ttl, delete: true }
+  return { ...obj, ttl, delete: false }
 }

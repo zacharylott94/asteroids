@@ -1,10 +1,10 @@
 //conditional takes a function that returns a boolean and a function to conditionally execute
 //Assumptions: 
-//condition and functor TAKE THE SAME ONE ARGUMENT
+//condition and map TAKE THE SAME ONE ARGUMENT
 
-export function conditional(condition, functor){
-  return function(argument){
-    if (condition(argument)) return functor(argument)
+export function conditional<T>(condition: Condition, monoid: Monoid<T>) {
+  return function (argument: T) {
+    if (condition(argument)) return monoid(argument)
     return argument
   }
 }

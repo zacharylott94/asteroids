@@ -13,6 +13,9 @@ type TRenderFunction<T> = (location: TVector, object: T) => void
 
 interface IGeneric extends IMoveable, ITypeable, IDeleteable, IRadius { }
 
+type Condition = (...args) => boolean
+type Monoid<T> = (thing: T) => T
+type Maybe<T> = T | void
 
 type TVector = {
   x: number,

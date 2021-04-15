@@ -5,10 +5,11 @@
 //But also, it kinda acts like the stator in a rotary system
 //It stays put while the functions you pass to it move the parts
 
-export function stator(state) {
+export function stator<T>(state: T): (monoid?: Monoid<T>) => T {
   let wrapper = { state }
-  return function (functor?: Function) {
-    if (functor === undefined) return wrapper.state
-    wrapper.state = functor(wrapper.state)
+  return function (monoid?: Monoid<T>): T {
+    if (monoid !== undefined)
+      wrapper.state = monoid(wrapper.state)
+    return wrapper.state
   }
 }

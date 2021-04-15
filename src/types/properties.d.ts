@@ -19,7 +19,8 @@ interface IRadius {
 }
 
 interface ITimeToLive {
-  ttl: number
+  ttl: number,
+  delete: boolean
 }
 
 interface ITypeable {
