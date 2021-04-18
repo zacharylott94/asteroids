@@ -6,6 +6,7 @@ import Position from "./dataStructures/Position.js"
 import Projectile from "./dataStructures/Projectile.js"
 import Vector from "./dataStructures/Vector.js"
 import { circleRenderer, playerRenderer, projectileRenderer } from "./draw/composedRenderingFunctions.js"
+import AsteroidSpawnSystem from "./engine/asteroidSpawner.js"
 import global from "./engine/global.js"
 import Graphics from "./engine/graphics.js"
 import { partial } from "./hof/partial.js"
@@ -36,6 +37,11 @@ let physicsLoop = () => {
   objectList(tickAllTTL)
   objectList(partial(concat, Particle(Position.real(objectList[0]?.position), Vector.fromDegreesAndMagnitude(randomAngle(0, 360), Math.random() * 1.5))))
   objectList(list => list.filter(obj => !obj.delete))
+  if (global.timer % 200 === 0) {
+    console.log(objectList())
+    AsteroidSpawnSystem(objectList, global.difficulty)
+
+  }
   global.timer++
 }
 
