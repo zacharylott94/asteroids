@@ -28,13 +28,11 @@ const offsets: TPosition = [
 
 export default class Position {
   static fromVector(vector: TVector): TPosition {
-    let newPosition = offsets
-    return Position.addVector(newPosition, vector)
+    return Position.addVector(offsets, vector)
   }
 
   static fromComponents(x: number, y: number): TPosition {
-    let newPosition = offsets
-    return Position.addVector(newPosition, Vector.fromComponents(x, y))
+    return Position.addVector(offsets, Vector.fromComponents(x, y))
   }
 
   static addVector(position: TPosition, vector: TVector): TPosition {
@@ -54,7 +52,7 @@ export default class Position {
     let closest = Vector.ZERO
     let closestDistance = Number.MAX_SAFE_INTEGER
     position.forEach(each => {
-      let squaredDistance = Vector.distanceSquared(each, point)
+      const squaredDistance = Vector.distanceSquared(each, point)
       if (squaredDistance < closestDistance) {
         closestDistance = squaredDistance
         closest = each

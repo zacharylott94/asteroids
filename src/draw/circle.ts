@@ -1,8 +1,6 @@
 import { context } from "../engine/canvas.js"
 
-//strokes a circle
-let circle: TRenderFunction<ICircleRenderable>
-circle = function (location: TVector, object: ICircleRenderable): void {
+const circle: TRenderFunction<ICircleRenderable> = (location: TVector, object: ICircleRenderable) => {
   context.save()
   context.moveTo(location.x, location.y)
   context.beginPath()
@@ -10,8 +8,6 @@ circle = function (location: TVector, object: ICircleRenderable): void {
   context.stroke()
   context.restore()
 }
-
-
 
 
 export default circle

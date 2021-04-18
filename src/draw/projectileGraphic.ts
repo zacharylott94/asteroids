@@ -2,8 +2,7 @@ import Graphics from "../engine/graphics.js"
 import { context } from "../engine/canvas.js"
 
 //Draws a diamond for the projectile
-let projectileGraphic: TRenderFunction<IRotatableRenderable>
-projectileGraphic = (location: TVector, object: IRotatableRenderable) => {
+const projectileGraphic: TRenderFunction<IRotatableRenderable> = (location: TVector, object: IRotatableRenderable) => {
   let length = 4
   let width = 2
   const { x, y } = location

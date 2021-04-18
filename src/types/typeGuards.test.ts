@@ -1,9 +1,9 @@
 import Position from "../dataStructures/Position.js"
 import Vector from "../dataStructures/Vector.js"
-import { isMoveable, isRotatable, isUpdateable } from "./typeGuards.js"
+import { hasTTL, isAsteroidOrParticle, isCollidable, isMoveable, isPlayer, isProjectile, isRotatable } from "./typeGuards.js"
 
 describe('Typeguards', () => {
-  it('isMoveable returns true if the passed object has a velocity and position', () => {
+  it('isMoveable', () => {
     let object = {
       velocity: Vector.fromComponents(2, 2),
       position: Position.fromComponents(2, 2)
@@ -17,7 +17,7 @@ describe('Typeguards', () => {
     expect(isMoveable(object3)).toBe(false)
   })
 
-  it('isRotatable returns true if the passed object has a rotation', () => {
+  it('isRotatable', () => {
     let object = {
       rotation: 10
     }
@@ -25,13 +25,59 @@ describe('Typeguards', () => {
     let object2 = {}
     expect(isRotatable(object2)).toBe(false)
   })
-
-  it('isUpdateable returns true if the passed object has a rotation', () => {
-    let object = {
-      update: (obj: any) => obj
+  it('hassTTL', () => {
+    const obj = {
+      ttl: 100
     }
-    expect(isUpdateable(object)).toBe(true)
-    let object2 = {}
-    expect(isUpdateable(object2)).toBe(false)
+    const noTTL = {
+      noTTL: true
+    }
+    expect(hasTTL(obj)).toBe(true)
+    expect(hasTTL(noTTL)).toBe(false)
+  })
+
+  it('isPlayer', () => {
+    const obj1 = {
+      type: ObjectType.Player
+    }
+    const obj2 = {
+      type: ObjectType.Asteroid
+    }
+    const obj3 = {}
+    expect(isPlayer(obj1)).toBe(true)
+    expect(isPlayer(obj2)).toBe(false)
+    expect(isPlayer(obj3)).toBe(false)
+  })
+
+  it('isCollidable', () => {
+    const obj1 = {
+      type: ObjectType.Particle,
+    }
+    const obj2 = {
+      type: ObjectType.Player,
+      radius: 1
+    }
+    const obj3 = {}
+    expect(isCollidable(obj1)).toBe(false)
+    expect(isCollidable(obj2)).toBe(true)
+    expect(isCollidable(obj3)).toBe(false)
+  })
+  it('isProjectile', () => {
+    const obj = { type: ObjectType.Projectile }
+    const obj2 = { type: ObjectType.Player }
+    const obj3 = {}
+    expect(isProjectile(obj)).toBe(true)
+    expect(isProjectile(obj2)).toBe(false)
+    expect(isProjectile(obj3)).toBe(false)
+  })
+  it('isAsteroidOrParticle', () => {
+    const obj = { type: ObjectType.Asteroid }
+    const obj2 = { type: ObjectType.Particle }
+    const obj3 = { type: ObjectType.Player }
+    const obj4 = {}
+    expect(isAsteroidOrParticle(obj)).toBe(true)
+    expect(isAsteroidOrParticle(obj2)).toBe(true)
+    expect(isAsteroidOrParticle(obj3)).toBe(false)
+    expect(isAsteroidOrParticle(obj4)).toBe(false)
   })
 })

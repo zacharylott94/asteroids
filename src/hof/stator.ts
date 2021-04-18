@@ -6,7 +6,7 @@
 //It stays put while the functions you pass to it move the parts
 
 export function stator<T>(state: T): (monoid?: Monoid<T>) => T {
-  let wrapper = { state }
+  const wrapper = { state }
   return function (monoid?: Monoid<T>): T {
     if (monoid !== undefined)
       wrapper.state = monoid(wrapper.state)
