@@ -1,4 +1,4 @@
-import bind from "./bind.js"
+import bind from "./compose.js"
 describe('bind', () => {
   it('takes two functions and composes them together', () => {
     const func1 = x => x + 1
