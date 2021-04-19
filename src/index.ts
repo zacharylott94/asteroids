@@ -1,4 +1,5 @@
 import { moveAllMoveable, tickAllTTL } from "./behaviors/actions/composedActions.js"
+import { fireProjectile } from "./behaviors/actions/fireProjectile.js"
 import "./dataStructures/controller.js"
 import { Particle } from "./dataStructures/Particle.js"
 import PlayerFactory from "./dataStructures/Player.js"
@@ -40,7 +41,7 @@ let physicsLoop = () => {
   if (global.timer % 200 === 0) {
     console.log(objectList())
     AsteroidSpawnSystem(objectList, global.difficulty)
-
+    objectList(fireProjectile)
   }
   global.timer++
 }
