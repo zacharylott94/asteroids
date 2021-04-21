@@ -9,7 +9,7 @@ import Vector from "./dataStructures/Vector.js"
 import { circleRenderer, playerRenderer, projectileRenderer } from "./draw/composedRenderingFunctions.js"
 import AsteroidSpawnSystem from "./engine/asteroidSpawner.js"
 import global from "./engine/global.js"
-import Graphics from "./engine/graphics.js"
+import { clear } from "./draw/clear.js"
 import { partial } from "./hof/partial.js"
 import { stator } from "./hof/stator.js"
 import concat from "./libraries/concat.js"
@@ -27,7 +27,7 @@ objectList(partial(concat, Projectile({ x: 10, y: 10 }, 55)))
 objectList(partial(concat, Projectile({ x: 10, y: 10 }, 65)))
 
 let graphicsLoop = () => {
-  Graphics.clear()
+  clear()
   objectList(circleRenderer)
   objectList(playerRenderer)
   objectList(projectileRenderer)
