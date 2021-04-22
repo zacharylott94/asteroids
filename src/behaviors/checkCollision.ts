@@ -1,4 +1,4 @@
-import Position from "../dataStructures/Position.js"
+import Position from "../dataStructures/position/Position.js"
 import Vector from "../dataStructures/Vector.js"
 
 export default function checkCollision(object: ICollidable, otherObject: ICollidable): boolean {

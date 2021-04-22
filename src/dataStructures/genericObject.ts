@@ -1,5 +1,4 @@
-import Position from "./Position.js"
-
+import Position from "./position/Position.js"
 
 export default function GenericFactory(location: TVector, velocity: TVector, radius: number, type = ObjectType.Generic): IGeneric {
   return {

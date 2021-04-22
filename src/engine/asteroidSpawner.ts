@@ -1,10 +1,9 @@
 import Asteroid from "../dataStructures/Asteroid.js"
-import Position from "../dataStructures/Position.js"
+import Position from "../dataStructures/position/Position.js"
 import Vector from "../dataStructures/Vector.js"
 import { partial } from "../hof/partial.js"
 import concat from "../libraries/concat.js"
 import { Settings } from "../settings.js"
-
 
 const largeAsteroid = Asteroid(Settings.LARGE_ASTEROID_RADIUS)
 

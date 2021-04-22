@@ -1,5 +1,4 @@
-//broken
-import Position from "../../dataStructures/Position.js"
+import Position from "../../dataStructures/position/Position.js"
 import Projectile from "../../dataStructures/Projectile.js"
 
 export function fireProjectile(objectList) {

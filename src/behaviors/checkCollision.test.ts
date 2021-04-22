@@ -1,4 +1,4 @@
-import Position from "../dataStructures/Position.js"
+import Position from "../dataStructures/position/Position.js"
 import checkCollision from "./checkCollision.js"
 
 describe('checkCollision', () => {
