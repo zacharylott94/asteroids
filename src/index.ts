@@ -2,8 +2,8 @@ import { moveAllMoveable, tickAllTTL } from "./behaviors/actions/composedActions
 import { fireProjectile } from "./behaviors/actions/fireProjectile.js"
 import "./dataStructures/controller.js"
 import { Particle } from "./dataStructures/Particle.js"
-import PlayerFactory from "./dataStructures/Player.js"
-import Position from "./dataStructures/Position.js"
+import Player from "./dataStructures/Player.js"
+import Position from "./dataStructures/position/Position.js"
 import Projectile from "./dataStructures/Projectile.js"
 import Vector from "./dataStructures/Vector.js"
 import { circleRenderer, playerRenderer, projectileRenderer } from "./draw/composedRenderingFunctions.js"
@@ -18,8 +18,9 @@ import { randomAngle } from "./libraries/random.js"
 import { setButtonMapping } from "./libraries/storage.js"
 import { Settings } from "./settings.js"
 
+
 let objectList = stator(new Array<IGeneric & ITimeToLive>())
-let player = PlayerFactory(Vector.fromComponents(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT / 2), Vector.ZERO, 0)
+let player = Player(Settings.PLAYER_RADIUS)(Vector.fromComponents(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT / 2), Vector.ZERO, 0)
 
 objectList(partial(concat, player))
 objectList(partial(concat, Projectile({ x: 10, y: 10 }, 45)))

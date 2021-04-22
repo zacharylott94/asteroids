@@ -1,4 +1,4 @@
-import { LargeAsteroidFactory } from "../dataStructures/Asteroid.js"
+import Asteroid from "../dataStructures/Asteroid.js"
 import Position from "../dataStructures/Position.js"
 import Vector from "../dataStructures/Vector.js"
 import { partial } from "../hof/partial.js"
@@ -6,11 +6,11 @@ import concat from "../libraries/concat.js"
 import { Settings } from "../settings.js"
 
 
-
+const largeAsteroid = Asteroid(Settings.LARGE_ASTEROID_RADIUS)
 
 
 function AsteroidSpawnSystem(objectList: Function, difficulty: number) {
-  const spawnAsteroid = partial(concat, LargeAsteroidFactory(generateSpawnLocation(), generateRandomVelocity()))
+  const spawnAsteroid = partial(concat, largeAsteroid(generateSpawnLocation(), generateRandomVelocity()))
   const asteroids = objectList().filter(obj => obj.type === ObjectType.Asteroid)
   if (asteroids.length < difficulty * 3)
     objectList(spawnAsteroid)

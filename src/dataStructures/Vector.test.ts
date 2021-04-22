@@ -2,6 +2,7 @@ import Vector from "./Vector.js"
 describe('Static Class Vector', () => {
   it('can create vectors from x and y values', () => {
     expect(Vector.fromComponents(10, 10)).toStrictEqual({ x: 10, y: 10 })
+    expect(Vector.new(10, 10)).toStrictEqual({ x: 10, y: 10 })
   })
   it('can create vectors from degrees and magnitude', () => {
     let vec = Vector.fromDegreesAndMagnitude(45, 1)

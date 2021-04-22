@@ -3,6 +3,7 @@ export default class Vector {
   static fromComponents(x: number, y: number): TVector {
     return { x, y }
   }
+  static new = Vector.fromComponents
   static fromDegreesAndMagnitude(degrees: number, magnitude: number): TVector {
     const angle: number = Math.PI * 2 / 360 * degrees
     const x: number = Math.cos(angle)

@@ -1,6 +1,6 @@
-import { Settings } from "../settings.js"
+import { Settings } from "../../settings.js"
 import Position from "./Position.js"
-import Vector from "./Vector.js"
+import Vector from "../Vector.js"
 describe('Position static class', () => {
   it('can get "real" position', () => {
     let position = Position.fromVector(Vector.fromComponents(20, 20))

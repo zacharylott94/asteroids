@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage ./build",
+    "test": "tsc; jest --coverage ./build;",
     "compile": "tsc --watch"
   },
   "repository": {
