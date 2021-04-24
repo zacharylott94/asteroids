@@ -11,31 +11,29 @@ import degrees from "./degrees.js"
 import scale from "./scale.js"
 import fromDegreesAndMagnitude from "./fromDegreesAndMagnitude.js"
 
-export default class Vector {
+export default {
 
-  static fromComponents(x: number, y: number): TVector {
-    return { x, y }
-  }
-  static new = Vector.fromComponents
-  static fromDegreesAndMagnitude = fromDegreesAndMagnitude
-  static add = add
-  static subtract = subtract
+  fromComponents: (x, y) => ({ x, y }),
+  new: (x, y) => ({ x, y }),
+  fromDegreesAndMagnitude,
+  add,
+  subtract,
 
-  static scale = scale
-  static degrees = degrees
-  static radians = radians
-  static normalize = normalize
-  static magnitude = magnitude
-  static squaredMagnitude = squaredMagnitude
-  static distanceSquared = distanceSquared
-  static distance = distance
-  static dotProduct = dotProduct
+  scale,
+  degrees,
+  radians,
+  normalize,
+  magnitude,
+  squaredMagnitude,
+  distanceSquared,
+  distance,
+  dotProduct,
 
-  static UP = Vector.fromComponents(0, -1)
-  static DOWN = Vector.fromComponents(0, 1)
-  static LEFT = Vector.fromComponents(-1, 0)
-  static RIGHT = Vector.fromComponents(1, 0)
-  static ZERO = Vector.fromComponents(0, 0)
+  UP: { x: 0, y: -1 },
+  DOWN: { x: 0, y: 1 },
+  LEFT: { x: -1, y: 0 },
+  RIGHT: { x: 1, y: 0 },
+  ZERO: { x: 0, y: 0 },
 
 }
 
