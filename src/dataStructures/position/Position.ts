@@ -1,5 +1,5 @@
 import constrain from "./constrain.js"
-import Vector from "../Vector.js"
+import Vector from "../vector/Vector.js"
 import closestTo from "./closestTo.js"
 import specificPositionVector from "./specificPositionVector.js"
 import addVector from "./addVector.js"

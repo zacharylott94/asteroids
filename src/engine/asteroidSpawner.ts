@@ -1,6 +1,6 @@
 import Asteroid from "../dataStructures/Asteroid.js"
 import Position from "../dataStructures/position/Position.js"
-import Vector from "../dataStructures/Vector.js"
+import Vector from "../dataStructures/vector/Vector.js"
 import { partial } from "../hof/partial.js"
 import concat from "../libraries/concat.js"
 import { Settings } from "../settings.js"

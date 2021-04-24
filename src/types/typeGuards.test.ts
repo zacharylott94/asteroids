@@ -1,5 +1,5 @@
 import Position from "../dataStructures/position/Position.js"
-import Vector from "../dataStructures/Vector.js"
+import Vector from "../dataStructures/vector/Vector.js"
 import { hasTTL, isAsteroidOrParticle, isCollidable, isMoveable, isPlayer, isProjectile, isRotatable } from "./typeGuards.js"
 
 describe('Typeguards', () => {

@@ -1,4 +1,4 @@
-import Vector from "../Vector.js"
+import Vector from "../vector/Vector.js"
 import addVector from "./addVector.js"
 
 export default function fromComponents(offsets, x: number, y: number): TPosition {

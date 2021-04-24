@@ -1,4 +1,4 @@
-import Vector from "../Vector.js"
+import Vector from "../vector/Vector.js"
 
 export default function closestTo(position: TPosition, point: TVector) {
   let closest = Vector.ZERO
