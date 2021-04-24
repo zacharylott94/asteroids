@@ -6,9 +6,9 @@ import mod from "../../libraries/mod.js"
 // export default (wrapper, vector) => {zip(vector,wrapper).map(([x,m]) => mod(x,m))}
 
 
-export default (wrapper, vector) => {
-  return {
-    x: mod(vector.x, wrapper.x),
-    y: mod(vector.y, wrapper.y)
-  }
+export default (wrapper, vector): TVector => {
+  return [
+    mod(vector[0], wrapper[0]),
+    mod(vector[1], wrapper[1])
+  ]
 }

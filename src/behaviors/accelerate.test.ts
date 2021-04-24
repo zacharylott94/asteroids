@@ -5,13 +5,10 @@ describe('accelerate', () => {
     let obj = {
       acceleration: 2,
       rotation: 90,
-      velocity: {
-        x: 10,
-        y: 10,
-      },
+      velocity: <TVector>[10, 10],
       dummy: "dummy data" //just to prove an object can have more properties than required
     }
-    let expected = { x: 10, y: 12 }
+    let expected = [10, 12]
     obj = accelerate(obj)
     expect(obj.velocity).toStrictEqual(expected)
   })

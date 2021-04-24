@@ -1,5 +1,5 @@
 export default (vector: TVector): number => {
-  const x = vector.x
-  const y = vector.y
+  const x = vector[0]
+  const y = vector[1]
   return (x * x + y * y)
 }

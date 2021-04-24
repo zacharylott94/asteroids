@@ -1,3 +1,3 @@
 export default (vector1: TVector, vector2: TVector): number => {
-  return ((vector1.x * vector2.x) + (vector1.y * vector2.y))
+  return ((vector1[0] * vector2[0]) + (vector1[1] * vector2[1]))
 }

@@ -13,8 +13,8 @@ import fromDegreesAndMagnitude from "./fromDegreesAndMagnitude.js"
 
 export default {
 
-  fromComponents: (x, y) => ({ x, y }),
-  new: (x, y) => ({ x, y }),
+  fromComponents: (x, y): TVector => [x, y],
+  new: (x, y): TVector => [x, y],
   fromDegreesAndMagnitude,
   add,
   subtract,
@@ -29,11 +29,11 @@ export default {
   distance,
   dotProduct,
 
-  UP: { x: 0, y: -1 },
-  DOWN: { x: 0, y: 1 },
-  LEFT: { x: -1, y: 0 },
-  RIGHT: { x: 1, y: 0 },
-  ZERO: { x: 0, y: 0 },
+  UP: <TVector>[0, -1],
+  DOWN: <TVector>[0, 1],
+  LEFT: <TVector>[-1, 0],
+  RIGHT: <TVector>[1, 0],
+  ZERO: <TVector>[0, 0],
 
 }
 

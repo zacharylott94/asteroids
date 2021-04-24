@@ -23,9 +23,9 @@ let objectList = stator(new Array<IGeneric & ITimeToLive>())
 let player = Player(Settings.PLAYER_RADIUS)(Vector.fromComponents(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT / 2), Vector.ZERO, 0)
 
 objectList(partial(concat, player))
-objectList(partial(concat, Projectile({ x: 10, y: 10 }, 45)))
-objectList(partial(concat, Projectile({ x: 10, y: 10 }, 55)))
-objectList(partial(concat, Projectile({ x: 10, y: 10 }, 65)))
+objectList(partial(concat, Projectile(<TVector>[10, 10], 45)))
+objectList(partial(concat, Projectile(<TVector>[10, 10], 55)))
+objectList(partial(concat, Projectile(<TVector>[10, 10], 65)))
 
 let graphicsLoop = () => {
   clear()

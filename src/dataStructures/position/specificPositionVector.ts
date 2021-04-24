@@ -1,4 +1,4 @@
 export default index => (position: TPosition): TVector => {
-  if (!position) return { x: 0, y: 0 }
+  if (!position) return [0, 0]
   return position[index]
 }

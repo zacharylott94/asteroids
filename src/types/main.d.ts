@@ -17,10 +17,7 @@ type Condition = (...args) => boolean
 type Monoid<T> = (thing: T) => T
 type Maybe<T> = T | void
 
-type TVector = {
-  x: number,
-  y: number
-}
+type TVector = [number, number]
 type TPosition = [TVector, TVector, TVector, TVector, TVector, TVector, TVector, TVector, TVector,]
 
 type Degrees = number

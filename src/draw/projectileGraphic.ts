@@ -5,7 +5,7 @@ import { context } from "../engine/canvas.js"
 const projectileGraphic: TRenderFunction<IRotatableRenderable> = (location: TVector, object: IRotatableRenderable) => {
   const length = 4
   const width = 2
-  const { x, y } = location
+  const [x, y] = location
   rotate(location, object.rotation)
   context.beginPath()
   context.moveTo(x, y + width)

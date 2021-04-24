@@ -1,3 +1,4 @@
 export default (vec1: TVector, vec2: TVector): TVector => {
-  return { x: vec1.x + vec2.x, y: vec1.y + vec2.y }
+  // return zip(vec1,vec2).map(tuple => tuple.reduce((x,y) => x + y))
+  return [vec1[0] + vec2[0], vec1[1] + vec2[1]]
 }

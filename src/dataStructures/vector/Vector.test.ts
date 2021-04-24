@@ -1,16 +1,16 @@
 import Vector from "./Vector.js"
 describe('Static Class Vector', () => {
   it('can create vectors from x and y values', () => {
-    expect(Vector.fromComponents(10, 10)).toStrictEqual({ x: 10, y: 10 })
-    expect(Vector.new(10, 10)).toStrictEqual({ x: 10, y: 10 })
+    expect(Vector.fromComponents(10, 10)).toStrictEqual([10, 10])
+    expect(Vector.new(10, 10)).toStrictEqual([10, 10])
   })
   it('can create vectors from degrees and magnitude', () => {
     let vec = Vector.fromDegreesAndMagnitude(45, 1)
-    expect(vec.x).toBeCloseTo(.707)
-    expect(vec.y).toBeCloseTo(.707)
+    expect(vec[0]).toBeCloseTo(.707)
+    expect(vec[1]).toBeCloseTo(.707)
     vec = Vector.fromDegreesAndMagnitude(0, 1)
-    expect(vec.x).toBe(1)
-    expect(vec.y).toBe(0)
+    expect(vec[0]).toBe(1)
+    expect(vec[1]).toBe(0)
   })
   it('can add two vectors', () => {
     let vec1 = Vector.fromComponents(1, 1)
@@ -58,11 +58,11 @@ describe('Static Class Vector', () => {
     expect(Vector.degrees(vec)).toBe(expected)
   })
   it('has identity vectors', () => {
-    expect(Vector.UP).toStrictEqual({ x: 0, y: -1 })
-    expect(Vector.DOWN).toStrictEqual({ x: 0, y: 1 })
-    expect(Vector.LEFT).toStrictEqual({ x: -1, y: 0 })
-    expect(Vector.RIGHT).toStrictEqual({ x: 1, y: 0 })
-    expect(Vector.ZERO).toStrictEqual({ x: 0, y: 0 })
+    expect(Vector.UP).toStrictEqual([0, -1])
+    expect(Vector.DOWN).toStrictEqual([0, 1])
+    expect(Vector.LEFT).toStrictEqual([-1, 0])
+    expect(Vector.RIGHT).toStrictEqual([1, 0])
+    expect(Vector.ZERO).toStrictEqual([0, 0])
 
   })
   it('can get the squared distance between two vectors', () => {
