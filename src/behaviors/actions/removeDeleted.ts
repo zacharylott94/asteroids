@@ -1,0 +1,1 @@
+export default list => list.filter(obj => !obj.delete)

@@ -52,10 +52,12 @@ describe('Typeguards', () => {
   it('isCollidable', () => {
     const obj1 = {
       type: ObjectType.Particle,
+      hasCollided: false
     }
     const obj2 = {
       type: ObjectType.Player,
-      radius: 1
+      radius: 1,
+      hasCollided: false
     }
     const obj3 = {}
     expect(isCollidable(obj1)).toBe(false)

@@ -1,7 +1,7 @@
 import { context } from "../engine/canvas.js"
 import { rotate } from "./rotate.js"
 
-const playerShipGraphic: TRenderFunction<IRotatableRenderable> = (location: TVector, object: IRotatableRenderable) => {
+const playerShipGraphic: RenderFunction<IRotatableRenderable> = (location: TVector, object: IRotatableRenderable) => {
     const [x, y] = location
     rotate(location, object.rotation)
     context.beginPath()

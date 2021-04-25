@@ -1,3 +1,4 @@
+import compose from "../../hof/compose.js"
 import { conditional } from "../../hof/conditional.js"
 import mapper from "../../hof/mapper.js"
 import { isMoveable, hasTTL } from "../../types/typeGuards.js"
@@ -6,3 +7,4 @@ import tickTTL from "../tickTTL.js"
 
 export const moveAllMoveable = mapper(conditional(isMoveable, move))
 export const tickAllTTL = mapper(conditional(hasTTL, tickTTL))
+export const moveAndTick = compose(moveAllMoveable, tickAllTTL)

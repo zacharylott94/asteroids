@@ -1,4 +1,4 @@
-import { moveAllMoveable, tickAllTTL } from "./behaviors/actions/composedActions.js"
+import { moveAndTick } from "./behaviors/actions/composedActions.js"
 import { fireProjectile } from "./behaviors/actions/fireProjectile.js"
 import "./dataStructures/controller.js"
 import { Particle } from "./dataStructures/Particle.js"
@@ -6,7 +6,7 @@ import Player from "./dataStructures/Player.js"
 import Position from "./dataStructures/position/Position.js"
 import Projectile from "./dataStructures/Projectile.js"
 import Vector from "./dataStructures/vector/Vector.js"
-import { circleRenderer, playerRenderer, projectileRenderer } from "./draw/composedRenderingFunctions.js"
+import { circleRenderer, collisionRenderer, playerRenderer, projectileRenderer } from "./draw/composedRenderingFunctions.js"
 import AsteroidSpawnSystem from "./engine/asteroidSpawner.js"
 import global from "./engine/global.js"
 import { clear } from "./draw/clear.js"
@@ -17,9 +17,12 @@ import "./libraries/inputViewer.js"
 import { randomAngle } from "./libraries/random.js"
 import { setButtonMapping } from "./libraries/storage.js"
 import { Settings } from "./settings.js"
+import collide, { resetCollision } from "./behaviors/actions/collide.js"
+import removeDeleted from "./behaviors/actions/removeDeleted.js"
 
 
-let objectList = stator(new Array<IGeneric & ITimeToLive>())
+const objectList = stator(new Array<IGeneric & IRotatableGeneric & ICollidable>())
+const particleList = stator(new Array<IGeneric & ITimeToLive>())
 let player = Player(Settings.PLAYER_RADIUS)(Vector.fromComponents(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT / 2), Vector.ZERO, 0)
 
 objectList(partial(concat, player))
@@ -32,13 +35,19 @@ let graphicsLoop = () => {
   objectList(circleRenderer)
   objectList(playerRenderer)
   objectList(projectileRenderer)
+  objectList(collisionRenderer)
+  particleList(circleRenderer)
 }
 
 let physicsLoop = () => {
-  objectList(moveAllMoveable)
-  objectList(tickAllTTL)
-  objectList(partial(concat, Particle(Position.real(objectList[0]?.position), Vector.fromDegreesAndMagnitude(randomAngle(0, 360), Math.random() * 1.5))))
-  objectList(list => list.filter(obj => !obj.delete))
+  objectList(resetCollision)
+  objectList(moveAndTick)
+  objectList(removeDeleted)
+  objectList(collide)
+
+  particleList(moveAndTick)
+  particleList(partial(concat, Particle(Position.real(objectList[0]?.position), Vector.fromDegreesAndMagnitude(randomAngle(0, 360), Math.random() * 1.5))))
+  particleList(removeDeleted)
   if (global.timer % 200 === 0) {
     console.log(objectList())
     AsteroidSpawnSystem(objectList, global.difficulty)
