@@ -17,8 +17,8 @@ import "./libraries/inputViewer.js"
 import { randomAngle } from "./libraries/random.js"
 import { setButtonMapping } from "./libraries/storage.js"
 import { Settings } from "./settings.js"
-import collide, { resetCollision } from "./behaviors/actions/collide.js"
 import removeDeleted from "./behaviors/actions/removeDeleted.js"
+import { checkAsteroidCollisionAgainstProjectiles, checkProjectileCollisionAgainstAsteroids, resetCollision } from "./behaviors/checkCollision.js"
 
 
 const objectList = stator(new Array<IGeneric & IRotatableGeneric & ICollidable>())
@@ -39,11 +39,15 @@ let graphicsLoop = () => {
   particleList(circleRenderer)
 }
 
+
 let physicsLoop = () => {
   objectList(resetCollision)
   objectList(moveAndTick)
+  objectList(checkAsteroidCollisionAgainstProjectiles)
+  objectList(checkProjectileCollisionAgainstAsteroids)
+  objectList(list => list.map(obj => { return obj.hasCollided ? { ...obj, delete: true } : obj }))
+
   objectList(removeDeleted)
-  objectList(collide)
 
   particleList(moveAndTick)
   particleList(partial(concat, Particle(Position.real(objectList[0]?.position), Vector.fromDegreesAndMagnitude(randomAngle(0, 360), Math.random() * 1.5))))
