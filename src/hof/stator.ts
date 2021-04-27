@@ -5,7 +5,9 @@
 //But also, it kinda acts like the stator in a rotary system
 //It stays put while the functions you pass to it move the parts
 
-export function stator<T>(state: T): (monoid?: Monoid<T>) => T {
+
+export const stator = <T>(state: T): Stator<T> => {
+  // export function stator<T>(state: T): Stator<T> {
   const wrapper = { state }
   return function (monoid?: Monoid<T>): T {
     if (monoid !== undefined)

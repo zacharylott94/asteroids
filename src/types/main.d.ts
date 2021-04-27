@@ -24,5 +24,24 @@ type Asteroid = IGeneric & ICollidable
 type Player = ICollidable & IGeneric & IAcceleration & IRotation
 type Projectile = IRotatableGeneric & ICollidable & ITimeToLive
 type Particle = IGeneric & ITimeToLive
+type GameObject = Player & Projectile & Asteroid
 
 type Degrees = number
+
+type Stator<T> = (monoid?: Monoid<T>) => T
+
+interface HumanInterface {
+  fire: Function,
+  accelerate: Function,
+  rotateCounterclockwise: Function,
+  rotateClockwise: Function,
+  pause: Function,
+  reset: Function
+}
+
+type GameState = {
+  timer: Stator<number>,
+  paused: Stator<boolean>,
+  particleList: Stator<Particle[]>,
+  objectList: Stator<GameObject[]>
+}
