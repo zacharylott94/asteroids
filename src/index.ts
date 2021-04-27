@@ -1,22 +1,18 @@
 import { moveAndTick } from "./behaviors/actions/composedActions.js"
-import { Particle } from "./dataStructures/Particle.js"
-import Vector from "./dataStructures/vector/Vector.js"
 import { circleRenderer, playerRenderer, projectileRenderer } from "./draw/composedRenderingFunctions.js"
 import AsteroidSpawnSystem from "./engine/asteroidSpawner.js"
 import { initGameState } from "./engine/global.js"
 import { clear } from "./draw/clear.js"
-import { partial } from "./hof/partial.js"
-import concat from "./libraries/concat.js"
-import { randomAngle } from "./libraries/random.js"
 import removeDeleted from "./behaviors/actions/removeDeleted.js"
 import { checkAsteroidCollisionAgainstProjectiles, checkProjectileCollisionAgainstAsteroids, resetCollision } from "./behaviors/checkCollision.js"
 import { setupInterface } from "./libraries/humanInterface.js"
+import Controller from "./engine/keyboardController.js"
+
 
 
 const GameState = initGameState()
 const humanInterface = setupInterface(GameState)
 humanInterface.reset()
-
 
 let graphicsLoop = () => {
   clear()
@@ -28,7 +24,16 @@ let graphicsLoop = () => {
 
 
 let physicsLoop = () => {
+  if (Controller.buttonPushed("p")) humanInterface.pause()
+  if (Controller.buttonPushed("o")) humanInterface.reset()
   if (GameState.paused()) return
+
+  if (Controller.heldButtons["w"]) humanInterface.accelerate()
+  if (Controller.heldButtons["a"]) humanInterface.rotateCounterclockwise()
+  if (Controller.heldButtons["d"]) humanInterface.rotateClockwise()
+  if (Controller.buttonPushed("Enter")) humanInterface.fire()
+
+
   GameState.objectList(resetCollision)
   GameState.objectList(moveAndTick)
   GameState.objectList(checkAsteroidCollisionAgainstProjectiles)
@@ -38,16 +43,11 @@ let physicsLoop = () => {
   GameState.objectList(removeDeleted)
 
   GameState.particleList(moveAndTick)
-  GameState.particleList(partial(concat, Particle([100, 100], Vector.fromDegreesAndMagnitude(randomAngle(0, 360), Math.random() * 1.5))))
   GameState.particleList(removeDeleted)
   if (GameState.timer() % 200 === 0) {
     console.log(GameState.objectList())
     AsteroidSpawnSystem(GameState.objectList, 1)
-    humanInterface.fire()
   }
-
-
-  humanInterface.accelerate()
   GameState.timer(_ => ++_)
 }
 

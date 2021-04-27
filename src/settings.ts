@@ -18,5 +18,6 @@ export const Settings = {
     "reset",
   ],
   PROJECTILE_SPEED: 4,
+  ROTATION_SPEED: 4,
 
 }
