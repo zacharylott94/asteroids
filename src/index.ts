@@ -7,11 +7,14 @@ import removeDeleted from "./behaviors/actions/removeDeleted.js"
 import { checkAsteroidCollisionAgainstProjectiles, checkProjectileCollisionAgainstAsteroids, resetCollision } from "./behaviors/checkCollision.js"
 import { setupInterface } from "./libraries/humanInterface.js"
 import Controller from "./engine/keyboardController.js"
-
+import { initPlayerParticles } from "./behaviors/actions/ParticleEmitters.js"
+import { isPlayer } from "./types/typeGuards.js"
 
 
 const GameState = initGameState()
+const getPlayer = () => GameState.objectList().filter(isPlayer)[0]
 const humanInterface = setupInterface(GameState)
+const playerParticles = initPlayerParticles(getPlayer, () => Controller.isButtonHeld("w"))
 humanInterface.reset()
 
 let graphicsLoop = () => {
@@ -42,6 +45,7 @@ let physicsLoop = () => {
 
   GameState.objectList(removeDeleted)
 
+  GameState.particleList(playerParticles)
   GameState.particleList(moveAndTick)
   GameState.particleList(removeDeleted)
   if (GameState.timer() % 200 === 0) {
