@@ -1,10 +1,9 @@
-import { moveAndTick } from "./behaviors/actions/composedActions.js"
+import { moveAndTick, updateObjectList } from "./behaviors/actions/composedActions.js"
 import { circleRenderer, playerRenderer, projectileRenderer } from "./draw/composedRenderingFunctions.js"
 import AsteroidSpawnSystem from "./engine/asteroidSpawner.js"
 import { initGameState } from "./engine/global.js"
 import { clear } from "./draw/clear.js"
 import removeDeleted from "./behaviors/actions/removeDeleted.js"
-import { checkAsteroidCollisionAgainstProjectiles, checkProjectileCollisionAgainstAsteroids, resetCollision } from "./behaviors/checkCollision.js"
 import { setupInterface } from "./libraries/humanInterface.js"
 import Controller from "./engine/keyboardController.js"
 import { initPlayerParticles } from "./behaviors/actions/ParticleEmitters.js"
@@ -37,13 +36,7 @@ let physicsLoop = () => {
   if (Controller.isButtonPushed("Enter")) humanInterface.fire()
 
 
-  GameState.objectList(resetCollision)
-  GameState.objectList(moveAndTick)
-  GameState.objectList(checkAsteroidCollisionAgainstProjectiles)
-  GameState.objectList(checkProjectileCollisionAgainstAsteroids)
-  GameState.objectList(list => list.map(obj => { return obj.hasCollided ? { ...obj, delete: true } : obj }))
-
-  GameState.objectList(removeDeleted)
+  GameState.objectList(updateObjectList)
 
   GameState.particleList(playerParticles)
   GameState.particleList(moveAndTick)
