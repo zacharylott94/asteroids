@@ -24,14 +24,14 @@ let graphicsLoop = () => {
 
 
 let physicsLoop = () => {
-  if (Controller.buttonPushed("p")) humanInterface.pause()
-  if (Controller.buttonPushed("o")) humanInterface.reset()
+  if (Controller.isButtonPushed("p")) humanInterface.pause()
+  if (Controller.isButtonPushed("o")) humanInterface.reset()
   if (GameState.paused()) return
 
-  if (Controller.heldButtons["w"]) humanInterface.accelerate()
-  if (Controller.heldButtons["a"]) humanInterface.rotateCounterclockwise()
-  if (Controller.heldButtons["d"]) humanInterface.rotateClockwise()
-  if (Controller.buttonPushed("Enter")) humanInterface.fire()
+  if (Controller.isButtonHeld("w")) humanInterface.accelerate()
+  if (Controller.isButtonHeld("a")) humanInterface.rotateCounterclockwise()
+  if (Controller.isButtonHeld("d")) humanInterface.rotateClockwise()
+  if (Controller.isButtonPushed("Enter")) humanInterface.fire()
 
 
   GameState.objectList(resetCollision)
