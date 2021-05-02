@@ -6,6 +6,7 @@ export function fireProjectile(objectList) {
   const realPlayerPos = Position.real(player.position)
   const rotation = player.rotation
   const playerVelocity = player.velocity
+  if (objectList.filter(obj => obj.type === ObjectType.Projectile).length > 2) return objectList
   return objectList.concat(Projectile(realPlayerPos, rotation, playerVelocity))
 }
 
