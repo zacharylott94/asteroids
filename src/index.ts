@@ -6,17 +6,15 @@ import { clear } from "./draw/clear.js"
 import removeDeleted from "./behaviors/actions/removeDeleted.js"
 import { setupInterface } from "./libraries/humanInterface.js"
 import Controller from "./engine/keyboardController.js"
-import { initPlayerParticles } from "./behaviors/actions/ParticleEmitters.js"
-import { isPlayer } from "./types/typeGuards.js"
+import { createDestroyParticles, createProjectileImpact, createProjectileTrail, initPlayerParticles } from "./behaviors/actions/ParticleEmitters.js"
+import { getCollidedProjectiles, getDeletedAsteroids, getPlayer, getProjectiles } from "./libraries/getters.js"
 
 
 const GameState = initGameState()
-const getPlayer = () => GameState.objectList().filter(isPlayer)[0]
 const humanInterface = setupInterface(GameState)
-const playerParticles = initPlayerParticles(getPlayer, () => Controller.isButtonHeld("w"))
 humanInterface.reset()
 
-let graphicsLoop = () => {
+const graphicsLoop = () => {
   clear()
   GameState.objectList(circleRenderer)
   GameState.objectList(playerRenderer)
@@ -24,8 +22,14 @@ let graphicsLoop = () => {
   GameState.particleList(circleRenderer)
 }
 
+const player = getPlayer(GameState.objectList)
+const deletedAsteroids = getDeletedAsteroids(GameState.objectList)
+const projetiles = getProjectiles(GameState.objectList)
+const collidedProjectiles = getCollidedProjectiles(GameState.objectList)
 
-let physicsLoop = () => {
+const playerParticles = initPlayerParticles(player, () => Controller.isButtonHeld("w"))
+
+const physicsLoop = () => {
   if (Controller.isButtonPushed("p")) humanInterface.pause()
   if (Controller.isButtonPushed("o")) humanInterface.reset()
   if (GameState.paused()) return
@@ -36,13 +40,23 @@ let physicsLoop = () => {
   if (Controller.isButtonPushed("Enter")) humanInterface.fire()
 
 
-  GameState.objectList(updateObjectList)
 
   GameState.particleList(playerParticles)
+
+
+  deletedAsteroids().forEach(object => GameState.particleList(createDestroyParticles(object)))
+  projetiles().forEach(projectile => GameState.particleList(createProjectileTrail(projectile)))
+  collidedProjectiles().forEach(projectile => GameState.particleList(createProjectileImpact(projectile)))
+
+
   GameState.particleList(moveAndTick)
   GameState.particleList(removeDeleted)
-  if (GameState.timer() % 200 === 0) {
-    console.log(GameState.objectList())
+
+  GameState.objectList(updateObjectList)
+
+
+
+  if (GameState.timer() % 60 === 0) {
     AsteroidSpawnSystem(GameState.objectList, 1)
   }
   GameState.timer(_ => ++_)

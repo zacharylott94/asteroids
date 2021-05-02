@@ -13,11 +13,12 @@ export const moveAndTick = compose(moveAllMoveable, tickAllTTL)
 
 
 export const updateObjectList = [
+  removeDeleted,
   resetCollision,
   moveAndTick,
   checkAsteroidCollisionAgainstProjectiles,
   checkProjectileCollisionAgainstAsteroids,
   list => list.map(obj => { return obj.hasCollided ? { ...obj, delete: true } : obj }),
-  removeDeleted].reduce(compose)
+].reduce(compose)
 
 
