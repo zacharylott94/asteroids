@@ -1,6 +1,6 @@
 import { hasCollided, isPlayer, isProjectile } from "../types/typeGuards.js"
 
-export const getPlayer = (stator: Stator<GameObject[]>) => () => stator().filter(isPlayer)
+export const getPlayer = (stator: Stator<GameObject[]>) => () => stator().filter(isPlayer)[0]
 
 export const getDeletedAsteroids = (stator: Stator<GameObject[]>) => () => {
   let deletedObjects = stator()

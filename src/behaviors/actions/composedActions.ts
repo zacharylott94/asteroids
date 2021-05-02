@@ -1,7 +1,7 @@
 import compose from "../../hof/compose.js"
 import { conditional } from "../../hof/conditional.js"
 import mapper from "../../hof/mapper.js"
-import { isMoveable, hasTTL } from "../../types/typeGuards.js"
+import { isMoveable, hasTTL, hasCollided, hasDurability, isCollidedProjectile, durabilityZero } from "../../types/typeGuards.js"
 import { checkAsteroidCollisionAgainstProjectiles, checkProjectileCollisionAgainstAsteroids, resetCollision } from "../checkCollision.js"
 import move from "../move.js"
 import tickTTL from "../tickTTL.js"
@@ -11,6 +11,12 @@ export const moveAllMoveable = mapper(conditional(isMoveable, move))
 export const tickAllTTL = mapper(conditional(hasTTL, tickTTL))
 export const moveAndTick = compose(moveAllMoveable, tickAllTTL)
 
+const tickDurability = obj => ({ ...obj, durability: obj.durability - 1 })
+const tickIfDurability = conditional(hasDurability, tickDurability)
+const tickDurabilityIfCollided = conditional(hasCollided, tickIfDurability)
+const flagDelete = obj => ({ ...obj, delete: true })
+const deleteIfCollidedProjectile = conditional(isCollidedProjectile, flagDelete)
+const deleteIfNoDurability = conditional(durabilityZero, flagDelete)
 
 export const updateObjectList = [
   removeDeleted,
@@ -18,7 +24,9 @@ export const updateObjectList = [
   moveAndTick,
   checkAsteroidCollisionAgainstProjectiles,
   checkProjectileCollisionAgainstAsteroids,
-  list => list.map(obj => { return obj.hasCollided ? { ...obj, delete: true } : obj }),
+  list => list.map(tickDurabilityIfCollided),
+  list => list.map(deleteIfCollidedProjectile),
+  list => list.map(deleteIfNoDurability),
 ].reduce(compose)
 
 

@@ -6,3 +6,6 @@ export const isCollidable = (Object) => ("hasCollided" in Object) && ("radius" i
 export const isProjectile = obj => obj.type === ObjectType.Projectile
 export const isAsteroidOrParticle = obj => obj.type === ObjectType.Particle || obj.type === ObjectType.Asteroid
 export const hasCollided = obj => obj.hasCollided
+export const hasDurability = obj => "durability" in obj
+export const isCollidedProjectile = obj => isProjectile(obj) && hasCollided(obj)
+export const durabilityZero = obj => obj?.durability < 1

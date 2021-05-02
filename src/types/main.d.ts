@@ -10,6 +10,8 @@ interface IMoveable extends IVelocity, IPosition { }
 
 interface IRotatableGeneric extends IRotation, IGeneric { }
 
+interface IDurability { durability: number }
+
 
 interface IGeneric extends IMoveable, ITypeable, IDeleteable, IRadius { }
 
@@ -20,7 +22,7 @@ type Monoid<T> = (thing: T) => T
 type TVector = [number, number]
 type TPosition = [TVector, TVector, TVector, TVector, TVector, TVector, TVector, TVector, TVector,]
 
-type Asteroid = IGeneric & ICollidable
+type Asteroid = IGeneric & ICollidable & IDurability
 type Player = ICollidable & IGeneric & IAcceleration & IRotation
 type Projectile = IRotatableGeneric & ICollidable & ITimeToLive
 type Particle = IGeneric & ITimeToLive
