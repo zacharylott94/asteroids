@@ -71,7 +71,7 @@ const particleMap = (method, filter) => objectListGetter => list => {
 
 const addDestroyParticles = particleMap(destroyParticleGenerator, obj => obj.type === ObjectType.Asteroid && obj.delete)
 const addProjectileTrails = particleMap(projectileTrailGenerator, isProjectile)
-const addProjectileImpacts = particleMap(projectileImpactGenerator, obj => isProjectile(obj) && obj.delete)
+const addProjectileImpacts = particleMap(projectileImpactGenerator, obj => isProjectile(obj) && obj.hasCollided)
 const addPlayerParticles = particleMap(playerParticleGenerator, isPlayer)
 export const particleGeneratorSetup = objectListGetter => {
   return [
