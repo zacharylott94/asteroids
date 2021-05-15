@@ -61,6 +61,15 @@ const destroyParticleGenerator = object => generateParticleList({
   get lifetime() { return randomInteger(60, 30) },
 })
 
+const projectileTimeoutParticleGenerator = projectile => generateParticleList({
+  get location() { return Position.real(projectile.position) },
+  get speed() { return Vector.magnitude(projectile.velocity) * .1 * randomNumber(1) },
+  get angle() { return projectile.rotation },
+  spread: 60,
+  get number() { return randomInteger(15, 10) },
+  get lifetime() { return randomInteger(100) },
+})
+
 const particleMap = (method, filter) => objectListGetter => list => {
   const particles = objectListGetter()
     .filter(filter)
@@ -73,12 +82,14 @@ const addDestroyParticles = particleMap(destroyParticleGenerator, obj => obj.typ
 const addProjectileTrails = particleMap(projectileTrailGenerator, isProjectile)
 const addProjectileImpacts = particleMap(projectileImpactGenerator, obj => isProjectile(obj) && obj.hasCollided)
 const addPlayerParticles = particleMap(playerParticleGenerator, isPlayer)
+const addProjectileTimeoutParticles = particleMap(projectileTimeoutParticleGenerator, obj => isProjectile(obj) && !obj.hasCollided && obj.delete)
 export const particleGeneratorSetup = objectListGetter => {
   return [
     addDestroyParticles,
     addProjectileTrails,
     addProjectileImpacts,
     addPlayerParticles,
+    addProjectileTimeoutParticles,
   ].map(f => f(objectListGetter))
     .reduce(compose)
 }
