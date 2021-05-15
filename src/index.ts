@@ -1,33 +1,24 @@
 import { moveAndTick, updateObjectList } from "./behaviors/actions/composedActions.js"
-import { circleRenderer, playerRenderer, projectileRenderer } from "./draw/composedRenderingFunctions.js"
+import { circleRenderer, gameObjectRenderer } from "./draw/composedRenderingFunctions.js"
 import AsteroidSpawnSystem from "./engine/asteroidSpawner.js"
 import { initGameState } from "./engine/global.js"
 import { clear } from "./draw/clear.js"
 import removeDeleted from "./behaviors/actions/removeDeleted.js"
 import { setupInterface } from "./libraries/humanInterface.js"
 import Controller from "./engine/keyboardController.js"
-import { createDestroyParticles, createProjectileImpact, createProjectileTrail, initPlayerParticles } from "./behaviors/actions/ParticleEmitters.js"
-import { getCollidedProjectiles, getDeletedAsteroids, getPlayer, getProjectiles } from "./libraries/getters.js"
+import { particleGeneratorSetup } from "./behaviors/actions/ParticleEmitters.js"
 
 
 const GameState = initGameState()
 const humanInterface = setupInterface(GameState)
+const particleGenerator = particleGeneratorSetup(GameState.objectList)
 humanInterface.reset()
 
 const graphicsLoop = () => {
   clear()
-  GameState.objectList(circleRenderer)
-  GameState.objectList(playerRenderer)
-  GameState.objectList(projectileRenderer)
+  GameState.objectList(gameObjectRenderer)
   GameState.particleList(circleRenderer)
 }
-
-const player = getPlayer(GameState.objectList)
-const deletedAsteroids = getDeletedAsteroids(GameState.objectList)
-const projetiles = getProjectiles(GameState.objectList)
-const collidedProjectiles = getCollidedProjectiles(GameState.objectList)
-
-const playerParticles = initPlayerParticles(player, () => Controller.isButtonHeld("w"))
 
 const physicsLoop = () => {
   if (Controller.isButtonPushed("p")) humanInterface.pause()
@@ -39,15 +30,7 @@ const physicsLoop = () => {
   if (Controller.isButtonHeld("d")) humanInterface.rotateClockwise()
   if (Controller.isButtonPushed("Enter")) humanInterface.fire()
 
-
-
-  GameState.particleList(playerParticles)
-
-
-  deletedAsteroids().forEach(object => GameState.particleList(createDestroyParticles(object)))
-  projetiles().forEach(projectile => GameState.particleList(createProjectileTrail(projectile)))
-  collidedProjectiles().forEach(projectile => GameState.particleList(createProjectileImpact(projectile)))
-
+  GameState.particleList(particleGenerator)
 
   GameState.particleList(moveAndTick)
   GameState.particleList(removeDeleted)

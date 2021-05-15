@@ -23,7 +23,7 @@ type TVector = [number, number]
 type TPosition = [TVector, TVector, TVector, TVector, TVector, TVector, TVector, TVector, TVector,]
 
 type Asteroid = IGeneric & ICollidable & IDurability
-type Player = ICollidable & IGeneric & IAcceleration & IRotation
+type Player = ICollidable & IGeneric & IAcceleration & IRotation & { accelerating: boolean }
 type Projectile = IRotatableGeneric & ICollidable & ITimeToLive
 type Particle = IGeneric & ITimeToLive
 type GameObject = Player & Projectile & Asteroid

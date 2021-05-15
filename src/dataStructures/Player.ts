@@ -7,5 +7,6 @@ export default (): Player => {
     rotation: 0,
     acceleration: .02,
     hasCollided: false,
+    accelerating: false,
   }
 }

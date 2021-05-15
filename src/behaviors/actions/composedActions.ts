@@ -13,10 +13,11 @@ export const moveAndTick = compose(moveAllMoveable, tickAllTTL)
 
 const tickDurability = obj => ({ ...obj, durability: obj.durability - 1 })
 const tickIfDurability = conditional(hasDurability, tickDurability)
-const tickDurabilityIfCollided = conditional(hasCollided, tickIfDurability)
+const tickDurabilityIfCollided = mapper(conditional(hasCollided, tickIfDurability))
 const flagDelete = obj => ({ ...obj, delete: true })
-const deleteIfCollidedProjectile = conditional(isCollidedProjectile, flagDelete)
-const deleteIfNoDurability = conditional(durabilityZero, flagDelete)
+const deleteIfCollidedProjectile = mapper(conditional(isCollidedProjectile, flagDelete))
+const deleteIfNoDurability = mapper(conditional(durabilityZero, flagDelete))
+const resetAccelerating = mapper(conditional(obj => "accelerating" in obj, (obj: any) => ({ ...obj, accelerating: false })))
 
 export const updateObjectList = [
   removeDeleted,
@@ -24,9 +25,10 @@ export const updateObjectList = [
   moveAndTick,
   checkAsteroidCollisionAgainstProjectiles,
   checkProjectileCollisionAgainstAsteroids,
-  list => list.map(tickDurabilityIfCollided),
-  list => list.map(deleteIfCollidedProjectile),
-  list => list.map(deleteIfNoDurability),
+  tickDurabilityIfCollided,
+  deleteIfCollidedProjectile,
+  deleteIfNoDurability,
+  resetAccelerating,
 ].reduce(compose)
 
 

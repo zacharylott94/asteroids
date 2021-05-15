@@ -15,7 +15,7 @@ export function setupInterface(gameState) {
     rotateClockwise: motor(gameState.objectList, clockwise),
     rotateCounterclockwise: motor(gameState.objectList, counterClockwise),
     accelerate: motor(gameState.objectList, mapper(conditional(isPlayer, accelerate))),
-    reset: _ => resetGameState(gameState),
+    reset: () => resetGameState(gameState),
     pause: motor(gameState.paused, paused => !paused)
   }
   return humanInterface
