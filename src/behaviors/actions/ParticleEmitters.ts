@@ -63,10 +63,10 @@ const destroyParticleGenerator = object => generateParticleList({
 
 const projectileTimeoutParticleGenerator = projectile => generateParticleList({
   get location() { return Position.real(projectile.position) },
-  get speed() { return Vector.magnitude(projectile.velocity) * .1 * randomNumber(1) },
+  get speed() { return Vector.magnitude(projectile.velocity) * .15 * randomNumber(1) },
   get angle() { return projectile.rotation },
   spread: 60,
-  get number() { return randomInteger(15, 10) },
+  get number() { return randomInteger(10, 5) },
   get lifetime() { return randomInteger(100) },
 })
 

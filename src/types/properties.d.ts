@@ -34,6 +34,5 @@ const enum ObjectType {
   Asteroid,
   Player,
   Projectile,
-  Particle,
   Generic,
 }

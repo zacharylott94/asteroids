@@ -7,3 +7,4 @@ export const circle: RenderFunction<ICircleRenderable> = ([x, y]: TVector, objec
   context.stroke()
 }
 
+export const unitCircle = (vec: TVector) => circle(vec, { radius: 1 })

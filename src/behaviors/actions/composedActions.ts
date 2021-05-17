@@ -1,7 +1,7 @@
 import compose from "../../hof/compose.js"
 import { conditional } from "../../hof/conditional.js"
 import mapper from "../../hof/mapper.js"
-import { isMoveable, hasTTL, hasCollided, hasDurability, isCollidedProjectile, durabilityZero } from "../../types/typeGuards.js"
+import { isMoveable, hasTTL, hasCollided, hasDurability, isCollidedProjectile, durabilityLT1 } from "../../types/typeGuards.js"
 import { checkAsteroidCollisionAgainstProjectiles, checkProjectileCollisionAgainstAsteroids, resetCollision } from "../checkCollision.js"
 import move from "../move.js"
 import tickTTL from "../tickTTL.js"
@@ -16,7 +16,7 @@ const tickIfDurability = conditional(hasDurability, tickDurability)
 const tickDurabilityIfCollided = mapper(conditional(hasCollided, tickIfDurability))
 const flagDelete = obj => ({ ...obj, delete: true })
 const deleteIfCollidedProjectile = mapper(conditional(isCollidedProjectile, flagDelete))
-const deleteIfNoDurability = mapper(conditional(durabilityZero, flagDelete))
+const deleteIfNoDurability = mapper(conditional(durabilityLT1, flagDelete))
 const resetAccelerating = mapper(conditional(obj => "accelerating" in obj, (obj: any) => ({ ...obj, accelerating: false })))
 
 export const updateObjectList = [

@@ -1,5 +1,5 @@
 import { moveAndTick, updateObjectList } from "./behaviors/actions/composedActions.js"
-import { circleRenderer, gameObjectRenderer } from "./draw/composedRenderingFunctions.js"
+import { gameObjectRenderer, particleRenderer } from "./draw/composedRenderingFunctions.js"
 import AsteroidSpawnSystem from "./engine/asteroidSpawner.js"
 import { initGameState } from "./engine/global.js"
 import { clear } from "./draw/clear.js"
@@ -17,7 +17,7 @@ humanInterface.reset()
 const graphicsLoop = () => {
   clear()
   GameState.objectList(gameObjectRenderer)
-  GameState.particleList(circleRenderer)
+  GameState.particleList(particleRenderer)
 }
 
 const physicsLoop = () => {

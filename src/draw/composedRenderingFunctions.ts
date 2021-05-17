@@ -1,7 +1,7 @@
 import { conditional } from "../hof/conditional.js"
 import mapper from "../hof/mapper.js"
-import { isAsteroidOrParticle, isPlayer, isProjectile } from "../types/typeGuards.js"
-import { circle } from "./circle.js"
+import { isAsteroid, isPlayer, isProjectile } from "../types/typeGuards.js"
+import { circle, unitCircle } from "./circle.js"
 import playerShipGraphic from "./playerShipGraphic.js"
 import projectileGraphic from "./projectileGraphic.js"
 import Renderer from "./renderer.js"
@@ -12,7 +12,8 @@ function buildRenderer(condition, draw) {
   return mapper(conditional(condition, Renderer(canvasContextScope(draw))))
 }
 
-export const circleRenderer = buildRenderer(isAsteroidOrParticle, circle)
+export const particleRenderer = mapper(Renderer(canvasContextScope(unitCircle)))
+export const asteroidRenderer = buildRenderer(isAsteroid, circle)
 export const playerRenderer = buildRenderer(isPlayer, playerShipGraphic)
 export const projectileRenderer = buildRenderer(isProjectile, projectileGraphic)
-export const gameObjectRenderer = [circleRenderer, playerRenderer, projectileRenderer].reduce(compose)
+export const gameObjectRenderer = [asteroidRenderer, playerRenderer, projectileRenderer].reduce(compose)

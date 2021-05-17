@@ -1,4 +1,4 @@
-interface ICircleRenderable extends IPosition, IRadius { }
+interface ICircleRenderable extends IRadius { }
 interface IRotatableRenderable extends IPosition, IRotation { }
 
 interface ICollidable extends IPosition, IRadius {
@@ -25,7 +25,7 @@ type TPosition = [TVector, TVector, TVector, TVector, TVector, TVector, TVector,
 type Asteroid = IGeneric & ICollidable & IDurability
 type Player = ICollidable & IGeneric & IAcceleration & IRotation & { accelerating: boolean }
 type Projectile = IRotatableGeneric & ICollidable & ITimeToLive
-type Particle = IGeneric & ITimeToLive
+type Particle = ITimeToLive & IMoveable & IDeleteable
 type GameObject = Player & Projectile & Asteroid
 
 type Degrees = number
