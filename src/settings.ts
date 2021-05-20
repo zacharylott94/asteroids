@@ -9,14 +9,6 @@ export const Settings = {
   PLAYER_SAFETY_RADIUS: 200,
   MIN_ASTEROID_VELOCITY: 1,
   ASTEROID_DIFFICULTY_VELOCITY_RATIO: 1,
-  CONTROLLER_ACTIONS: [
-    "left",
-    "right",
-    "accelerate",
-    "fire",
-    "pause",
-    "reset",
-  ],
   PROJECTILE_SPEED: 4,
   ROTATION_SPEED: 4,
 

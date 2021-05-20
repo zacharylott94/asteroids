@@ -1,4 +1,4 @@
-import accelerate from "./accelerate.js"
+import accelerate from "./accelerate"
 
 describe('accelerate', () => {
   it('returns a new object by adding the acceleration property of the old object to the velocity property', () => {

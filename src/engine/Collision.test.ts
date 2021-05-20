@@ -1,5 +1,5 @@
 import Position from "../dataStructures/position/Position.js"
-import checkCollision from "./checkCollision.js"
+import { checkCollision } from "./Collision.js"
 
 describe('checkCollision', () => {
   it('Compares two objects and returns the first object with a true hasCollided property if the object overlap', () => {

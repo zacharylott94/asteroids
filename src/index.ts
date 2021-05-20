@@ -1,12 +1,12 @@
-import { moveAndTick, updateObjectList } from "./behaviors/actions/composedActions.js"
+import { moveAndTick, updateObjectList } from "./behaviors/updateObjectList.js"
 import { gameObjectRenderer, particleRenderer } from "./draw/composedRenderingFunctions.js"
 import AsteroidSpawnSystem from "./engine/asteroidSpawner.js"
 import { initGameState } from "./engine/global.js"
 import { clear } from "./draw/clear.js"
-import removeDeleted from "./behaviors/actions/removeDeleted.js"
-import { setupInterface } from "./libraries/humanInterface.js"
+import removeDeleted from "./behaviors/removeDeleted.js"
+import { setupInterface } from "./engine/humanInterface.js"
 import Controller from "./engine/keyboardController.js"
-import { particleGeneratorSetup } from "./behaviors/actions/ParticleEmitters.js"
+import { particleGeneratorSetup } from "./engine/ParticleEmitters.js"
 
 
 const GameState = initGameState()

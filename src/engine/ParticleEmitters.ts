@@ -1,10 +1,10 @@
-import { Particle } from "../../dataStructures/Particle.js"
-import Position from "../../dataStructures/position/Position.js"
-import Vector from "../../dataStructures/vector/Vector.js"
-import compose from "../../hof/compose.js"
-import concat from "../../libraries/concat.js"
-import { randomAngle, randomInteger, randomNumber } from "../../libraries/random.js"
-import { isPlayer, isProjectile } from "../../types/typeGuards.js"
+import { Particle } from "../dataStructures/Particle.js"
+import Position from "../dataStructures/position/Position.js"
+import Vector from "../dataStructures/vector/Vector.js"
+import compose from "../hof/compose.js"
+import concat from "../libraries/concat.js"
+import { randomAngle, randomInteger, randomNumber } from "../libraries/random.js"
+import { isPlayer, isProjectile } from "../types/typeGuards.js"
 
 type ParticleGeneratorSettings = {
   number: number,
