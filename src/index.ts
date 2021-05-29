@@ -40,7 +40,7 @@ const physicsLoop = () => {
 
 
   if (GameState.timer() % 60 === 0) {
-    AsteroidSpawnSystem(GameState.objectList, 1)
+    GameState.objectList(AsteroidSpawnSystem(1))
   }
   GameState.timer(_ => ++_)
 }

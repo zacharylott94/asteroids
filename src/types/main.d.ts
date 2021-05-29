@@ -26,7 +26,7 @@ type Asteroid = IGeneric & ICollidable & IDurability & { size: number }
 type Player = ICollidable & IGeneric & IAcceleration & IRotation & { accelerating: boolean }
 type Projectile = IRotatableGeneric & ICollidable & ITimeToLive
 type Particle = ITimeToLive & IMoveable & IDeleteable
-type GameObject = Player & Projectile & Asteroid
+type GameObject = Player | Projectile | Asteroid
 
 type Degrees = number
 
