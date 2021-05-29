@@ -1,6 +1,6 @@
 import { conditional } from "../hof/conditional.js"
 import mapper from "../hof/mapper.js"
-import { isAsteroid, isPlayer, isProjectile } from "../types/typeGuards.js"
+import { isAsteroid, isPlayer, isProjectile } from "../hof/conditionals.js"
 import { circle, unitCircle } from "./circle.js"
 import playerShipGraphic from "./playerShipGraphic.js"
 import projectileGraphic from "./projectileGraphic.js"

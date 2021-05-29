@@ -22,7 +22,7 @@ type Monoid<T> = (thing: T) => T
 type TVector = [number, number]
 type TPosition = [TVector, TVector, TVector, TVector, TVector, TVector, TVector, TVector, TVector,]
 
-type Asteroid = IGeneric & ICollidable & IDurability
+type Asteroid = IGeneric & ICollidable & IDurability & { size: number }
 type Player = ICollidable & IGeneric & IAcceleration & IRotation & { accelerating: boolean }
 type Projectile = IRotatableGeneric & ICollidable & ITimeToLive
 type Particle = ITimeToLive & IMoveable & IDeleteable

@@ -1,3 +1,5 @@
+import and from "./and.js"
+
 export const isCollidedProjectile = obj => isProjectile(obj) && hasCollided(obj)
 export const durabilityLT1 = obj => obj?.durability < 1
 export const hasCollided = obj => obj.hasCollided
@@ -19,3 +21,6 @@ export const isObject = (...types: ObjectType[]) => obj => types.reduce((l, r) =
 export const isProjectile = isObject(ObjectType.Projectile)
 export const isPlayer = isObject(ObjectType.Player)
 export const isAsteroid = isObject(ObjectType.Asteroid)
+
+
+export const isAsteroidWithNoDurability = and(durabilityLT1, isAsteroid)

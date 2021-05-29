@@ -1,0 +1,1 @@
+export default (c1: Condition, c2: Condition) => obj => c1(obj) && c2(obj)

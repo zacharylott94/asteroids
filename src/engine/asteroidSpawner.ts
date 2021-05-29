@@ -1,11 +1,11 @@
-import Asteroid from "../dataStructures/Asteroid.js"
+import { create as Asteroid } from "../dataStructures/Asteroid.js"
 import Position from "../dataStructures/position/Position.js"
 import Vector from "../dataStructures/vector/Vector.js"
 import { partial } from "../hof/partial.js"
 import concat from "../libraries/concat.js"
 import { Settings } from "../settings.js"
 
-const largeAsteroid = Asteroid(Settings.LARGE_ASTEROID_RADIUS)
+const largeAsteroid = Asteroid(2)
 
 
 function AsteroidSpawnSystem(objectList: Function, difficulty: number) {

@@ -5,7 +5,7 @@ import { resetGameState } from "./global.js"
 import { conditional } from "../hof/conditional.js"
 import mapper from "../hof/mapper.js"
 import motor from "../hof/motor.js"
-import { isPlayer } from "../types/typeGuards.js"
+import { isPlayer } from "../hof/conditionals.js"
 
 
 
