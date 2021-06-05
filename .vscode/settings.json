@@ -5,5 +5,6 @@
         "renderable",
         "renderables"
     ],
-    "mocha.subdirectory": "..\\..\\..\\..\\..\\..\\c:\\Users\\Admin\\Google Drive\\Programming\\Javascript\\Asteroids\\scripts"
+    "mocha.subdirectory": "..\\..\\..\\..\\..\\..\\c:\\Users\\Admin\\Google Drive\\Programming\\Javascript\\Asteroids\\scripts",
+    "FSharp.suggestGitignore": false
 }

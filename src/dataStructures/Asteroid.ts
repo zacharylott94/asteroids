@@ -4,17 +4,18 @@ import GenericFactory from "./genericObject.js"
 import Position from "./position/Position.js"
 import Vector from "./vector/Vector.js"
 
-const sizeToRadius =
+const SIZE_TO_RADIUS =
   [
     15,
     25,
     40,
   ]
-const durability = 3
-const velocityScale = 1.1
-const spreadAngles = [90, 180]
+const DURABILITY = 3
+const VELOCITY_SCALE = 1.1
+const SPREAD = 30
+const DEADZONE = 5
 
-export const create = size => (location, velocity): Asteroid => {
+export const create = size => (location, velocity, durability = DURABILITY, sizeToRadius = SIZE_TO_RADIUS): Asteroid => {
   return {
     ...GenericFactory(location, velocity, sizeToRadius[size], ObjectType.Asteroid),
     hasCollided: false,
@@ -23,11 +24,12 @@ export const create = size => (location, velocity): Asteroid => {
   }
 }
 
-const shatterVelocities = asteroid => {
+const shatterVelocities = (asteroid: Asteroid, spread = SPREAD, deadzone = DEADZONE, velocityScale = VELOCITY_SCALE) => {
   const asteroidDirection = Vector.degrees(asteroid.velocity)
+  const newAngles = [asteroidDirection + spread + deadzone, asteroidDirection - spread - deadzone]
   const magnitude = Vector.magnitude(asteroid.velocity)
-  return spreadAngles
-    .map(angle => randomDirectionVector(asteroidDirection, angle))
+  return newAngles
+    .map(angle => randomDirectionVector(angle, spread * 2))
     .map(vector => Vector.scale(vector, magnitude, velocityScale))
 }
 
