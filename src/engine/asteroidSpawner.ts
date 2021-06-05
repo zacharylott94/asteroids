@@ -4,9 +4,10 @@ import Vector from "../dataStructures/vector/Vector.js"
 import { Settings } from "../settings.js"
 
 const largeAsteroid = Asteroid(2)
+const difficultyRatio = 1 / 18
 const playerSafetyRadius = 200
-const minAsteroidVelocity = 1
-const AsteroidDifficultyVelocityRatio = 1
+const minAsteroidVelocity = .5
+const AsteroidDifficultyVelocityRatio = 1 / 36
 
 function generateSpawnLocation(objectList: GameObject[]): TVector {
   const player = objectList.filter(object => object.type === ObjectType.Player)[0]
@@ -27,7 +28,7 @@ function generateRandomVelocity(difficulty: number): TVector {
 
 const AsteroidSpawnSystem = difficulty => (objectList: GameObject[]): GameObject[] => {
   const asteroids = objectList.filter(obj => obj.type === ObjectType.Asteroid)
-  if (asteroids.length < difficulty * 3)
+  if (asteroids.length - 1 < (difficulty + 1) * difficultyRatio)
     return objectList.concat(largeAsteroid(generateSpawnLocation(objectList), generateRandomVelocity(difficulty)))
   return objectList
 }

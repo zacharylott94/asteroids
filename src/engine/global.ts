@@ -5,7 +5,8 @@ export const initGameState = (): GameState => ({
   timer: stator(0),
   paused: stator<boolean>(false),
   objectList: stator(new Array<GameObject>()),
-  particleList: stator(new Array<Particle>())
+  particleList: stator(new Array<Particle>()),
+  score: stator(0),
 })
 
 export const resetGameState = (gameState) => {
@@ -13,4 +14,5 @@ export const resetGameState = (gameState) => {
   gameState.paused(_ => false)
   gameState.objectList(_ => [Player()])
   gameState.particleList(_ => [])
+  gameState.score(_ => 0)
 }

@@ -1,9 +1,8 @@
 import { context } from "../engine/canvas.js"
-type anyRenderable = IRotatableRenderable & ICircleRenderable
-export function canvasContextScope(func: RenderFunction<anyRenderable>): RenderFunction<anyRenderable> {
-  return function (location, object) {
+export function canvasContextScope(func) {
+  return function (...args) {
     context.save()
-    func(location, object)
+    func(...args)
     context.restore()
   }
 }

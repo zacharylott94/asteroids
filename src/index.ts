@@ -7,6 +7,9 @@ import removeDeleted from "./behaviors/removeDeleted.js"
 import { setupInterface } from "./engine/humanInterface.js"
 import Controller from "./engine/keyboardController.js"
 import { particleGeneratorSetup } from "./engine/ParticleEmitters.js"
+import drawText from "./draw/text.js"
+import { Settings } from "./settings.js"
+import updateScore from "./behaviors/updateScore.js"
 
 
 const GameState = initGameState()
@@ -18,6 +21,7 @@ const graphicsLoop = () => {
   clear()
   GameState.objectList(gameObjectRenderer)
   GameState.particleList(particleRenderer)
+  drawText(() => [Settings.GAME_WIDTH / 2, 20], () => `SCORE: ${GameState.score()}`)
 }
 
 const physicsLoop = () => {
@@ -36,11 +40,11 @@ const physicsLoop = () => {
   GameState.particleList(removeDeleted)
 
   GameState.objectList(updateObjectList)
-
+  GameState.score(updateScore(GameState.objectList))
 
 
   if (GameState.timer() % 60 === 0) {
-    GameState.objectList(AsteroidSpawnSystem(1))
+    GameState.objectList(AsteroidSpawnSystem(GameState.score()))
   }
   GameState.timer(_ => ++_)
 }

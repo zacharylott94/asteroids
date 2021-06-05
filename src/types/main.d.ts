@@ -45,5 +45,6 @@ type GameState = {
   timer: Stator<number>,
   paused: Stator<boolean>,
   particleList: Stator<Particle[]>,
-  objectList: Stator<GameObject[]>
+  objectList: Stator<GameObject[]>,
+  score: Stator<number>,
 }
