@@ -1,6 +1,7 @@
 import { conditional } from "../hof/conditional.js"
 import { Settings } from "../settings.js"
 import { isPlayer } from "../hof/conditionals.js"
+import mapper from "../hof/mapper.js"
 
 const rotate = rotationAmount => object => {
   return { ...object, rotation: object.rotation + rotationAmount }
@@ -8,10 +9,5 @@ const rotate = rotationAmount => object => {
 const rotatePlayerClockwise = conditional(isPlayer, rotate(Settings.ROTATION_SPEED))
 const rotatePlayerCounterClockwise = conditional(isPlayer, rotate(-Settings.ROTATION_SPEED))
 
-export function clockwise(objectList) {
-  return objectList.map(rotatePlayerClockwise)
-}
-
-export function counterClockwise(objectList) {
-  return objectList.map(rotatePlayerCounterClockwise)
-}
+export const clockwise = mapper(rotatePlayerClockwise)
+export const counterClockwise = mapper(rotatePlayerCounterClockwise)
