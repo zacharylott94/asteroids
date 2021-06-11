@@ -13,7 +13,7 @@ import updateScore from "./behaviors/updateScore.js"
 
 
 const GameState = initGameState()
-const humanInterface = setupInterface(GameState)
+const humanInterface = setupInterface(GameState, Settings.ROTATION_SPEED)
 const particleGenerator = particleGeneratorSetup(GameState.objectList)
 humanInterface.reset()
 

@@ -1,15 +1,14 @@
 import accelerate from "../behaviors/accelerate.js"
 import { fireProjectileWhenReady } from "../behaviors/fireProjectile.js"
-import { clockwise, counterClockwise } from "../behaviors/rotate.js"
+import { setupRotationFunctions } from "../behaviors/rotate.js"
 import { resetGameState } from "./global.js"
 import { conditional } from "../hof/conditional.js"
 import mapper from "../hof/mapper.js"
 import motor from "../hof/motor.js"
 import { isPlayer } from "../hof/conditionals.js"
 
-
-
-export function setupInterface(gameState) {
+export function setupInterface(gameState, rotationSpeed) {
+  const [clockwise, counterClockwise] = setupRotationFunctions(rotationSpeed)
   const humanInterface: HumanInterface = {
     fire: motor(gameState.objectList, fireProjectileWhenReady),
     rotateClockwise: motor(gameState.objectList, clockwise),
