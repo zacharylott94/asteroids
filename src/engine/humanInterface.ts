@@ -1,11 +1,11 @@
-import accelerate from "../behaviors/accelerate.js"
-import { fireProjectileWhenReady } from "../behaviors/fireProjectile.js"
-import { setupRotationFunctions } from "../behaviors/rotate.js"
+import { fireProjectileWhenReady } from "../behaviors/listMappers/fireProjectile.js"
+import { setupRotationFunctions } from "../behaviors/objectMappers/rotate.js"
 import { resetGameState } from "./global.js"
 import { conditional } from "../hof/conditional.js"
 import mapper from "../hof/mapper.js"
 import motor from "../hof/motor.js"
-import { isPlayer } from "../hof/conditionals.js"
+import { isPlayer } from "../hof/conditions.js"
+import accelerate from "../behaviors/objectMappers/accelerate.js"
 
 export function setupInterface(gameState, rotationSpeed) {
   const [clockwise, counterClockwise] = setupRotationFunctions(rotationSpeed)

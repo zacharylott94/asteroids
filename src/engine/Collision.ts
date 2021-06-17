@@ -15,22 +15,14 @@ export function checkCollision(object: ICollidable, otherObject: ICollidable): I
   return object
 }
 
-
-const checkCollisionAgainstTypes = (type1: ObjectType, type2: ObjectType) => (obj1, obj2) => {
-  if ((obj1.type === type1) && (obj2.type === type2)) return checkCollision(obj1, obj2)
+const checkCollisionAgainstMask = (obj1, obj2) => {
+  if (obj1.collidableWith(obj2)) return checkCollision(obj1, obj2)
   return obj1
 }
 const resetObject = <T>(obj: T & ICollidable): T & ICollidable => ({ ...obj, hasCollided: false })
 const resetCollision = mapper(resetObject)
 
-
-const checkAsteroidCollisionAgainstProjectiles = reduceMap(checkCollisionAgainstTypes(ObjectType.Asteroid, ObjectType.Projectile))
-const checkProjectileCollisionAgainstAsteroids = reduceMap(checkCollisionAgainstTypes(ObjectType.Projectile, ObjectType.Asteroid))
-const checkPlayerCollisionAgainstAsteroids = reduceMap(checkCollisionAgainstTypes(ObjectType.Player, ObjectType.Asteroid))
-
 export default {
   reset: resetCollision,
-  checkAsteroidAgainstProjectiles: checkAsteroidCollisionAgainstProjectiles,
-  checkProjectileAgainstAsteroids: checkProjectileCollisionAgainstAsteroids,
-  checkPlayerAgainstAsteroids: checkPlayerCollisionAgainstAsteroids,
+  checkAgainstMask: reduceMap(checkCollisionAgainstMask),
 }

@@ -1,20 +1,23 @@
-import { moveAndTick, updateObjectList } from "./behaviors/updateObjectList.js"
 import { gameObjectRenderer, particleRenderer } from "./draw/composedRenderingFunctions.js"
 import AsteroidSpawnSystem from "./engine/asteroidSpawner.js"
 import { initGameState } from "./engine/global.js"
 import { clear } from "./draw/clear.js"
-import removeDeleted from "./behaviors/removeDeleted.js"
 import { setupInterface } from "./engine/humanInterface.js"
 import Controller from "./engine/keyboardController.js"
-import { particleGeneratorSetup } from "./engine/ParticleEmitters.js"
 import drawText from "./draw/text.js"
 import { Settings } from "./settings.js"
 import updateScore from "./behaviors/updateScore.js"
+import Projectile from "./dataStructures/Projectile.js"
+import { isPlayer } from "./hof/conditions.js"
+import concat from "./libraries/concat.js"
+import { partial } from "./hof/partial.js"
+import particleListUpdaterSetup from "./behaviors/listMappers/updateParticleList.js"
+import { updateObjectList } from "./behaviors/listMappers/updateObjectList.js"
 
 
 const GameState = initGameState()
 const humanInterface = setupInterface(GameState, Settings.ROTATION_SPEED)
-const particleGenerator = particleGeneratorSetup(GameState.objectList)
+const updateParticleList = particleListUpdaterSetup(GameState.objectList)
 humanInterface.reset()
 
 const graphicsLoop = () => {
@@ -34,11 +37,7 @@ const physicsLoop = () => {
   if (Controller.isButtonHeld("d")) humanInterface.rotateClockwise()
   if (Controller.isButtonPushed("Enter")) humanInterface.fire()
 
-  GameState.particleList(particleGenerator)
-
-  GameState.particleList(moveAndTick)
-  GameState.particleList(removeDeleted)
-
+  GameState.particleList(updateParticleList)
   GameState.objectList(updateObjectList)
   GameState.score(updateScore(GameState.objectList))
 

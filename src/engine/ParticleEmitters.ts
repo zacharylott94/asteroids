@@ -4,7 +4,7 @@ import Vector from "../dataStructures/vector/Vector.js"
 import compose from "../hof/compose.js"
 import concat from "../libraries/concat.js"
 import { randomAngle, randomInteger, randomNumber } from "../libraries/random.js"
-import { isPlayer, isProjectile } from "../hof/conditionals.js"
+import { isPlayer, isProjectile } from "../hof/conditions.js"
 
 type ParticleGeneratorSettings = {
   number: number,

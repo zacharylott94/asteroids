@@ -1,3 +1,4 @@
+import { isPlayerProjectile } from "../hof/conditions.js"
 import { partial } from "../hof/partial.js"
 import { randomDirectionVector } from "../libraries/random.js"
 import GenericFactory from "./genericObject.js"
@@ -15,12 +16,15 @@ const VELOCITY_SCALE = 1.1
 const SPREAD = 30
 const DEADZONE = 5
 
+
+
 export const create = size => (location, velocity, durability = DURABILITY, sizeToRadius = SIZE_TO_RADIUS): Asteroid => {
   return {
     ...GenericFactory(location, velocity, sizeToRadius[size], ObjectType.Asteroid),
     hasCollided: false,
     durability,
-    size
+    size,
+    collidableWith: isPlayerProjectile,
   }
 }
 
@@ -42,4 +46,10 @@ export const shatter = (asteroid: Asteroid): Asteroid[] => {
   return shatterVelocities(asteroid)
     .map(vel => factory(vel))
     .concat({ ...asteroid, delete: true })
+}
+
+
+export default {
+  create
+
 }

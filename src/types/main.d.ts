@@ -2,8 +2,11 @@ interface ICircleRenderable extends IRadius { }
 interface IRotatableRenderable extends IPosition, IRotation { }
 
 interface ICollidable extends IPosition, IRadius {
-  hasCollided: Boolean
+  hasCollided: Boolean,
+  collidableWith: collisionMask
 }
+
+type collisionMask = (obj: GameObject) => boolean
 
 
 interface IMoveable extends IVelocity, IPosition { }
@@ -24,7 +27,7 @@ type TPosition = [TVector, TVector, TVector, TVector, TVector, TVector, TVector,
 
 type Asteroid = IGeneric & ICollidable & IDurability & { size: number }
 type Player = ICollidable & IGeneric & IAcceleration & IRotation & { accelerating: boolean }
-type Projectile = IRotatableGeneric & ICollidable & ITimeToLive
+type Projectile = IRotatableGeneric & ICollidable & ITimeToLive & { owner: ObjectType }
 type Particle = ITimeToLive & IMoveable & IDeleteable
 type GameObject = Player | Projectile | Asteroid
 

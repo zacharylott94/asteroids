@@ -1,5 +1,5 @@
 import and from "../hof/and.js"
-import { isAsteroid } from "../hof/conditionals.js"
+import { isAsteroid } from "../hof/conditions.js"
 
 const updateScore = objectList => score => score + objectList()
   .filter([

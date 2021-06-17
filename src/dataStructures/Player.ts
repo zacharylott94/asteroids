@@ -1,5 +1,10 @@
+import { isPlayer } from "../hof/conditions.js"
 import { Settings } from "../settings.js"
 import GenericFactory from "./genericObject.js"
+
+function collidableWith(obj: GameObject) {
+  return obj.collidableWith === isPlayer
+}
 
 export default (): Player => {
   return {
@@ -8,5 +13,6 @@ export default (): Player => {
     acceleration: .02,
     hasCollided: false,
     accelerating: false,
+    collidableWith,
   }
 }

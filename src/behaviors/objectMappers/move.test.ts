@@ -1,5 +1,5 @@
-import Position from "../dataStructures/position/Position"
-import move from "./move"
+import Position from "../../dataStructures/position/Position.js"
+import move from "./move.js"
 
 describe('move', () => {
   it('takes an object and returns a new object with its old position plus velocity', () => {
