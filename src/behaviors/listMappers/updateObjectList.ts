@@ -3,8 +3,9 @@ import Collision from "../../engine/Collision.js"
 import and from "../../hof/and.js"
 import compose from "../../hof/compose.js"
 import { conditional } from "../../hof/conditional.js"
-import { hasDurability, hasCollided, isCollidedProjectile, isPlayer, isAsteroidWithNoDurability } from "../../hof/conditions.js"
+import { hasDurability, hasCollided, isCollidedProjectile, isPlayer, isAsteroidWithNoDurability, hasAcceleration } from "../../hof/conditions.js"
 import mapper from "../../hof/mapper.js"
+import accelerate from "../objectMappers/accelerate.js"
 import moveAllMoveable from "./moveAllMoveable.js"
 import removeDeleted from "./removeDeleted.js"
 import tickAllTTL from "./tickAllTTL.js"
@@ -22,7 +23,7 @@ const shatterIfNoDurability = compose(
   list => list.flat()
 )
 
-const resetAccelerating = mapper(conditional(obj => "accelerating" in obj, (obj: any) => ({ ...obj, accelerating: false })))
+const resetAcceleration = mapper(conditional(hasAcceleration, (obj: any) => ({ ...obj, acceleration: 0 })))
 
 
 export const updateObjectList = [
@@ -35,7 +36,8 @@ export const updateObjectList = [
   deleteIfCollidedProjectile,
   deleteIfCollidedPlayer,
   shatterIfNoDurability,
-  resetAccelerating,
+  mapper(conditional(hasAcceleration, accelerate)),
+  resetAcceleration,
 ].reduce(compose)
 
 

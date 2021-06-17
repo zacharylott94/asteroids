@@ -12,6 +12,7 @@ export const isMoveable = hasProperties("velocity", "position")
 export const hasDurability = hasProperties("durability")
 export const isRotatable = hasProperties("rotation")
 export const hasTTL = hasProperties("ttl")
+export const hasAcceleration = hasProperties("acceleration")
 
 
 //object type checks

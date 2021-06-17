@@ -28,7 +28,7 @@ const playerParticleGenerator = player => generateParticleList({
   get angle() { return player.rotation + 180 },
   spread: 15,
   get number() {
-    if (player.accelerating) return randomInteger(2)
+    if (player.acceleration > 0) return randomInteger(2)
     return 0
   },
   get lifetime() { return randomInteger(15) }
