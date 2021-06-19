@@ -5,6 +5,7 @@ import compose from "../hof/compose.js"
 import concat from "../libraries/concat.js"
 import { randomAngle, randomInteger, randomNumber } from "../libraries/random.js"
 import { isPlayer, isProjectile } from "../hof/conditions.js"
+import and from "../hof/and.js"
 
 type ParticleGeneratorSettings = {
   number: number,
@@ -70,6 +71,15 @@ const projectileTimeoutParticleGenerator = projectile => generateParticleList({
   get lifetime() { return randomInteger(100) },
 })
 
+const playerDeathParticleGenerator = player => generateParticleList({
+  get location() { return Position.real(player.position) },
+  get speed() { return randomNumber(1, .15) },
+  angle: 0,
+  spread: 360,
+  get number() { return randomInteger(40, 30) },
+  get lifetime() { return randomInteger(520, 400) }
+})
+
 const particleMap = (method, filter) => objectListGetter => list => {
   const particles = objectListGetter()
     .filter(filter)
@@ -83,6 +93,7 @@ const addProjectileTrails = particleMap(projectileTrailGenerator, isProjectile)
 const addProjectileImpacts = particleMap(projectileImpactGenerator, obj => isProjectile(obj) && obj.hasCollided)
 const addPlayerParticles = particleMap(playerParticleGenerator, isPlayer)
 const addProjectileTimeoutParticles = particleMap(projectileTimeoutParticleGenerator, obj => isProjectile(obj) && !obj.hasCollided && obj.delete)
+const addPlayerDeathParticles = particleMap(playerDeathParticleGenerator, and(isPlayer, obj => obj.delete))
 export const particleGeneratorSetup = objectListGetter => {
   return [
     addDestroyParticles,
@@ -90,6 +101,7 @@ export const particleGeneratorSetup = objectListGetter => {
     addProjectileImpacts,
     addPlayerParticles,
     addProjectileTimeoutParticles,
+    addPlayerDeathParticles,
   ].map(f => f(objectListGetter))
     .reduce(compose)
 }
