@@ -24,7 +24,7 @@ export const create = size => (location, velocity, durability = DURABILITY, size
     hasCollided: false,
     durability,
     size,
-    collidableWith: isPlayerProjectile,
+    isCollidableWith: isPlayerProjectile,
   }
 }
 

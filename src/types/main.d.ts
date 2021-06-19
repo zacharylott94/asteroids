@@ -3,7 +3,7 @@ interface IRotatableRenderable extends IPosition, IRotation { }
 
 interface ICollidable extends IPosition, IRadius {
   hasCollided: Boolean,
-  collidableWith: collisionMask
+  isCollidableWith: collisionMask
 }
 
 type collisionMask = (obj: GameObject) => boolean

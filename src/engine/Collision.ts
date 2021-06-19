@@ -16,7 +16,7 @@ export function checkCollision(object: ICollidable, otherObject: ICollidable): I
 }
 
 const checkCollisionAgainstMask = (obj1, obj2) => {
-  if (obj1.collidableWith(obj2)) return checkCollision(obj1, obj2)
+  if (obj1.isCollidableWith(obj2)) return checkCollision(obj1, obj2)
   return obj1
 }
 const resetObject = <T>(obj: T & ICollidable): T & ICollidable => ({ ...obj, hasCollided: false })

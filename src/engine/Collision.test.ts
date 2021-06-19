@@ -7,7 +7,7 @@ describe('checkCollision', () => {
       position: Position.fromComponents(0, 0),
       radius: 25,
       hasCollided: false,
-      collidableWith: obj => true,
+      isCollidableWith: obj => true,
     }
     let object2 = { ...object }
     //trivial case
