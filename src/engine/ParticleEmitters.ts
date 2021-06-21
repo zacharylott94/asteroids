@@ -24,7 +24,9 @@ const generateParticleList = (generatorSettings: ParticleGeneratorSettings) => {
 }
 
 const playerParticleGenerator = player => generateParticleList({
-  get location() { return Position.real(player.position) },
+  get location() {
+    return Vector.subtract(Position.real(player.position), Vector.fromDegreesAndMagnitude(player.rotation, 5))
+  },
   get speed() { return Vector.magnitude(player.velocity) * 1.5 },
   get angle() { return player.rotation + 180 },
   spread: 15,
