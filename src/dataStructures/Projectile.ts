@@ -26,8 +26,10 @@ export const Projectile = (settings: projectileSettings) => {
 }
 
 export const PlayerProjectile = player => {
+  const location = Vector.add(Position.real(player.position),
+    Vector.fromDegreesAndMagnitude(player.rotation, 10))
   let settings: projectileSettings = {
-    location: Position.real(player.position),
+    location,
     rotation: player.rotation,
     owner: ObjectType.Player,
     isCollidableWith: isAsteroid,
