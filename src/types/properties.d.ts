@@ -11,7 +11,8 @@ interface IPosition {
 }
 
 interface IRotation {
-  rotation: Degrees
+  rotation: Degrees,
+  angularVelocity: Degrees
 }
 
 interface IRadius {

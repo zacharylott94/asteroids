@@ -10,5 +10,6 @@ export default (): Player => {
     acceleration: 0,
     hasCollided: false,
     isCollidableWith: or(isOwner(ObjectType.UFO), isAsteroid),
+    angularVelocity: 0,
   }
 }

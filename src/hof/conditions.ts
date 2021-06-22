@@ -15,6 +15,7 @@ export const hasTTL = hasProperties("ttl")
 export const hasAcceleration = hasProperties("acceleration")
 
 
+
 //object type checks
 
 export const isCollidedProjectile = obj => isProjectile(obj) && hasCollided(obj)
@@ -26,6 +27,9 @@ export const isOwner = ownerType => obj => obj.owner === ownerType
 export const isOwnedByPlayer = isOwner(ObjectType.Player)
 export const isPlayerProjectile = and(isProjectile, isOwnedByPlayer)
 export const isAsteroidWithNoDurability = and(durabilityLT1, isAsteroid)
+export const isRotatingCounterclockwise = object => object.angularVelocity < 0
+export const isRotatingClockwise = object => object.angularVelocity > 0
+export const isAccelerating = object => object.acceleration > 0
 
 
 //list property checks

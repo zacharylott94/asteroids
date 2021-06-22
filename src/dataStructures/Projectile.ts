@@ -9,11 +9,11 @@ type projectileSettings = {
   rotation: Degrees,
   inheritedVelocity: TVector,
   location: TVector,
-  isCollidableWith: Function,
+  isCollidableWith: collisionMask,
   owner: ObjectType,
 }
 
-export const Projectile = (settings: projectileSettings) => {
+export const Projectile = (settings: projectileSettings): Projectile => {
   const velocity = Vector.fromDegreesAndMagnitude(settings.rotation, Settings.PROJECTILE_SPEED)
   return {
     ...GenericFactory(settings.location, Vector.add(velocity, settings.inheritedVelocity), 1, ObjectType.Projectile),
@@ -22,6 +22,7 @@ export const Projectile = (settings: projectileSettings) => {
     hasCollided: false,
     isCollidableWith: settings.isCollidableWith,
     owner: settings.owner,
+    angularVelocity: 0
   }
 }
 
