@@ -4,7 +4,7 @@ import Vector from "../dataStructures/vector/Vector.js"
 import compose from "../hof/compose.js"
 import concat from "../libraries/concat.js"
 import { randomAngle, randomInteger, randomNumber } from "../libraries/random.js"
-import { isPlayer, isProjectile } from "../hof/conditions.js"
+import { isAccelerating, isPlayer, isProjectile, isRotatingClockwise, isRotatingCounterclockwise } from "../hof/conditions.js"
 import and from "../hof/and.js"
 
 type ParticleGeneratorSettings = {
@@ -23,19 +23,29 @@ const generateParticleList = (generatorSettings: ParticleGeneratorSettings) => {
   return particles
 }
 
-const playerParticleGenerator = player => generateParticleList({
+const boosterSettings = (player, offset) => ({
   get location() {
-    return Vector.subtract(Position.real(player.position), Vector.fromDegreesAndMagnitude(player.rotation, 5))
+    return [
+      Position.real(player.position),
+      Vector.fromDegreesAndMagnitude(player.rotation, -5),
+      Vector.fromDegreesAndMagnitude(player.rotation + 90, offset)
+    ].reduce(Vector.add)
   },
   get speed() { return Vector.magnitude(player.velocity) * 1.5 },
   get angle() { return player.rotation + 180 },
   spread: 15,
-  get number() {
-    if (player.acceleration > 0) return randomInteger(2)
-    return 0
-  },
+  get number() { return randomInteger(2) },
   get lifetime() { return randomInteger(15) }
 })
+
+const playerLeftBooster = player => generateParticleList(boosterSettings(player, -5))
+
+const playerRightBooster = player => generateParticleList(boosterSettings(player, 5))
+
+const playerBoosters = player => [
+  playerRightBooster(player),
+  playerLeftBooster(player)
+].flat()
 
 const projectileTrailGenerator = (projectile) => generateParticleList({
   get location() { return Position.real(projectile.position) },
@@ -90,20 +100,24 @@ const particleMap = (method, filter) => objectListGetter => list => {
   return concat(list, particles)
 }
 
-const addDestroyParticles = particleMap(destroyParticleGenerator, obj => obj.type === ObjectType.Asteroid && obj.delete)
-const addProjectileTrails = particleMap(projectileTrailGenerator, isProjectile)
-const addProjectileImpacts = particleMap(projectileImpactGenerator, obj => isProjectile(obj) && obj.hasCollided)
-const addPlayerParticles = particleMap(playerParticleGenerator, isPlayer)
-const addProjectileTimeoutParticles = particleMap(projectileTimeoutParticleGenerator, obj => isProjectile(obj) && !obj.hasCollided && obj.delete)
-const addPlayerDeathParticles = particleMap(playerDeathParticleGenerator, and(isPlayer, obj => obj.delete))
+const DestroyParticles = particleMap(destroyParticleGenerator, obj => obj.type === ObjectType.Asteroid && obj.delete)
+const ProjectileTrails = particleMap(projectileTrailGenerator, isProjectile)
+const ProjectileImpacts = particleMap(projectileImpactGenerator, obj => isProjectile(obj) && obj.hasCollided)
+const PlayerParticles = particleMap(playerBoosters, and(isPlayer, isAccelerating))
+const ProjectileTimeoutParticles = particleMap(projectileTimeoutParticleGenerator, obj => isProjectile(obj) && !obj.hasCollided && obj.delete)
+const PlayerDeathParticles = particleMap(playerDeathParticleGenerator, and(isPlayer, obj => obj.delete))
+const PlayerCounterclockwiseBooster = particleMap(playerRightBooster, and(isPlayer, isRotatingCounterclockwise))
+const PlayerClockwiseBooster = particleMap(playerLeftBooster, and(isPlayer, isRotatingClockwise))
 export const particleGeneratorSetup = objectListGetter => {
   return [
-    addDestroyParticles,
-    addProjectileTrails,
-    addProjectileImpacts,
-    addPlayerParticles,
-    addProjectileTimeoutParticles,
-    addPlayerDeathParticles,
+    DestroyParticles,
+    ProjectileTrails,
+    ProjectileImpacts,
+    PlayerParticles,
+    ProjectileTimeoutParticles,
+    PlayerDeathParticles,
+    PlayerClockwiseBooster,
+    PlayerCounterclockwiseBooster
   ].map(f => f(objectListGetter))
     .reduce(compose)
 }
