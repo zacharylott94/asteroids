@@ -2,10 +2,10 @@ import { Particle } from "../dataStructures/Particle.js"
 import Position from "../dataStructures/position/Position.js"
 import Vector from "../dataStructures/vector/Vector.js"
 import compose from "../hof/compose.js"
-import concat from "../libraries/concat.js"
 import { randomAngle, randomInteger, randomNumber } from "../libraries/random.js"
 import { isAccelerating, isPlayer, isProjectile, isRotatingClockwise, isRotatingCounterclockwise } from "../hof/conditions.js"
 import and from "../hof/and.js"
+import array from "../libraries/array.js"
 
 type ParticleGeneratorSettings = {
   number: number,
@@ -15,6 +15,9 @@ type ParticleGeneratorSettings = {
   lifetime: number,
   speed: number,
 }
+
+const limit = array.limit(200)
+const concat = array.concat
 
 const generateParticleList = (generatorSettings: ParticleGeneratorSettings) => {
   let particles = new Array<Particle>(generatorSettings.number).fill(Particle())
@@ -97,7 +100,7 @@ const particleMap = (method, filter) => objectListGetter => list => {
     .filter(filter)
     .map(method)
     .reduce(concat, [])
-  return concat(list, particles)
+  return limit(concat(list, particles))
 }
 
 const DestroyParticles = particleMap(destroyParticleGenerator, obj => obj.type === ObjectType.Asteroid && obj.delete)
