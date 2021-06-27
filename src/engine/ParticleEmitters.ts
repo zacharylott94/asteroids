@@ -1,4 +1,4 @@
-import { Particle } from "../dataStructures/Particle.js"
+import { Particle as particleSetup } from "../dataStructures/Particle.js"
 import Position from "../dataStructures/position/Position.js"
 import Vector from "../dataStructures/vector/Vector.js"
 import compose from "../hof/compose.js"
@@ -6,6 +6,7 @@ import { randomAngle, randomInteger, randomNumber } from "../libraries/random.js
 import { isAccelerating, isPlayer, isProjectile, isRotatingClockwise, isRotatingCounterclockwise } from "../hof/conditions.js"
 import and from "../hof/and.js"
 import array from "../libraries/array.js"
+import { Settings } from "../settings.js"
 
 type ParticleGeneratorSettings = {
   number: number,
@@ -14,19 +15,21 @@ type ParticleGeneratorSettings = {
   angle: Degrees,
   lifetime: number,
   speed: number,
+  timer: Function
 }
 
 const limit = array.limit(200)
 const concat = array.concat
+const Particle = particleSetup([Settings.GAME_WIDTH, Settings.GAME_HEIGHT])
 
 const generateParticleList = (generatorSettings: ParticleGeneratorSettings) => {
-  let particles = new Array<Particle>(generatorSettings.number).fill(Particle())
+  let particles = new Array<Particle>(generatorSettings.number).fill(Particle(0))
   let randomVelocity = () => Vector.fromDegreesAndMagnitude(randomAngle(generatorSettings.angle, generatorSettings.spread), generatorSettings.speed)
-  particles = particles.map(_ => Particle(generatorSettings.location, randomVelocity(), generatorSettings.lifetime))
+  particles = particles.map(_ => Particle(generatorSettings.timer(), generatorSettings.location, randomVelocity(), generatorSettings.lifetime))
   return particles
 }
 
-const boosterSettings = (player, offset) => ({
+const boosterSettings = (player, offset, timer) => ({
   get location() {
     return [
       Position.real(player.position),
@@ -38,67 +41,73 @@ const boosterSettings = (player, offset) => ({
   get angle() { return player.rotation + 180 },
   spread: 15,
   get number() { return randomInteger(2) },
-  get lifetime() { return randomInteger(15) }
+  get lifetime() { return randomInteger(15) },
+  timer
 })
 
-const playerLeftBooster = player => generateParticleList(boosterSettings(player, -5))
+const playerLeftBooster = timer => player => generateParticleList(boosterSettings(player, -5, timer))
 
-const playerRightBooster = player => generateParticleList(boosterSettings(player, 5))
+const playerRightBooster = timer => player => generateParticleList(boosterSettings(player, 5, timer))
 
-const playerBoosters = player => [
-  playerRightBooster(player),
-  playerLeftBooster(player)
+const playerBoosters = timer => player => [
+  playerRightBooster(timer)(player),
+  playerLeftBooster(timer)(player)
 ].flat()
 
-const projectileTrailGenerator = (projectile) => generateParticleList({
+const projectileTrailGenerator = timer => (projectile) => generateParticleList({
   get location() { return Position.real(projectile.position) },
   get speed() { return Vector.magnitude(projectile.velocity) * .2 },
   get angle() { return projectile.rotation + 180 },
   spread: 65,
   get number() { return randomInteger(3) },
   get lifetime() { return randomInteger(15) },
+  timer
 })
 
-const projectileImpactGenerator = (projectile) => generateParticleList({
+const projectileImpactGenerator = timer => (projectile) => generateParticleList({
   get location() { return Position.real(projectile.position) },
   get speed() { return randomNumber(1) },
   get angle() { return projectile.rotation + 180 },
   spread: 110,
   get number() { return randomInteger(60, 30) },
   get lifetime() { return randomInteger(60) },
+  timer,
 })
 
-const destroyParticleGenerator = object => generateParticleList({
+const destroyParticleGenerator = timer => object => generateParticleList({
   get location() { return Position.real(object.position) },
   get speed() { return randomNumber(5, 3) },
   angle: 0,
   spread: 360,
   get number() { return object.radius * 2 },
   get lifetime() { return randomInteger(60, 30) },
+  timer
 })
 
-const projectileTimeoutParticleGenerator = projectile => generateParticleList({
+const projectileTimeoutParticleGenerator = timer => projectile => generateParticleList({
   get location() { return Position.real(projectile.position) },
   get speed() { return Vector.magnitude(projectile.velocity) * .15 * randomNumber(1) },
   get angle() { return projectile.rotation },
   spread: 60,
   get number() { return randomInteger(10, 5) },
   get lifetime() { return randomInteger(100) },
+  timer
 })
 
-const playerDeathParticleGenerator = player => generateParticleList({
+const playerDeathParticleGenerator = timer => player => generateParticleList({
   get location() { return Position.real(player.position) },
   get speed() { return randomNumber(1, .15) },
   angle: 0,
   spread: 360,
   get number() { return randomInteger(40, 30) },
-  get lifetime() { return randomInteger(520, 400) }
+  get lifetime() { return randomInteger(520, 400) },
+  timer
 })
 
-const particleMap = (method, filter) => objectListGetter => list => {
+const particleMap = (method, filter) => (objectListGetter, timerGetter) => list => {
   const particles = objectListGetter()
     .filter(filter)
-    .map(method)
+    .map(method(timerGetter))
     .reduce(concat, [])
   return limit(concat(list, particles))
 }
@@ -111,7 +120,7 @@ const ProjectileTimeoutParticles = particleMap(projectileTimeoutParticleGenerato
 const PlayerDeathParticles = particleMap(playerDeathParticleGenerator, and(isPlayer, obj => obj.delete))
 const PlayerCounterclockwiseBooster = particleMap(playerRightBooster, and(isPlayer, isRotatingCounterclockwise))
 const PlayerClockwiseBooster = particleMap(playerLeftBooster, and(isPlayer, isRotatingClockwise))
-export const particleGeneratorSetup = objectListGetter => {
+export const particleGeneratorSetup = (objectListGetter, timerGetter) => {
   return [
     DestroyParticles,
     ProjectileTrails,
@@ -121,7 +130,7 @@ export const particleGeneratorSetup = objectListGetter => {
     PlayerDeathParticles,
     PlayerClockwiseBooster,
     PlayerCounterclockwiseBooster
-  ].map(f => f(objectListGetter))
+  ].map(f => f(objectListGetter, timerGetter))
     .reduce(compose)
 }
 

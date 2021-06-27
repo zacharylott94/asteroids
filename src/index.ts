@@ -13,13 +13,13 @@ import { updateObjectList } from "./behaviors/listMappers/updateObjectList.js"
 
 const GameState = initGameState()
 const humanInterface = setupInterface(GameState, Settings.ROTATION_SPEED)
-const updateParticleList = particleListUpdaterSetup(GameState.objectList)
+const updateParticleList = particleListUpdaterSetup(GameState.objectList, GameState.timer)
 humanInterface.reset()
 
 const graphicsLoop = () => {
   clear()
   GameState.objectList(gameObjectRenderer)
-  GameState.particleList(particleRenderer)
+  GameState.particleList(particleRenderer(GameState.timer()))
   drawText(() => [Settings.GAME_WIDTH / 2, 20], () => `SCORE: ${GameState.score()}`)
 }
 
@@ -41,6 +41,7 @@ const physicsLoop = () => {
   if (GameState.timer() % 60 === 0) {
     GameState.objectList(AsteroidSpawnSystem(GameState.score()))
   }
+
   GameState.timer(_ => ++_)
 }
 

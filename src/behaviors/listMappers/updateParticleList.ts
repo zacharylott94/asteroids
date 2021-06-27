@@ -1,14 +1,16 @@
 import { particleGeneratorSetup } from "../../engine/ParticleEmitters.js"
 import compose from "../../hof/compose.js"
-import moveAllMoveable from "./moveAllMoveable.js"
-import tickAllTTL from "./tickAllTTL.js"
-import removeDeleted from "./removeDeleted.js"
 
-export default function particleListUpdaterSetup(objectList) {
+const isNotTimedOut = timer => particle => {
+  if (particle(timer())[0] === Number.POSITIVE_INFINITY) return false
+  return true
+}
+
+const filterTimedOut = timer => list => list.filter(isNotTimedOut(timer))
+
+export default function particleListUpdaterSetup(objectList, timer) {
   return [
-    particleGeneratorSetup(objectList),
-    moveAllMoveable,
-    tickAllTTL,
-    removeDeleted,
+    particleGeneratorSetup(objectList, timer),
+    filterTimedOut(timer),
   ].reduce(compose)
 }

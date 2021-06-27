@@ -12,7 +12,14 @@ function buildRenderer(condition, draw) {
   return mapper(conditional(condition, Renderer(canvasContextScope(draw))))
 }
 
-export const particleRenderer = mapper(Renderer(canvasContextScope(unitCircle)))
+const particlesToPositions = (time, particles) => particles.map(particle => particle(time))
+const positionToCircle = canvasContextScope(unitCircle)
+
+export const particleRenderer = time => (particles: Particle[]) => {
+  particlesToPositions(time, particles).forEach(positionToCircle)
+  return particles
+}
+
 export const asteroidRenderer = buildRenderer(isAsteroid, circle)
 export const playerRenderer = buildRenderer(isPlayer, playerShipGraphic)
 export const projectileRenderer = buildRenderer(isProjectile, projectileGraphic)
