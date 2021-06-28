@@ -1,6 +1,6 @@
 const limit = limit => array => {
   let newArray = Array.from(array)
-  while (newArray.length > limit) newArray.shift()
+  while (newArray.length > limit) newArray.pop()
   return newArray
 }
 //This function takes an item and a list and concatenates them
