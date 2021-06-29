@@ -8,19 +8,16 @@ import updateScore from "./behaviors/updateScore.js"
 import particleListUpdaterSetup from "./behaviors/listMappers/updateParticleList.js"
 import { updateObjectList } from "./behaviors/listMappers/updateObjectList.js"
 import { gameRenderSetup } from "./draw/setupFunctions.ts/gameRenderSetup.js"
-import { pausedTextSetup } from "./draw/setupFunctions.ts/pausedTextSetup.js"
 
 const GameState = initGameState()
 
-const pausedText = pausedTextSetup(Settings.GAME_WIDTH, Settings.GAME_HEIGHT, GameState.paused)
-const gameRender = gameRenderSetup(GameState)
+const gameRender = gameRenderSetup(GameState, Settings.GAME_WIDTH, Settings.GAME_HEIGHT)
 const humanInterface = setupInterface(GameState, Settings.ROTATION_SPEED)
 const updateParticleList = particleListUpdaterSetup(GameState.objectList, GameState.timer)
 humanInterface.reset()
 
 const graphicsLoop = () => {
   clear()
-  pausedText()
   gameRender()
 }
 
