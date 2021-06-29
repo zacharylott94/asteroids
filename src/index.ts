@@ -1,26 +1,27 @@
-import { gameObjectRenderer, particleRenderer } from "./draw/composedRenderingFunctions.js"
 import AsteroidSpawnSystem from "./engine/asteroidSpawner.js"
 import { initGameState } from "./engine/global.js"
 import { clear } from "./draw/clear.js"
 import { setupInterface } from "./engine/humanInterface.js"
 import Controller from "./engine/keyboardController.js"
-import drawText from "./draw/text.js"
 import { Settings } from "./settings.js"
 import updateScore from "./behaviors/updateScore.js"
 import particleListUpdaterSetup from "./behaviors/listMappers/updateParticleList.js"
 import { updateObjectList } from "./behaviors/listMappers/updateObjectList.js"
-
+import { gameRenderSetup } from "./draw/setupFunctions.ts/gameRenderSetup.js"
+import { pausedTextSetup } from "./draw/setupFunctions.ts/pausedTextSetup.js"
 
 const GameState = initGameState()
+
+const pausedText = pausedTextSetup(Settings.GAME_WIDTH, Settings.GAME_HEIGHT, GameState.paused)
+const gameRender = gameRenderSetup(GameState)
 const humanInterface = setupInterface(GameState, Settings.ROTATION_SPEED)
 const updateParticleList = particleListUpdaterSetup(GameState.objectList, GameState.timer)
 humanInterface.reset()
 
 const graphicsLoop = () => {
   clear()
-  GameState.objectList(gameObjectRenderer)
-  GameState.particleList(particleRenderer(GameState.timer()))
-  drawText(() => [Settings.GAME_WIDTH / 2, 20], () => `SCORE: ${GameState.score()}`)
+  pausedText()
+  gameRender()
 }
 
 const physicsLoop = () => {
