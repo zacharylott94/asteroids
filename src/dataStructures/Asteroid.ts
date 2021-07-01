@@ -4,6 +4,7 @@ import { randomDirectionVector } from "../libraries/random.js"
 import GenericFactory from "./genericObject.js"
 import Position from "./position/Position.js"
 import Vector from "./vector/Vector.js"
+import Ore from "./Ore.js"
 
 const SIZE_TO_RADIUS =
   [
@@ -37,12 +38,12 @@ const shatterVelocities = (asteroid: Asteroid, spread = SPREAD, deadzone = DEADZ
     .map(vector => Vector.scale(vector, magnitude, velocityScale))
 }
 
-export const shatter = (asteroid: Asteroid): Asteroid[] => {
+export const shatter = (asteroid: Asteroid): (Asteroid | Ore)[] => {
   const factory = partial(
     create(asteroid.size - 1),
     Position.real(asteroid.position)
   )
-  if (asteroid.size === 0) return [{ ...asteroid, delete: true }]
+  if (asteroid.size === 0) return [{ ...asteroid, delete: true }, Ore(Position.real(asteroid.position), asteroid.velocity)]
   return shatterVelocities(asteroid)
     .map(vel => factory(vel))
     .concat({ ...asteroid, delete: true })

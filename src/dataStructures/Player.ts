@@ -11,5 +11,6 @@ export default (): Player => {
     hasCollided: false,
     isCollidableWith: or(isOwner(ObjectType.UFO), isAsteroid),
     angularVelocity: 0,
+    ore: 0
   }
 }

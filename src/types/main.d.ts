@@ -26,8 +26,9 @@ type TVector = [number, number]
 type TPosition = [TVector, TVector, TVector, TVector, TVector, TVector, TVector, TVector, TVector,]
 
 type Asteroid = IGeneric & ICollidable & IDurability & { size: number }
-type Player = ICollidable & IGeneric & IAcceleration & IRotation
+type Player = ICollidable & IGeneric & IAcceleration & IRotation & { ore: number }
 type Projectile = IRotatableGeneric & ICollidable & ITimeToLive & { owner: ObjectType }
+type Ore = ICollidable & IGeneric
 type Particle = (time: number) => TVector
 type GameObject = Player | Projectile | Asteroid
 

@@ -37,4 +37,5 @@ const enum ObjectType {
   Projectile,
   Generic,
   UFO,
+  Ore,
 }

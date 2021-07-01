@@ -1,4 +1,5 @@
 import and from "./and.js"
+import or from "./or.js"
 
 
 
@@ -18,7 +19,6 @@ export const hasAcceleration = hasProperties("acceleration")
 
 //object type checks
 
-export const isCollidedProjectile = obj => isProjectile(obj) && hasCollided(obj)
 export const isObject = (...types: ObjectType[]) => obj => types.reduce((l, r) => l || obj.type === r, false)
 export const isProjectile = isObject(ObjectType.Projectile)
 export const isPlayer = isObject(ObjectType.Player)
@@ -30,6 +30,8 @@ export const isAsteroidWithNoDurability = and(durabilityLT1, isAsteroid)
 export const isRotatingCounterclockwise = object => object.angularVelocity < 0
 export const isRotatingClockwise = object => object.angularVelocity > 0
 export const isAccelerating = object => object.acceleration > 0
+export const isOre = object => object.type === ObjectType.Ore
+export const isOrePlayerOrProjectile = [isPlayer, isProjectile, isOre].reduce(or)
 
 
 //list property checks
