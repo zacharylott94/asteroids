@@ -10,7 +10,8 @@ export const gameRenderSetup = (gameState, width, height) => {
     () => {
       gameState.objectList(gameObjectRenderer)
       gameState.particleList(particleRenderer(gameState.timer()))
-      drawText(() => [Settings.GAME_WIDTH / 2, 20], () => `SCORE: ${gameState.score()}`)
+      //Note that this is set to track ore. This is temporary.
+      drawText(() => [Settings.GAME_WIDTH / 2, 20], () => `SCORE: ${gameState.ore()}`)
     })
 }
 

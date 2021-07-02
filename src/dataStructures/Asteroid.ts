@@ -22,7 +22,7 @@ const DEADZONE = 5
 export const create = size => (location, velocity, durability = DURABILITY, sizeToRadius = SIZE_TO_RADIUS): Asteroid => {
   return {
     ...GenericFactory(location, velocity, sizeToRadius[size], ObjectType.Asteroid),
-    hasCollided: false,
+    hasCollidedWith: [],
     durability,
     size,
     isCollidableWith: isPlayerProjectile,

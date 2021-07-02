@@ -19,7 +19,7 @@ export const Projectile = (settings: projectileSettings): Projectile => {
     ...GenericFactory(settings.location, Vector.add(velocity, settings.inheritedVelocity), 1, ObjectType.Projectile),
     ttl: Settings.PROJECTILE_TTL,
     rotation: settings.rotation,
-    hasCollided: false,
+    hasCollidedWith: [],
     isCollidableWith: settings.isCollidableWith,
     owner: settings.owner,
     angularVelocity: 0

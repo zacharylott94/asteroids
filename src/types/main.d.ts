@@ -2,7 +2,7 @@ interface ICircleRenderable extends IRadius { }
 interface IRotatableRenderable extends IPosition, IRotation { }
 
 interface ICollidable extends IPosition, IRadius {
-  hasCollided: Boolean,
+  hasCollidedWith: ObjectType[],
   isCollidableWith: collisionMask
 }
 
@@ -26,11 +26,11 @@ type TVector = [number, number]
 type TPosition = [TVector, TVector, TVector, TVector, TVector, TVector, TVector, TVector, TVector,]
 
 type Asteroid = IGeneric & ICollidable & IDurability & { size: number }
-type Player = ICollidable & IGeneric & IAcceleration & IRotation & { ore: number }
+type Player = ICollidable & IGeneric & IAcceleration & IRotation
 type Projectile = IRotatableGeneric & ICollidable & ITimeToLive & { owner: ObjectType }
 type Ore = ICollidable & IGeneric
 type Particle = (time: number) => TVector
-type GameObject = Player | Projectile | Asteroid
+type GameObject = Player | Projectile | Asteroid | Ore
 
 type Degrees = number
 
@@ -51,4 +51,5 @@ type GameState = {
   particleList: Stator<Particle[]>,
   objectList: Stator<GameObject[]>,
   score: Stator<number>,
+  ore: Stator<number>,
 }

@@ -4,7 +4,7 @@ const radius = 3
 
 const Ore = (location, velocity): Ore => ({
   ...GenericFactory(location, velocity, radius, ObjectType.Ore),
-  hasCollided: false,
+  hasCollidedWith: [],
   isCollidableWith: isPlayer
 })
 

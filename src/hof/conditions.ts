@@ -6,9 +6,9 @@ import or from "./or.js"
 //property checks
 
 export const durabilityLT1 = obj => obj?.durability < 1
-export const hasCollided = obj => obj.hasCollided
+export const hasCollided = obj => obj.hasCollidedWith.length > 0
 export const hasProperties = (...props: string[]) => obj => props.reduce((l, r) => l && r in obj, true)
-export const isCollidable = hasProperties("hasCollided", "radius")
+export const isCollidable = hasProperties("hasCollidedWith", "radius")
 export const isMoveable = hasProperties("velocity", "position")
 export const hasDurability = hasProperties("durability")
 export const isRotatable = hasProperties("rotation")

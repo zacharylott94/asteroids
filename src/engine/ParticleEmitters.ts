@@ -3,7 +3,7 @@ import Position from "../dataStructures/position/Position.js"
 import Vector from "../dataStructures/vector/Vector.js"
 import compose from "../hof/compose.js"
 import { randomAngle, randomInteger, randomNumber } from "../libraries/random.js"
-import { isAccelerating, isPlayer, isProjectile, isRotatingClockwise, isRotatingCounterclockwise } from "../hof/conditions.js"
+import { hasCollided, isAccelerating, isPlayer, isProjectile, isRotatingClockwise, isRotatingCounterclockwise } from "../hof/conditions.js"
 import and from "../hof/and.js"
 import array from "../libraries/array.js"
 import { Settings } from "../settings.js"
@@ -138,7 +138,7 @@ const particleMap = (method, filter) => (objectListGetter, timerGetter) => list 
 
 const DestroyParticles = particleMap(destroyParticleGenerator, obj => obj.type === ObjectType.Asteroid && obj.delete)
 const ProjectileTrails = particleMap(projectileTrailGenerator, isProjectile)
-const ProjectileImpacts = particleMap(projectileImpactGenerator, obj => isProjectile(obj) && obj.hasCollided)
+const ProjectileImpacts = particleMap(projectileImpactGenerator, and(isProjectile, hasCollided))
 const PlayerParticles = particleMap(playerBoosters, and(isPlayer, isAccelerating))
 const ProjectileTimeoutParticles = particleMap(projectileTimeoutParticleGenerator, obj => isProjectile(obj) && !obj.hasCollided && obj.delete)
 const PlayerDeathParticles = particleMap(playerDeathParticleGenerator, and(isPlayer, obj => obj.delete))
