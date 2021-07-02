@@ -4,7 +4,7 @@ import Collision from "../../engine/Collision.js"
 import and from "../../hof/and.js"
 import compose from "../../hof/compose.js"
 import { conditional } from "../../hof/conditional.js"
-import { hasDurability, hasCollided, isPlayer, isAsteroidWithNoDurability, hasAcceleration, isOrePlayerOrProjectile, isProjectile, isOre, isAsteroid } from "../../hof/conditions.js"
+import { hasDurability, hasCollided, isPlayer, isAsteroidWithNoDurability, hasAcceleration, isProjectile, isOre, isRotatable } from "../../hof/conditions.js"
 import mapper from "../../hof/mapper.js"
 import accelerate from "../objectMappers/accelerate.js"
 import { rotate } from "../objectMappers/rotate.js"
@@ -12,8 +12,6 @@ import moveAllMoveable from "../listMappers/moveAllMoveable.js"
 import removeDeleted from "../listMappers/removeDeleted.js"
 import tickAllTTL from "../listMappers/tickAllTTL.js"
 import or from "../../hof/or.js"
-
-
 
 const tickDurability = obj => ({ ...obj, durability: obj.durability - 1 })
 const tickIfDurability = conditional(hasDurability, tickDurability)
@@ -26,7 +24,7 @@ const shatterIfNoDurability = compose(
 
 const resetAcceleration = mapper(conditional(hasAcceleration, (obj: any) => ({ ...obj, acceleration: 0 })))
 const resetPlayerAngularVelocity = mapper(conditional(isPlayer, (player: Player) => ({ ...player, angularVelocity: 0 })))
-const rotatePlayer = mapper(conditional(isPlayer, rotate))
+const rotateObjects = mapper(conditional(isRotatable, rotate))
 
 const deleteIfCollided = mapper(conditional(and(hasCollided, or(isOre, isProjectile)), flagDelete))
 const deleteIfPlayerCollidingWithAsteroid = mapper(
@@ -41,7 +39,7 @@ export const updateObjectList = [
   removeDeleted,
   Collision.reset,
   moveAllMoveable,
-  rotatePlayer,
+  rotateObjects,
   resetPlayerAngularVelocity,
   tickAllTTL,
   Collision.checkAgainstMask,

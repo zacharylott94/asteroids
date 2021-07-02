@@ -8,7 +8,6 @@ interface ICollidable extends IPosition, IRadius {
 
 type collisionMask = (obj: GameObject) => boolean
 
-
 interface IMoveable extends IVelocity, IPosition { }
 
 interface IRotatableGeneric extends IRotation, IGeneric { }
@@ -28,7 +27,7 @@ type TPosition = [TVector, TVector, TVector, TVector, TVector, TVector, TVector,
 type Asteroid = IGeneric & ICollidable & IDurability & { size: number }
 type Player = ICollidable & IGeneric & IAcceleration & IRotation
 type Projectile = IRotatableGeneric & ICollidable & ITimeToLive & { owner: ObjectType }
-type Ore = ICollidable & IGeneric
+type Ore = ICollidable & IGeneric & IRotation
 type Particle = (time: number) => TVector
 type GameObject = Player | Projectile | Asteroid | Ore
 

@@ -7,6 +7,7 @@ import projectileGraphic from "./projectileGraphic.js"
 import Renderer from "./renderer.js"
 import { canvasContextScope } from "./canvasContextScope.js"
 import compose from "../hof/compose.js"
+import square from "./square.js"
 
 function buildRenderer(condition, draw) {
   return mapper(conditional(condition, Renderer(canvasContextScope(draw))))
@@ -21,7 +22,7 @@ export const particleRenderer = time => (particles: Particle[]) => {
 }
 
 export const asteroidRenderer = buildRenderer(isAsteroid, circle)
-export const oreRenderer = buildRenderer(isOre, circle)
+export const oreRenderer = buildRenderer(isOre, square)
 export const playerRenderer = buildRenderer(isPlayer, playerShipGraphic)
 export const projectileRenderer = buildRenderer(isProjectile, projectileGraphic)
 export const gameObjectRenderer = [asteroidRenderer, playerRenderer, projectileRenderer, oreRenderer].reduce(compose)
